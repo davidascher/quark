@@ -6,13 +6,19 @@
   },
   "dependencies": {
     "basePackages": {
-      "accounts-persona": {}
+      "accounts-persona": {},
+      "bafa": {}
     },
     "packages": {
       "accounts-persona": {
         "git": "https://github.com/vladikoff/meteor-accounts-persona.git",
         "tag": "v0.1.2",
         "commit": "5b13b13c1cac1fed418969cf3aaec05662a3ebd0"
+      },
+      "bafa": {
+        "git": "https://github.com/jackp/BAFA.git",
+        "tag": "v0.3.0",
+        "commit": "cf8c9b0be42b21cb0203c6d08926529c4e00b0c6"
       }
     }
   }
