@@ -6,6 +6,7 @@
   "packages": {
     "accounts-persona": {},
     "bafa": {},
-    "jquery-ui": {}
+    "jquery-ui": {},
+    "mini-pages": {}
   }
 }
