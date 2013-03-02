@@ -6,9 +6,7 @@ var Future = require('fibers/future'), wait = Future.wait;
 var db;
 var restify = require('restify');
 var assert = require('assert');
-// var request = require('request');
 var SKEY = process.env['BING_APP_ID'];
-// Creates a JSON client
 var client = restify.createJsonClient({
   url: 'https://api.datamarket.azure.com',
 });
@@ -18,7 +16,6 @@ var ServiceRootURL = "https://api.duckduckgo.com";
 
 Meteor.methods({
   search: function (term) {
-		// return [];
 		if (!term) return;
   	Meteor._debug("DOING A SEARCH FOR", term);
     var fut = new Future();
@@ -36,53 +33,21 @@ Meteor.methods({
     return myresults;
 	},
 	searchremote: function(term) {
-		// XXX BROKEN NOT SURE WHY
 		if (!term) return;
-    Meteor._debug("DOING REMOTE SEARCH FOR", term);
-
     var fut2 = new Future();
 
     client.basicAuth(SKEY, SKEY);
     client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'' + term + '\'&$format=JSON&$top=50&$skip=0', function(err, req, res, obj) {
 			var subanswers = obj.d.results[0].Web;
-			Meteor._debug(subanswers);
 			var parts = [];
 			for (var i = 0; i < subanswers.length; i++) {
 				var answer = subanswers[i];
-				// Meteor._debug(answer.Description);
 				parts.push({'url': answer.Url, 'title': answer.Title, 'description': answer.Description});
 			}
-			// Meteor._debug("About to call .ret() with ", parts)
 			fut2.ret(parts);
     });
-		Meteor._debug("About to call .wait()")
     return fut2.wait();
-
-  //   var params = { q: "'"+term+"'",  'format': "json"};
-		// req = request.get(ServiceRootURL).qs(params);
-		// request(req, function(e, r, body) {
-		// 	Meteor._debug(e, r, body);
   }
-
-	// bingClient.search(term, function(error, response, data) {
-	// 	Meteor._debug(error);
-	// 	Meteor._debug(response);
-	// 	Meteor._debug(data);
-	// 	if (!error && response.statusCode == 200) {
-	// 		Meteor._debug(data.SearchResponse.Web.Results[0].Url);
-	// 		Meteor._debug(data.SearchResponse.Web.Results);
-	// 	} else {
-	// 		Meteor._debug("ERROR! " + error + "/" + response.statusCode);
-	// 		Meteor._debug("ERROR! " + error.remoteErrors);
-	// 	}
-	// 	fut.ret(data.SearchResponse.Web.Results)
-	// });
-	// var otherresults = fut2.wait();
- //    Meteor._debug("GOT LOCAL RESULTS");
-
-	// Meteor._debug(otherresults);
-	// return {'local': myresults, 'remote': otherresults};
- //  }
 });
 
 var onParaChange = {
