@@ -8,7 +8,8 @@
     "basePackages": {
       "accounts-persona": {},
       "bafa": {},
-      "jquery-ui": {}
+      "jquery-ui": {},
+      "mini-pages": {}
     },
     "packages": {
       "accounts-persona": {
@@ -25,6 +26,16 @@
         "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
         "tag": "v1.8.16",
         "commit": "abda12134b8f3c5db31d6a4864bead6aa3640358"
+      },
+      "mini-pages": {
+        "git": "https://github.com/cmather/meteor-mini-pages.git",
+        "tag": "v0.3.0",
+        "commit": "3de8b93dd4355ebbdcfaed7891350b349ee54815"
+      },
+      "page-js": {
+        "git": "https://github.com/tmeasday/meteor-page-js.git",
+        "tag": "v1.3.5",
+        "commit": "c652f795a86498aa4609ab637a694710421cb218"
       }
     }
   }
