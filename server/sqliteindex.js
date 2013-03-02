@@ -95,7 +95,7 @@ var onParaChange = {
 	}
 }
 
-db = new sqlite3.Database('../paragraphs.sqlite3', function() {
+db = new sqlite3.Database('paragraphs.sqlite3', function() {
 	db.run("CREATE VIRTUAL TABLE paragraphs USING fts4(key, data);", function() {});
 });
 Meteor.startup(function () {
