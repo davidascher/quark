@@ -38,5 +38,5 @@ client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'tomato\'&$format=J
 
   console.log(err); // JSON.stringify(obj, null, 2));
   console.log(res); // JSON.stringify(obj, null, 2));
-  console.log(obj); // JSON.stringify(obj, null, 2));
+  console.log(JSON.stringify(obj, null, 2));
 });
