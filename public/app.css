@@ -95,6 +95,7 @@ div.para {
 }
 
 .searchcard {
+	white-space: wrap;
 	position: relative;
 	background: white;
     overflow: hidden;
@@ -119,6 +120,7 @@ div.para {
 	border-top: 1px solid rgba(19, 43, 82, 0.2100);
 	padding: .2em 1em;
 	height: 180px;
+	text-wrap: ;
 	line-height: 1.0em;
 	/*max-height: 180px;*/
 }
