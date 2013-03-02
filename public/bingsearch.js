@@ -5,7 +5,6 @@
 // function bing(term, top, skip, cb) {
 // 	// var ServiceRootURL = "https://api.duckduckgo.com";
 //     var ServiceRootURL =  'https://api.datamarket.azure.com/Bing/Search/v1/Composite';
-//     var SKEY = process.env['BING_APP_ID'];
 //     console.log("SKEY", SKEY);
 //     var params = {
 //          Sources: "'web'", 
@@ -23,6 +22,7 @@
 // })
 
 var restify = require('restify');
+var SKEY = process.env['BING_APP_ID'];
 
 // Creates a JSON client
 var client = restify.createJsonClient({
