@@ -50,7 +50,7 @@ Meteor.methods({
 			for (var i = 0; i < subanswers.length; i++) {
 				var answer = subanswers[i];
 				Meteor._debug(answer.Description);
-				parts.push({'url': answer.FirstURL, 'text': answer.Description});
+				parts.push({'url': answer.Url, 'text': answer.Description});
 			}
 			Meteor._debug("About to call .ret() with ", parts)
 			fut2.ret(parts);
