@@ -9,7 +9,8 @@
       "accounts-persona": {},
       "font-awesome": {},
       "jquery-ui": {},
-      "mini-pages": {}
+      "mini-pages": {},
+      "bafa": {}
     },
     "packages": {
       "accounts-persona": {
@@ -31,6 +32,11 @@
         "git": "https://github.com/cmather/meteor-mini-pages.git",
         "tag": "v0.3.0",
         "commit": "3de8b93dd4355ebbdcfaed7891350b349ee54815"
+      },
+      "bafa": {
+        "git": "https://github.com/jackp/BAFA.git",
+        "tag": "v0.3.0",
+        "commit": "cf8c9b0be42b21cb0203c6d08926529c4e00b0c6"
       },
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",
