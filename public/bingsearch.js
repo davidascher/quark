@@ -28,7 +28,6 @@ var SKEY = process.env['BING_APP_ID'];
 // Creates a JSON client
 var client = restify.createJsonClient({
   url: 'https://api.datamarket.azure.com',
-  // url: 'https://us-west-1.api.joyentcloud.com'
 });
 
 
@@ -38,5 +37,5 @@ client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'tomato\'&$format=J
 
   // console.log(err); // JSON.stringify(obj, null, 2));
   // console.log(res); // JSON.stringify(obj, null, 2));
-  console.log(JSON.stringify(obj, null, 2));
+  console.log(JSON.stringify(obj.d.results, null, 2));
 });
