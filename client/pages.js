@@ -47,10 +47,10 @@ function doSearch(searchterm) {
     Session.set("searchresults", results);
   });
 
-  // Meteor.call("searchremote", searchterm, function(err, remote) {
-  //   console.log(remote)
-    // Session.set("remotesearchresults", remote);
-  // });
+  Meteor.call("searchremote", searchterm, function(err, remote) {
+    console.log(remote)
+    Session.set("remotesearchresults", remote);
+  });
 }
 
 Template.main.rendered = function() {
