@@ -23,6 +23,9 @@ Todos:
 - chrome whitespace in links?
 - chrome doesn't unescape urls, figure out whether to slugify
 
+
+- on rename, history gets borked because the old page no longer exists.  fix.
+
 Code
   - do mongo search of page titles
   - Pages should have a type: page, link, image, json, code?
