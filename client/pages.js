@@ -48,7 +48,7 @@ function doSearch(searchterm) {
   });
 
   Meteor.call("searchremote", searchterm, function(err, remote) {
-    console.log(remote)
+    console.log("setting remote search results to ", remote)
     Session.set("remotesearchresults", remote);
   });
 }
@@ -107,7 +107,7 @@ Template.main.socialsearchresults = function() {
   return results;
 }
 
-Template.main.socialsearchresults = function() {
+Template.main.remotesearchresults = function() {
   return Session.get("remotesearchresults");
 }
 
