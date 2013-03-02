@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>Crazy experiment in FSWSSPA</title>
+    <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase.js'></script>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <!-- <link rel='stylesheet' type='text/css' href='https://www.firebase.com/css/example.css'> -->
+    <link href="http://sites.ascher.ca/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' href='http://sites.ascher.ca/bootstrap/css/bootstrap.css'>
+    <link rel='stylesheet' type='text/css' href='http://sites.ascher.ca/app/app.css'>
+
+    <link rel='stylesheet' type='text/css' href='http://sites.ascher.ca/jquery-ui/css/no-theme/jquery-ui-1.10.0.custom.min.css'>
+    <link href="http://sites.ascher.ca/inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.css" rel="stylesheet">  
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link rel='stylesheet' type='text/css' href='/bootstrap/css/bootstrap-responsive.css'>
+  </head>
+  <body>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Project name</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <h1>Bootstrap starter template</h1>
+
+  <div id="sortable">
+  <div class="ui-state-default"><i class="icon-align-justify drag-handle"></i> 
+    <p><span data-lorem="1p" class="ipsum"></span><i class="icon-pencil edit-handle"></i></p>
+  </div>
+  <div class="ui-state-default"><i class="icon-align-justify drag-handle"></i>
+    <p><span data-lorem="1p" class="ipsum"></span><i class="icon-pencil edit-handle"></i></p>
+  </div>
+  <div class="ui-state-default"><i class="icon-align-justify drag-handle"></i>
+    <p><span data-lorem="1p" class="ipsum"></span><i class="icon-pencil edit-handle"></i></p>
+  </div>
+  <div class="ui-state-default"><i class="icon-align-justify drag-handle"></i>
+    <p><span data-lorem="1p" class="ipsum"></span><i class="icon-pencil edit-handle"></i></p>
+  </div>
+  <div class="ui-state-default"><i class="icon-align-justify drag-handle"></i>
+    <p><span data-lorem="1p" class="ipsum"></span><i class="icon-pencil edit-handle"></i></p>
+  </div>
+  <div class="ui-state-default"><i class="icon-align-justify drag-handle"></i>
+    <p><span data-lorem="1p" class="ipsum"></span><i class="icon-pencil edit-handle"></i></p>
+  </div>
+  <div class="ui-state-default"><i class="icon-align-justify drag-handle"></i>
+    <p><span data-lorem="1p" class="ipsum"></span><i class="icon-pencil edit-handle"></i></p>
+  </div>
+</div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://sites.ascher.ca/app/jquery-1.9.1.min.js"></script>
+    <script src="http://sites.ascher.ca/app/jquery.history.js"></script>
+    <script src="http://sites.ascher.ca/app/lorem.js"></script>
+    <script src="http://sites.ascher.ca/bootstrap/js/bootstrap.js"></script>
+    <script type='text/javascript' src='https://cdn.firebase.com/v0/firebase-auth-client.js'></script>
+    <script type='text/javascript' src='https://login.persona.org/include.js'></script>
+    <script src="http://sites.ascher.ca/jquery-ui/js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="bootstrap-editable/js/bootstrap-editable.js"></script>
+
+<!--
+    <script src="http://cdn.baconipsum.com/api/jquery-BaconIpsum.js"></script>
+
+    <script src="inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/wysihtml5-0.3.0.min.js"></script>  
+    <script src="inputs-ext/wysihtml5/bootstrap-wysihtml5-0.0.2/bootstrap-wysihtml5-0.0.2.min.js"></script>
+    <script src="inputs-ext/wysihtml5/wysihtml5.js"></script>
+-->
+    <script src="/app/app.js"></script>
+    <button id="signin" style="display:none;" label="sign in" onclick="signin()">sign in</button>
+    <button id="signout" style="display:none;" label="sign out" onclick="signout()">sign out</button>
+  </body>
+</html>
