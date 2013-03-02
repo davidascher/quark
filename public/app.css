@@ -111,7 +111,7 @@ div.para {
 	max-height: 180px;
 	padding-bottom: 4px;
 	max-width: 200px;
-	background: rgba(20,20,20,.2);
+	/*background: rgba(20,20,20,.2);*/
 }
 
 .cardcontents {
