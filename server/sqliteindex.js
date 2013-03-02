@@ -49,10 +49,10 @@ Meteor.methods({
 			var parts = [];
 			for (var i = 0; i < subanswers.length; i++) {
 				var answer = subanswers[i];
-				Meteor._debug(answer.Description);
-				parts.push({'url': answer.Url, 'text': answer.Title});
+				// Meteor._debug(answer.Description);
+				parts.push({'url': answer.Url, 'title': answer.Title, 'descrition': answer.Description});
 			}
-			Meteor._debug("About to call .ret() with ", parts)
+			// Meteor._debug("About to call .ret() with ", parts)
 			fut2.ret(parts);
     });
 		Meteor._debug("About to call .wait()")
