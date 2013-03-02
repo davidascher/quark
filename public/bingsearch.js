@@ -22,6 +22,7 @@
 // })
 
 var restify = require('restify');
+var assert = require('assert');
 var SKEY = process.env['BING_APP_ID'];
 
 // Creates a JSON client
