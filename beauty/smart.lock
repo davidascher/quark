@@ -7,7 +7,8 @@
   "dependencies": {
     "basePackages": {
       "accounts-persona": {},
-      "bafa": {}
+      "bafa": {},
+      "jquery-ui": {}
     },
     "packages": {
       "accounts-persona": {
@@ -19,6 +20,11 @@
         "git": "https://github.com/jackp/BAFA.git",
         "tag": "v0.3.0",
         "commit": "cf8c9b0be42b21cb0203c6d08926529c4e00b0c6"
+      },
+      "jquery-ui": {
+        "git": "https://github.com/TimHeckel/meteor-jquery-ui.git",
+        "tag": "v1.8.16",
+        "commit": "abda12134b8f3c5db31d6a4864bead6aa3640358"
       }
     }
   }
