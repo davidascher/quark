@@ -1,0 +1,291 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+
+body {
+	background: url(/cream_dust/cream_dust.png) repeat 0 0;
+	color: rgb(14, 32, 59);
+	font-family: 'Droid Sans', sans-serif;
+	overflow-y: scroll;
+}
+
+button, input, select, textarea {
+	font-family: 'Droid Sans', sans-serif;
+}
+
+.main {
+	padding-top: 2em;
+}
+
+div.para {
+	display: inline;
+}
+
+.card {
+	position: relative;
+	background: white;
+	/*max-width: 25em;*/
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: .2em 1em;
+	margin: 1px;
+}
+
+.link {
+	background-color: orange;
+}
+
+.searchcard:hover {
+	cursor: pointer;
+}
+
+.trash {
+	display: inline-block;
+}
+.dropzone {
+	opacity: .3;
+	border-radius: 5px;
+	padding: 5px;
+	box-shadow:         inset 0 0 0px #000;	
+}
+
+.ready {
+   box-shadow:         inset 0 0 4px #aaa;	
+}
+
+.activated {
+   opacity: 1;
+   background: rgba(255, 248, 191, 0.2800);
+   box-shadow:         inset 0 0 4px #aaa;	
+}
+
+.search-heading {
+	border-left: 3px pink solid;
+	border-top: 1px solid #bbb;
+	margin-top: 0.5em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-bottom: 0.5em;
+	padding-left: 1em;
+	font-size: larger;
+	color: grey;
+}
+.searchresults {
+    position: relative;
+}
+
+.table {
+	display: table;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+}
+
+.searchstrip {
+	overflow-x: scroll;
+    white-space: nowrap;
+	overflow-y: hidden;
+	display: inline-block;
+	width: 100%;
+	/*height: 200px;*/
+}
+
+.searchcard {
+	position: relative;
+	background: white;
+    overflow: hidden;
+	display: inline-block;
+	float: right;
+
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-right: .4em;
+	margin-bottom: .2em;
+	padding: 0;
+
+	height: 180px;
+	max-height: 180px;
+	padding-bottom: 4px;
+	max-width: 200px;
+	background: rgba(20,20,20,.2);
+}
+
+.cardcontents {
+	background: white;
+	border-top: 1px solid rgba(19, 43, 82, 0.2100);
+	padding: .2em 1em;
+	height: 180px;
+	line-height: 1.0em;
+	/*max-height: 180px;*/
+}
+
+.cardname {
+	font-size: smallest;
+	padding: 0em .5em;
+	margin-right: .5em;
+	overflow-x: hidden;
+	font-size: medium;
+	line-height: 1.1em;
+}
+
+.searchcard p {
+}
+
+.paragraph-placeholder {
+	min-height: 1.2em; 
+	line-height: 1.2em;
+	min-width: 10em;
+	background-color: #fff8b2;	
+	border: 1px dotted grey;
+	display: block;
+}
+.draggable .drag-handle {
+	cursor: move; 
+}
+
+.clear {
+	clear: both;
+}
+
+.buttonbar {
+	padding-top: 2em;
+	display: block;
+	clear: both;
+}
+.new-para, .new-page, .new-link, .new-others {
+	vertical-align: baseline;
+}
+
+span.pagetitle:hover {
+	background-color: #fff8b2;
+}
+.navbar-fixed-top, .navbar-fixed-bottom {
+	position: static;
+}
+.right {
+	float: right;
+	margin-right: 1em;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+	color: rgb(14, 32, 59);
+}
+
+#sortable { list-style-type: none; margin: 0; padding: 0; }
+
+/*#sortable div { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; }*/
+.drag-handle { 
+	position: absolute; 
+	margin-right: 1.3em; 
+	min-width: 1.3em; 
+	width: 1.3em;
+	float: left;
+	/*clear:;*/
+}
+
+.draggable-handle {
+	position: absolute;
+	right: 0.5em;
+	top: 0.5em;
+	opacity: .2;
+}
+.draggable-handle:hover {
+	opacity: 1
+}
+
+.right {
+	float: right;
+}
+
+h3.page-name {
+	margin-left: 16px;
+}
+
+textarea.editable {
+	width: 22em;
+	height: 10em;
+}
+
+.parablock {
+	position: relative;
+}
+
+.parablock:after {
+	content: "Hit 'esc' when done.";
+	position:absolute;
+	bottom: 1em;
+	right: 1em;
+	opacity: .4;
+}
+
+.para {
+	float: left;
+	margin-left: 20px;
+	/*text-indent: -1.5em;*/
+}
+.drag-handle, .done-handle {
+	vertical-align: top;
+	opacity: .1;
+}
+
+.drag-handle:hover {
+	opacity: 1;
+	cursor: move;
+}
+
+.done-handle:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+.edit-handle {
+	padding-left: .2em;
+	width: 12px;
+	opacity: .1;
+	float: right;
+}
+
+.sidebar-cluster {
+	transition: height 0.5s;
+	-moz-transition: height 0.5s;
+}
+.starred, .unstarred {
+	cursor: pointer;
+}
+
+.unstarred {
+	opacity: .2;
+}
+.unstarred:hover {
+	opacity: 1;
+	color: red;
+}
+
+.starred {
+	color: red;
+	opacity: .6;
+}
+
+.starred:hover {
+	opacity: 1;
+}
+
+.edit-handle:hover {
+	opacity: 1;
+	cursor: pointer;
+}
+
+span.ipsum p {
+	display: inline;
+}
+
+.new-para {
+	margin-bottom: 2em;
+}
+
+.favorite {
+	font-size: 140px;
+	vertical-align: baseline;
+}
