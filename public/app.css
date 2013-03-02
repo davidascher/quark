@@ -127,6 +127,7 @@ div.para {
 	font-size: smallest;
 	padding: 0em .5em;
 	margin-right: .5em;
+	padding-bottom: .1em;
 	overflow-x: hidden;
 	font-size: medium;
 	line-height: 1.1em;
