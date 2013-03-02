@@ -43,8 +43,9 @@ Meteor.methods({
     var fut2 = new Future();
 
     client.basicAuth(SKEY, SKEY);
-    client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'tomato\'&$format=JSON&$top=50&$skip=0', function(err, req, res, obj) {
+    client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'tomato\'&$format=JSON&$top=2&$skip=0', function(err, req, res, obj) {
 			var subanswers = JSON.parse(obj);
+			Meteor._debug(subanswers);
 			var parts = [];
 			for (var i = 0; i < subanswers.length; i++) {
 				var answer = subanswers[i];
