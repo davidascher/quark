@@ -49,7 +49,7 @@ Meteor.methods({
 			var parts = [];
 			for (var i = 0; i < subanswers.length; i++) {
 				var answer = subanswers[i];
-				Meteor._debug(answer.text);
+				Meteor._debug(answer.Url);
 				parts.push({'url': answer.FirstURL, 'text': answer.Result});
 			}
 			Meteor._debug("About to call .ret() with ", parts)
