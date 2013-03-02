@@ -28,7 +28,7 @@
         {{#if doingsearch}}
           <div class="searchresults row-fluid">
             <div class="span12">
-              <div class="search-heading">Your pages</div>
+              <div class="search-heading">Your data</div>
                 {{#if searchresults}}
                   <div class="searchstrip table">
                     <div class="row">
@@ -45,6 +45,27 @@
               </div>
             </div>
           </div>
+
+          <div class="searchresults row-fluid">
+            <div class="span12">
+              <div class="search-heading">Web data</div>
+                {{#if searchresults}}
+                  <div class="searchstrip table">
+                    <div class="row">
+                      {{#each remotesearchresults}}
+                      <div class="cell">
+                        {{>remotesearchcard this}}
+                      </div>
+                      {{/each}}  
+                    </div>
+                  </div>
+                {{else}}
+                  <p>No pages found.</p>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+
         {{/if}}
       </div>
     </div>
