@@ -1,0 +1,190 @@
+<head>
+  <title>Playing w/ meteor and fedwiki</title>
+  <link rel='stylesheet' type='text/css' href='/app.css'>
+</head>
+<body>
+</body>
+
+<template name="layout">
+  {{>main}}
+</template>
+
+<template name="main">
+<div id="root">
+  <div class="container-fluid main">
+    <div class="row-fluid">
+      <div class="span5">
+          {{> page}}
+      </div>
+      <div class="span7">
+        <div class="row-fluid">
+          <div class="searchfield span6">
+            {{>search}}
+          </div>
+          <div id="trash" class="trash dropzone span6">
+            <i class="icon-trash icon-2x"/>
+          </div>
+        </div>
+        {{#if doingsearch}}
+          <div class="searchresults row-fluid">
+            <div class="span12">
+              <div class="search-heading">Your pages</div>
+                {{#if searchresults}}
+                  <div class="searchstrip table">
+                    <div class="row">
+                      {{#each searchresults}}
+                      <div class="cell">
+                        {{>searchcard this}}
+                      </div>
+                      {{/each}}  
+                    </div>
+                  </div>
+                {{else}}
+                  <p>No pages found.</p>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template name="searchcard">
+  <div class="searchcard draggable" data-id="{{pageId}}">
+    <h3 class="cardname"><a href="{{name}}">{{name}}</a></h3>
+    <div class="cardcontents">
+      {{#each snippets}}
+        <p>{{{this}}}</p>
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+
+<template name="searchlink">
+  <div class="searchcard draggable" data-id="{{pageId}}">
+    <i class='draggable-handle icon-move'></i>
+    <h4><a href="{{url}}">{{text}}</h4>
+  </div>
+</template>
+
+<template name="search">
+  <input id="search" type="text" class="input-medium search-query">
+  <button id="submit" type="submit" class="btn">Search</button>
+</template>
+<template name="samplesearchresult">
+  <div class="searchcard draggable {{this}}">
+    <h3>lorem ipsum</h3>
+    <p>loco dolores y amor</p>
+  </div>
+</template>
+
+<template name="redirected">
+  {{#if redirected_from}}
+  <span class="redirected-from">You were redirected here from '{{redirected_from}}', a page which was renamed to '{{pageName}}'</span>
+  {{/if}}
+</template>
+
+<template name="heartedpages">
+    {{#if pages.count}}
+      <li class="nav-header">
+        <i class="heart icon-heart starred"></i> pages
+      </li>
+      {{#each pages}}
+      <li><a class="internal" data="{{name}}" href="{{name}}">{{name}}</a>
+      </li>
+      {{/each}}
+    {{/if}}
+</template>
+
+<template name="recentpages">
+  <li class="nav-header">Recent pages</li>
+  {{#each pages}}
+  <li><a class="internal" data="{{name}}" href="{{name}}">{{name}}</a>
+  </li>
+  {{/each}}
+</template>
+
+<template name="para">
+  <div class="ui-state-default draggable">
+    <span class="drag-handle">¶</span>
+    <!-- <i class="icon-align-justify drag-handle"></i> -->
+    <div>
+      <div class="para" data-id='{{_id}}' data-index='{{index}}'>
+        {{#if editing}}
+          <div class="parablock">
+            <textarea id="para-textarea" class='editable'>{{this.content}}</textarea>
+          </div>
+            <i class="icon-remove-circle done-handle"></i>
+        {{else}}<div class='editable'>{{#linkify this.content}}{{/linkify}}</div>
+        {{/if}}
+      </div>
+    </div>
+    <div class="clear"/>
+  </div>
+</template>
+
+<template name="heart">
+  {{#if starred}}
+    <i class="heart icon-heart starred"></i>
+  {{else}}
+    <i class="heart icon-heart-empty unstarred"></i>
+  {{/if}}
+</template>
+
+<template name="page">
+  <div id="page" class="card">
+    <h3 class="page-name">{{>editablepagetitle currentPage}} {{>heart}}</h3>
+    <div id="pages">
+      <div id="sortable">
+        {{#each paras}}
+          {{> para}}
+        {{/each}}
+      </div>
+      <div class="buttonbar">
+        {{>newpara}}
+        {{>newpage}}
+        {{>newlink}}
+        {{>newothers}}
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="editablepagetitle">
+  {{#if editing_title}}
+    <input type="text" id="title-input" class="editing-title" value="{{ this }}"></input>
+  {{else}}
+    <span class="pagetitle">
+      {{ this }}
+    </span>
+  {{/if}}
+</template>
+
+<template name="newpara">
+  <button class="new-para btn">+ ¶&nbsp;</button>
+</template>
+<template name="newpage">
+  <button class="new-page btn">+ <i class="icon-file"></i></button>
+</template>
+<template name="newlink">
+  <button class="new-link btn">+ <i class="icon-link"></i></button>
+</template>
+<template name="newothers">
+  <div class="btn-group">
+    <a class="btn dropdown-toggle  new-others" data-toggle="dropdown" href="#">
+    + …
+    <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+      <li><a tabindex="-1" href="#">Image</a></li>
+      <li><a tabindex="-1" href="#">Data</a></li>
+      <li><a tabindex="-1" href="#">Visualization</a></li>
+      <li class="divider"></li>
+      <li><a tabindex="-1" href="#">Plugin…</a></li>
+    </ul>
+  </div>
+</template>

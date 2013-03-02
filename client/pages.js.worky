@@ -1,0 +1,120 @@
+// TODOs
+
+// - link to nonexistent page -> create new page
+// - add bootstrap package rather than inline script
+
+
+Pages = new Meteor.Collection("pages");
+Paras = new Meteor.Collection("paras");
+
+Template.page.currentPage = function () {
+  var pageName = Session.get("page_name");
+  page = Pages.findOne({'name': pageName}, {sort: {name: 1}});
+  if (page) return page.name;
+  // Paras.insert({index: 0, 'page': pageName, 'content': ["This page has no content yet."]})
+  // Pages.insert({'name': pageName});
+  // return pageName;
+};
+
+Template.page.paras = function() {
+	var pageName = Session.get("page_name");
+	var paras = Paras.find({"page": pageName}, {sort: {index: 1}});
+  return paras
+}
+
+Template.para.editing = function () {
+  return Session.equals('editing_para', this._id);
+};
+
+
+Template.page.events({
+  'click .edit-handle': function(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    Session.set("editing_para", this._id);
+  },
+
+  'click i.done-handle': function(evt, template) {
+    var textarea = $(evt.target).parent().find("textarea")[0];
+    Paras.update({_id: this._id}, {
+      page: this.page, 
+      index: this.index, 
+      content: [textarea.value]});
+    Session.set("editing_para", null);
+  },
+
+  'click span.editable': function (evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    Session.set("editing_para", this._id);
+  },
+
+  'keydown p.para': function(evt) {
+    if (evt.which == 27) {
+      Paras.update({_id: this._id}, {
+        page: this.page, 
+        index: this.index, 
+        content: [evt.target.value]});
+      Session.set("editing_para", null);
+    }
+  },
+
+  'click a.internal': function (evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    var target = evt.target.getAttribute('data');
+    Session.set("page_name", unescape(target));
+  }
+});
+
+asSlug = function(name) {
+  return name;
+//  return name.replace(/\s/g, '-').replace(/[^A-Za-z0-9-]/g, '').toLowerCase();
+};
+
+renderInternalLink = function(match, name) {
+  var slug = asSlug(name);
+  return "<a class=\"internal\" data=\"" + slug + "\" href=\"/" + slug + "\" title=\"" + "\">" + name + "</a>";
+};
+
+Handlebars.registerHelper('linkify', function(content, options) {
+  var retval = content[0].replace(/\[\[([^\]]+)\]\]/gi, renderInternalLink).replace(/\[(http.*?) (.*?)\]/gi, "<a class=\"external\" target=\"_blank\" href=\"$1\" title=\"$1\" rel=\"nofollow\">$2</a>");
+  return new Handlebars.SafeString(retval);
+});
+
+
+var PagesRouter = Backbone.Router.extend({
+  routes: {
+    ":page_name": "main",
+    "": "index"
+  },
+  index: function() {
+    Session.set("page_name", "Welcome");
+  },
+  main: function (page_name) {
+  	console.log("in main handler, page_name is ", unescape(page_name));
+    // debugger;
+    Session.set("page_name", unescape(page_name));
+  },
+  // setPage: function (page_name) {
+  //   console.log('in setPage, doing navigate');
+  //   this.navigate(page_name, true);
+  // }
+});
+
+Router = new PagesRouter;
+
+Meteor.startup(function () {
+  Backbone.history.start({pushState: true});
+});
+
+
+// Subscribe to 'pages' collection on startup.
+// Select a list once data has arrived.
+Meteor.subscribe('pages', function () {
+  if (!Session.get('page_name')) {
+    var page = Pages.findOne({}, {sort: {name: 1}});
+    if (page)
+      Router.setPage(page.name);
+  }
+});
