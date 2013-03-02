@@ -95,7 +95,7 @@ div.para {
 }
 
 .searchcard {
-	white-space: wrap;
+	white-space: normal;
 	position: relative;
 	background: white;
     overflow: hidden;
