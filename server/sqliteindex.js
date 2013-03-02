@@ -44,7 +44,7 @@ Meteor.methods({
 
     client.basicAuth(SKEY, SKEY);
     client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'' + term + '\'&$format=JSON&$top=2&$skip=0', function(err, req, res, obj) {
-			var subanswers = JSON.parse(obj);
+			var subanswers = obj.d.results[0].Web;
 			Meteor._debug(subanswers);
 			var parts = [];
 			for (var i = 0; i < subanswers.length; i++) {
