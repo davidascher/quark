@@ -4,7 +4,14 @@ var sqlite3 = require('sqlite3');
 var allparas = Paras.find();
 var Future = require('fibers/future'), wait = Future.wait;
 var db;
-var request = require('request');
+var restify = require('restify');
+var assert = require('assert');
+// var request = require('request');
+var SKEY = process.env['BING_APP_ID'];
+// Creates a JSON client
+var client = restify.createJsonClient({
+  url: 'https://api.datamarket.azure.com',
+});
 
 
 var ServiceRootURL = "https://api.duckduckgo.com";
@@ -32,11 +39,11 @@ Meteor.methods({
 		// XXX BROKEN NOT SURE WHY
 		if (!term) return;
     Meteor._debug("DOING REMOTE SEARCH FOR", term);
+
     var fut2 = new Future();
-    var params = { q: "'"+term+"'",  'format': "json"};
-		req = request.get(ServiceRootURL).qs(params);
-		request(req, function(e, r, body) {
-			Meteor._debug(e, r, body);
+
+    client.basicAuth(SKEY, SKEY);
+    client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'tomato\'&$format=JSON&$top=50&$skip=0', function(err, req, res, obj) {
 			var subanswers = JSON.parse(body);
 			var parts = [];
 			for (var i = 0; i < subanswers.length; i++) {
@@ -49,6 +56,11 @@ Meteor.methods({
     });
 		Meteor._debug("About to call .wait()")
     return fut2.wait();
+
+  //   var params = { q: "'"+term+"'",  'format': "json"};
+		// req = request.get(ServiceRootURL).qs(params);
+		// request(req, function(e, r, body) {
+		// 	Meteor._debug(e, r, body);
   }
 
 	// bingClient.search(term, function(error, response, data) {
