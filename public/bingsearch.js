@@ -26,15 +26,15 @@ var assert = require('assert');
 var SKEY = process.env['BING_APP_ID'];
 
 // Creates a JSON client
-var client = restify.createXMLClient({
+var client = restify.createJsonClient({
   url: 'https://api.datamarket.azure.com',
   // url: 'https://us-west-1.api.joyentcloud.com'
 });
 
 
 client.basicAuth(SKEY, SKEY);
-client.get('/Bing/Search/v1/Composite?q=tomato&$format=XML&$top=10&$skip=0', function(err, req, res, obj) {
+client.get('/Bing/Search/v1/Composite?q=tomato&$format=JSON&$top=10&$skip=0', function(err, req, res, obj) {
   assert.ifError(err);
 
-  console.log(obj); //JSON.stringify(obj, null, 2));
+  console.log(obj); // JSON.stringify(obj, null, 2));
 });
