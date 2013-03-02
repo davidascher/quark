@@ -36,5 +36,7 @@ client.basicAuth(SKEY, SKEY);
 client.get('/Bing/Search/v1/Composite?q=tomato&$format=JSON&$top=10&$skip=0', function(err, req, res, obj) {
   // assert.ifError(err);
 
+  console.log(err); // JSON.stringify(obj, null, 2));
+  console.log(res); // JSON.stringify(obj, null, 2));
   console.log(obj); // JSON.stringify(obj, null, 2));
 });
