@@ -26,7 +26,7 @@ var assert = require('assert');
 var SKEY = process.env['BING_APP_ID'];
 
 // Creates a JSON client
-var client = restify.createJsonClient({
+var client = restify.createXMLClient({
   url: 'https://api.datamarket.azure.com',
   // url: 'https://us-west-1.api.joyentcloud.com'
 });
