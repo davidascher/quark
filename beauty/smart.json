@@ -1,11 +1,7 @@
 {
-  "meteor": {
-    "git": "https://github.com/meteor/meteor.git",
-    "branch": "master"
-  },
   "packages": {
     "accounts-persona": {},
-    "bafa": {},
+    "font-awesome": {},
     "jquery-ui": {},
     "mini-pages": {}
   }
