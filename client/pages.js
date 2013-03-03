@@ -456,6 +456,7 @@ if (newRouter) {
     var params = arg.params;
     params['_id'] = 'Welcome';
     var id = pageNameToId(unescape(params['_id']));
+    var id = 'Welcome';
     Session.set("pageId", id);
     // Session.set("idStack", Session.get("idStack").push(id))
     // Session.set("pageId", pageNameToId("Welcome"));
