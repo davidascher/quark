@@ -52,7 +52,7 @@ function doSearch(searchterm) {
 }
 
 Template.main.rendered = function() {
-  $(".searchresults .draggable").draggable({ opacity: 0.7, helper: "clone" }); //{stack: ".searchresults .searchcard"});
+  $(".draggable").draggable({ opacity: 0.7, helper: "clone" }); //{stack: ".searchresults .searchcard"});
   $( "#page" ).droppable({
     accept: ".draggable",
     hoverClass: "activated",
