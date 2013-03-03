@@ -254,8 +254,8 @@ Template.editablepagetitle.events({
 
 Template.heart.events({
   'click i.heart': function(evt, tmpl) {
-    var page = Pages.findOne(Session.get("pageId"));
-    Pages.update(page, {$set: {starred: !page.starred}})
+    // var page = Pages.findOne(Session.get("pageId"));
+    Pages.update(this, {$set: {starred: !page.starred}})
   }
 })
 
