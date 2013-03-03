@@ -77,6 +77,7 @@ Template.main.rendered = function() {
 
 Template.main.pagestack = function() {
   var stackIds = Session.get("stackIds");
+  if (!stackIds) return;
   var pages = new Meteor.Collection();
   for (var i = 0; i < stackIds.length; i++) {
     pages.push(Pages.findOne(stackIds[i]));
