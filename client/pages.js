@@ -75,6 +75,14 @@ Template.main.rendered = function() {
   });
 };
 
+Template.main.pagestack = function() {
+  var stackIds = Session.get("stackIds");
+  var pages = new Collection();
+  for (var i = 0; i < stackIds.length; i++) {
+    pages.push(Pages.findOne(stackIds[i]));
+  }
+}
+
 Template.search.events({
   'keydown #search': function(evt) {
     var searchterm = $("#search")[0].value;
