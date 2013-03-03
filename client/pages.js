@@ -457,7 +457,7 @@ if (newRouter) {
     this.set("post", { title: "Post Title Set in Filter" });
     var id = pageNameToId(unescape(params['_id']));
     Session.set("pageId", id);
-    Session.set("idStack", Session.get("idStack").push(id))
+    // Session.set("idStack", Session.get("idStack").push(id))
     // Session.set("pageId", pageNameToId("Welcome"));
   }
 
