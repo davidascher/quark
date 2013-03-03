@@ -272,13 +272,14 @@ Template.page.rendered = function() {
 }
 
 Template.page.name = function () {
-  id = this._id;
-  if (!id) return;
-  var page = Pages.findOne(id);
-  if (!page) return;
-  var pageName = page.name;
-  if (!pageName) return;
-  return pageName.trim();
+  return this.name;
+  // id = this._id;
+  // if (!id) return;
+  // var page = Pages.findOne(id);
+  // if (!page) return;
+  // var pageName = page.name;
+  // if (!pageName) return;
+  // return pageName.trim();
 };
 
 Template.page.paras = function() {
