@@ -83,7 +83,11 @@ Template.main.pagestack = function() {
   if (!stackIds) return;
   var pages = new Meteor.Collection();
   for (var i = 0; i < stackIds.length; i++) {
-    pages.insert(Pages.findOne(stackIds[i]));
+    var p = Pages.findOne(stackIds[i]);
+    if (p) {
+      console.log("inserting a page", p)
+      pages.insert(p);
+    }
   }
 }
 
