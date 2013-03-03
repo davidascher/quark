@@ -88,6 +88,7 @@ Template.main.pagestack = function() {
       pages.insert(p);
     }
   }
+  console.log("pages", pages);
   return pages;
 }
 
