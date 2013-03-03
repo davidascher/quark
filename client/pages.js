@@ -445,6 +445,8 @@ function updateParagraphOrder(event, ui) {
 
 if (newRouter) {
   var router;
+  Session.set("idStack", []); // at first there is nothing.
+
   function setPage (arg) {
     console.log("in setPage", arg.params);
     var params = arg.params;
