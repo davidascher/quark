@@ -78,8 +78,8 @@ Template.main.rendered = function() {
 Template.main.pagestack = function() {
   var stackIds = Session.get("stackIds");
   stackIds = [];
-  stackIds.push('foo');
-  stackIds.push('bar');
+  stackIds.push('Welcome');
+  stackIds.push('whatever');
   if (!stackIds) return;
   var pages = new Meteor.Collection();
   for (var i = 0; i < stackIds.length; i++) {
