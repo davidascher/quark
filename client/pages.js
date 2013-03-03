@@ -87,6 +87,7 @@ Template.main.pagestack = function() {
       pages.insert(p);
     }
   }
+  return pages;
 }
 
 Template.search.events({
