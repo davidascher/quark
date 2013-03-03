@@ -246,11 +246,11 @@ Template.editablepagetitle.events({
   }
 })
 
-Template.heart.starred = function() {
-  var page = Pages.findOne(Session.get("pageId"));
-  if (!page) return false;
-  return page.starred && true;
-}
+// Template.heart.starred = function() {
+//   var page = Pages.findOne(Session.get("pageId"));
+//   if (!page) return false;
+//   return page.starred && true;
+// }
 
 Template.heart.events({
   'click i.heart': function(evt, tmpl) {
