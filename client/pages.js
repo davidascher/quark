@@ -80,12 +80,12 @@ Template.main.pagestack = function() {
   var stackIds = Session.get("idStack");
   console.log("stackIds", stackIds);
   // if (!stackIds) return;
-  var pages = new Meteor.Collection();
+  var pages = []; // new Meteor.Collection();
   for (var i = 0; i < stackIds.length; i++) {
     var p = Pages.findOne(stackIds[i]);
     if (p) {
       console.log("inserting a page", p)
-      pages.insert(p);
+      pages.push(p);
     }
   }
   console.log("pages", pages);
