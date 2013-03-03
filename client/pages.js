@@ -479,6 +479,7 @@ if (newRouter) {
       Session.set("pageId", id);
     },
     main: function (pageId) {
+      console.log("main, pageId = ", pageId)
       Session.set("pageId", pageNameToId(unescape(pageId)));
     },
     setPage: function (list_id) {
