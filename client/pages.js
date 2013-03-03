@@ -263,7 +263,7 @@ Template.page.rendered = function() {
   $( ".para" ).enableSelection();
 }
 
-Template.page.title = function () {
+Template.page.currentPage = function () {
   id = Session.get("pageId");
   if (!id) return;
   var page = Pages.findOne(id);
