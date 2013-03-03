@@ -272,7 +272,7 @@ Template.page.rendered = function() {
 }
 
 Template.page.name = function () {
-  id = Session.get("pageId");
+  id = this._id; // Session.get("pageId");
   if (!id) return;
   var page = Pages.findOne(id);
   if (!page) return;
