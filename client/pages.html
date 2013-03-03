@@ -14,7 +14,10 @@
   <div class="container-fluid main">
     <div class="row-fluid">
       <div class="span5">
-          {{> page}}
+        {{#each pagestack}}
+          {{> page this}}
+        {{/each}}
+        {{> page}}
       </div>
       <div class="span7">
         <div class="row-fluid">
