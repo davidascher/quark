@@ -77,9 +77,6 @@ Template.main.rendered = function() {
 
 Template.main.pagestack = function() {
   var stackIds = Session.get("stackIds");
-  stackIds = [];
-  stackIds.push('Welcome');
-  stackIds.push('whatever');
   if (!stackIds) return;
   var pages = new Meteor.Collection();
   for (var i = 0; i < stackIds.length; i++) {
@@ -456,7 +453,7 @@ function updateParagraphOrder(event, ui) {
 
 if (newRouter) {
   var router;
-  Session.set("idStack", []); // at first there is nothing.
+  Session.set("idStack", ['Welcome', 'whatever']); // at first there is nothing.
 
   function setPage (arg) {
     console.log("in setPage", arg.params);
