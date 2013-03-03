@@ -205,7 +205,6 @@ Template.recentpages.pages = function() {
   return Pages.find({}, {sort: {mtime: -1}}); // most recently modified first
 };
 
-
 Template.editablepagetitle.editing_title = function() {
   return Session.get("editing_title");
 }
