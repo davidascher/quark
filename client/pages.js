@@ -9,8 +9,6 @@ var Paras = new Meteor.Collection("paras");
 var Redirects = new Meteor.Collection("redirects");
 var showdown;
 
-var newRouter = true;
-
 function doSearch(searchterm) {
   var results = [];
   var pages = {};
@@ -435,58 +433,32 @@ function updateParagraphOrder(event, ui) {
 }
 
 
-if (newRouter) {
-  var router;
-  Session.set("idStack", ['Welcome', 'whatever']); // at first there is nothing.
+var router;
+Session.set("idStack", ['Welcome', 'whatever']); // at first there is nothing.
 
-  function setPage (arg) {
-    console.log("in setPage", arg.params);
-    var params = arg.params;
-    this.set("post", { title: "Post Title Set in Filter" });
-    Session.set("pageId", pageNameToId(unescape(params['_id'])));
+function setPage (arg) {
+  console.log("in setPage", arg.params);
+  var params = arg.params;
+  this.set("post", { title: "Post Title Set in Filter" });
+  Session.set("pageId", pageNameToId(unescape(params['_id'])));
 
-    // console.log("in setPage", arg.params);
-    // var params = arg.params;
-    // params['_id'] = 'Welcome';
-    // var id = pageNameToId(unescape(params['_id']));
-    // var id = 'Welcome';
-    // Session.set("pageId", id);
-    // Session.set("idStack", Session.get("idStack").push(id))
-    // Session.set("pageId", pageNameToId("Welcome"));
-  }
-
-  Meteor.startup(function () {
-    router = new Meteor.PageRouter({});
-    router.pages({
-      '/:_id': { to: 'main', before: [setPage]},
-      '/': { to: 'main', 'as': 'Welcome', before: [setPage]}
-    });
-  });
-
-} else {
-  var PagesRouter = Backbone.Router.extend({
-    routes: {
-      ":pageId": "main",
-      "": "index"
-    },
-    index: function() {
-      id = "Welcome"; // special cased in bootstrap code pageNameToId("Welcome");
-      Session.set("pageId", id);
-    },
-    main: function (pageId) {
-      console.log("main, pageId = ", pageId)
-      Session.set("pageId", pageNameToId(unescape(pageId)));
-    },
-    setPage: function (list_id) {
-      this.navigate(list_id, true);
-    }
-  });
-
-  Router = new PagesRouter;
-  Meteor.startup(function () {
-    Backbone.history.start({pushState: true});
-  });
+  // console.log("in setPage", arg.params);
+  // var params = arg.params;
+  // params['_id'] = 'Welcome';
+  // var id = pageNameToId(unescape(params['_id']));
+  // var id = 'Welcome';
+  // Session.set("pageId", id);
+  // Session.set("idStack", Session.get("idStack").push(id))
+  // Session.set("pageId", pageNameToId("Welcome"));
 }
+
+Meteor.startup(function () {
+  router = new Meteor.PageRouter({});
+  router.pages({
+    '/:_id': { to: 'main', before: [setPage]},
+    '/': { to: 'main', 'as': 'Welcome', before: [setPage]}
+  });
+});
 
 
 Meteor.startup(function () {
@@ -503,7 +475,7 @@ Meteor.subscribe('pages', function () {
   if (!Session.get('pageId')) {
     // not clear if this does anything
     var page = Pages.findOne({}, {sort: {name: 1}});
-    if (page && newRouter)
+    if (page)
       Router.setList(page._id);
   }
 });
