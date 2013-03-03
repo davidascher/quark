@@ -217,11 +217,8 @@ var endPagetitleEditing = function(evt, tmpl) {
   var pageId = Session.get('pageId')
   var page = Pages.findOne(pageId);
   var oldpagename = page.name;
-  console.log("OLDPAGE NAME", oldpagename);
   if (!page) return;
   var newpagename = tmpl.find("#title-input").value;
-  console.log("NEW PAGE NAME", newpagename);
-  console.log(page);
   Pages.update(page._id, {$set: {name: newpagename}})
   router.go("/" + newpagename);
   Session.set("editand", null);
@@ -246,15 +243,8 @@ Template.editablepagetitle.events({
   }
 })
 
-// Template.heart.starred = function() {
-//   var page = Pages.findOne(Session.get("pageId"));
-//   if (!page) return false;
-//   return page.starred && true;
-// }
-
 Template.heart.events({
   'click i.heart': function(evt, tmpl) {
-    // var page = Pages.findOne(Session.get("pageId"));
     Pages.update(this, {$set: {starred: !this.starred}})
   }
 })
