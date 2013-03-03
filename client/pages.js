@@ -454,6 +454,7 @@ if (newRouter) {
   function setPage (arg) {
     console.log("in setPage", arg.params);
     var params = arg.params;
+    params['_id'] = 'Welcome';
     this.set("post", { title: "Post Title Set in Filter" });
     var id = pageNameToId(unescape(params['_id']));
     Session.set("pageId", id);
