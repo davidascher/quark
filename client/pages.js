@@ -77,7 +77,8 @@ Template.main.rendered = function() {
 
 Template.main.pagestack = function() {
   console.log("LOOKING AT PAGESTACK");
-  var stackIds = Session.get("stackIds");
+  var stackIds = Session.get("idStack");
+  console.log("stackIds", stackIds);
   // if (!stackIds) return;
   var pages = new Meteor.Collection();
   for (var i = 0; i < stackIds.length; i++) {
