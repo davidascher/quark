@@ -271,16 +271,16 @@ Template.page.rendered = function() {
   $( ".para" ).enableSelection();
 }
 
-Template.page.name = function () {
-  return this.name;
-  // id = this._id;
-  // if (!id) return;
-  // var page = Pages.findOne(id);
-  // if (!page) return;
-  // var pageName = page.name;
-  // if (!pageName) return;
-  // return pageName.trim();
-};
+// Template.page.name = function () {
+//   return this.name;
+//   // id = this._id;
+//   // if (!id) return;
+//   // var page = Pages.findOne(id);
+//   // if (!page) return;
+//   // var pageName = page.name;
+//   // if (!pageName) return;
+//   // return pageName.trim();
+// };
 
 Template.page.paras = function() {
 	return Paras.find({"page": this._id}, {sort: {index: 1}});
