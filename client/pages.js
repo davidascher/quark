@@ -261,7 +261,6 @@ Template.heart.events({
 
 Template.page.preserve(['.card']);
 
-
 Template.page.rendered = function() {
   $("#sortable").sortable({ handle: ".drag-handle", 
     update: updateParagraphOrder,
