@@ -282,10 +282,7 @@ Template.page.name = function () {
 };
 
 Template.page.paras = function() {
-  console.log(this);
-	var pageName = this._id; // Session.get("pageId");
-	var paras = Paras.find({"page": pageName}, {sort: {index: 1}});
-  return paras
+	return Paras.find({"page": this._id}, {sort: {index: 1}});
 }
 
 Template.para.editing = function () {
