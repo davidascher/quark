@@ -162,7 +162,8 @@ Template.newpage.events({
   'click': function(evt) {
     // this creates a paragraph containing a link to a page that doesn't exist.
     // and inserts it at the end of the current page.
-    var pageId = Session.get("pageId");
+    var pageId = this._id;
+    // var pageId = Session.get("pageId");
     var names = ['new page', 'another new page', 'a random new page'];
     var newpage = true;
     var i = 0;
