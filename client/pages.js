@@ -465,6 +465,7 @@ if (newRouter) {
     router = new Meteor.PageRouter({});
     router.pages({
       '/:_id': { to: 'main', before: [setPage]}
+      '/': { to: 'main', 'as': 'Welcome', before: [setPage]}
     });
   });
 
