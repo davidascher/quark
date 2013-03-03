@@ -130,8 +130,9 @@ Template.main.remotesearchresults = function() {
 
 Template.newpara.events({
   'click': function(evt) {
-    var pageName = Session.get("pageId");
-    var index = Paras.find({page: pageName}).count() + 1;
+    // var pageName = Session.get("pageId");
+    var id = this._id;
+    var index = Paras.find({page: id}).count() + 1;
     var p = Paras.insert({
       index: index,
       'page': pageName,
@@ -145,8 +146,9 @@ Template.newpara.events({
 
 Template.newlink.events({
   'click': function(evt) {
-    var pageName = Session.get("pageId");
-    var index = Paras.find({page: pageName}).count() + 1;
+    // var pageName = Session.get("pageId");
+    var id = this._id;
+    var index = Paras.find({page: id}).count() + 1;
     var p = Paras.insert({
       index: index,
       'page': pageName,
