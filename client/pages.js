@@ -271,7 +271,7 @@ Template.page.rendered = function() {
   $( ".para" ).enableSelection();
 }
 
-Template.page.currentPage = function () {
+Template.page.name = function () {
   id = Session.get("pageId");
   if (!id) return;
   var page = Pages.findOne(id);
