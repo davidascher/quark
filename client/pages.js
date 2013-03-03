@@ -149,11 +149,6 @@ Template.newlink.events({
   }
 })
 
-// Template.searchcard.pageName = function() {
-//   console.log(this);
-//   return Pages.findOne({name: this.pageName});
-// }
-
 Template.newpage.events({
   'click': function(evt) {
     // this creates a paragraph containing a link to a page that doesn't exist.
@@ -267,7 +262,7 @@ Template.page.rendered = function() {
   $( ".para" ).enableSelection();
 }
 
-Template.page.currentPage = function () {
+Template.page.title = function () {
   id = Session.get("pageId");
   if (!id) return;
   var page = Pages.findOne(id);
