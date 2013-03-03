@@ -454,10 +454,15 @@ if (newRouter) {
   function setPage (arg) {
     console.log("in setPage", arg.params);
     var params = arg.params;
-    params['_id'] = 'Welcome';
-    var id = pageNameToId(unescape(params['_id']));
-    var id = 'Welcome';
-    Session.set("pageId", id);
+    this.set("post", { title: "Post Title Set in Filter" });
+    Session.set("pageId", pageNameToId(unescape(params['_id'])));
+
+    // console.log("in setPage", arg.params);
+    // var params = arg.params;
+    // params['_id'] = 'Welcome';
+    // var id = pageNameToId(unescape(params['_id']));
+    // var id = 'Welcome';
+    // Session.set("pageId", id);
     // Session.set("idStack", Session.get("idStack").push(id))
     // Session.set("pageId", pageNameToId("Welcome"));
   }
