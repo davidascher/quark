@@ -259,7 +259,7 @@ Template.editablepagetitle.editing_title = function() {
 var endPagetitleEditing = function(evt, tmpl) {
   evt.stopPropagation();
   evt.preventDefault();
-  console.log(evt.target);
+  console.log(evt);
   Session.set("editing_title", null);
   var pageId = $(evt.target.parentNode).attr('data-id');
   console.log(pageId);
