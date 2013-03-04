@@ -106,6 +106,10 @@ Template.main.topmostpage = function() {
   if (!stackIds) return;
   var id = stackIds[stackIds.length-1];
   var id = Pages.findOne(id);
+  if (!id) {
+    console.log(this);
+    console.log(router);
+  }
   console.log("topmostpage =", id);
   return id;
 }
