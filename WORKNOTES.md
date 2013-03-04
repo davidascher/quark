@@ -2,6 +2,8 @@ Work Notes
 
 Big Open Questions
 	* what does my take on federation look like?  (what's easiest way to setup a sub-domain?)
+	* what does social search look like?
+	* what is the plugin model -- edit through the web as an option? [after all, if it's my wiki, auth is enough]
 
 URL strategy:
 	- main URL is the shareable URL - should refer to the main page (or when we get to it, multiple pages)
