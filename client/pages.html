@@ -9,19 +9,6 @@
   {{>main}}
 </template>
 
-<template name="slider">
-  <div class="current">
-    {{#with topmostpage}}
-      {{>page this}}
-    {{/with}}
-  </div>
-  <div class="next">
-    {{#with topmostpage}}
-      {{>page this}}
-    {{/with}}
-  </div>
-</template>
-
 
 <template name="main">
 <div id="root">
@@ -30,7 +17,7 @@
       <div id="pagewrapper" class="span6">
         <div class="container">
           <div class="wrap">
-      {{> slider}}
+            {{> slider}}
           </div>
       </div>
       <div class="span5">
@@ -90,6 +77,21 @@
   </div>
 </div>
 </template>
+
+
+<template name="slider">
+  <div class="current">
+    {{#with topmostpage}}
+      {{>page this}}
+    {{/with}}
+  </div>
+  <div class="next">
+    {{#with topmostpage}}
+      {{>page this}}
+    {{/with}}
+  </div>
+</template>
+
 
 <template name="searchcard">
   <div class="searchcard draggable-card" type="page" data-id="{{pageId}}">
