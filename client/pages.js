@@ -261,7 +261,7 @@ var endPagetitleEditing = function(evt, tmpl) {
   evt.preventDefault();
   console.log(evt);
   Session.set("editing_title", null);
-  var pageId = $(evt.target.parentNode).attr('data-id');
+  var pageId = $(evt.target).attr('original-value');
   console.log(pageId);
   // console.log(tmpl);
   var pageId = this._id; // Session.get('pageId')
