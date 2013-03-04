@@ -527,8 +527,9 @@ function setPage (arg) {
       console.log("FOUND A REDIRECT!", redirect)
       // this is an actual client-side redirect, kinda cute!
       id = redirect.original_id;
+    } else {
+      id = '404'; // this will trigger the right template thing.
     }
-    id = '404'; // this will trigger the right template thing.
   } else {
     id = page._id;
   }
