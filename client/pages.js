@@ -260,9 +260,13 @@ var endPagetitleEditing = function(evt, tmpl) {
   evt.stopPropagation();
   evt.preventDefault();
   Session.set("editing_title", null);
+  console.log(this);
   var pageId = this._id; // Session.get('pageId')
+  console.log("pageId", pageId);
   var page = this; // Pages.findOne(pageId);
+  console.log("page", pageId);
   var oldpagename = page.name;
+  console.log("oldpagename", oldpagename);
   if (!page) return;
   var newpagename = tmpl.find("#title-input").value;
   Pages.update(page._id, {$set: {name: newpagename}})
