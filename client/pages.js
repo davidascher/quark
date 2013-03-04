@@ -517,6 +517,7 @@ function setHomePage() {
 }
 
 function setPage (pagename) {
+  console.log("in setPage");
   // if (!arg.params) debugger;
   // var params = arg.params;
   // if (!params) return;
