@@ -79,7 +79,7 @@ Template.fourohfour.events({
       'page': newpageId,
       'content': ["This is an default page. Very sad.  Make it personal?"]
     })
-    router.go(name);
+    // router.go(name);
   }
 })
 
