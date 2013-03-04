@@ -10,7 +10,8 @@ var Redirects = new Meteor.Collection("redirects");
 var showdown;
 var parasHandle = null;
 var pagesHandle = null;
-
+var router;
+Session.set("idStack", []); // default
 
 pagesHandle = Meteor.subscribe("pages", function() {
   console.log('in cb for pagesHandle');
@@ -532,9 +533,6 @@ function updateParagraphOrder(event, ui) {
   });
 }
 
-
-var router;
-Session.set("idStack", []); // default
 
 function setHomePage() {
   Session.set("idStack", ['Welcome']); // default home page
