@@ -264,6 +264,7 @@ var endPagetitleEditing = function(evt, tmpl) {
   var oldpagename = $(evt.target).attr('original-value');
   var page = Pages.findOne({'name': oldpagename});
   if (!page) return;
+  console.log(page);
   var newpagename = tmpl.find("#title-input").value;
   console.log("new name", newpagename);
   Pages.update(page._id, {$set: {name: newpagename}})
