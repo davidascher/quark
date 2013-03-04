@@ -67,6 +67,13 @@ Template.fourohfour.url_name = function() {
   return unescape(path.slice(1));
 }
 
+Template.fourohfour.events({
+  'click .doit': function(evt) {
+    
+    var searchterm = $("#search")[0].value;
+    doSearch(searchterm);
+  }
+})
 
 Template.main.rendered = function() {
   $(".draggable-card").draggable({ opacity: 0.7, helper: "clone" });
@@ -217,13 +224,6 @@ Template.newpage.events({
       }
       newpage = Pages.findOne({name: newpagename});
     }
-    var timestamp = (new Date()).getTime();
-    var newpageId = Pages.insert({name: newpagename, mtime: timestamp});
-    Paras.insert({
-      index: 0,
-      'page': newpageId,
-      'content': ["This is an default page. Very sad.  Make it personal?"]
-    })
     var index = Paras.find({page: pageId}).count() + 1;
     var p = Paras.insert({
       index: index,
