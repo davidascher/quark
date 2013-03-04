@@ -525,11 +525,10 @@ function setPage (arg) {
     var redirect = Redirects.findOne({old_name: unescapedPageName});
     if (redirect) {
       console.log("FOUND A REDIRECT!", redirect)
-      // this is an actual client-side redirect, kinda cute!
       var newpage = Pages.findOne(redirect.original_id);
-      router.go(newpage.name);
+      router.go(newpage.name); // XXX this is flashy =(
       return;
-      // id = redirect.original_id;
+
     } else {
       id = '404'; // this will trigger the right template thing.
     }
