@@ -13,20 +13,14 @@
 <div id="root">
   <div class="container-fluid main">
     <div class="row-fluid">
-      <div class="span5">
-        {{#each pagestack}}
-          {{>page this }}
-        {{/each}}
+      <div id="pagewrapper" class="span6">
+        {{#with topmostpage}}
+          {{>page this}}
+        {{/with}}
       </div>
-      <div class="span7">
-        <div class="row-fluid">
-          <div class="searchfield span6">
-            {{>search}}
-          </div>
-          <div id="trash" class="trash dropzone span6">
-            <i class="icon-trash icon-2x"/>
-          </div>
-        </div>
+      <div class="span5">
+        {{>search}}
+        {{! <i id="trash" class="dropzone icon-trash icon-2x"/> }}
         {{#if doingsearch}}
           <div class="searchresults row-fluid">
             <div class="span12">
@@ -42,10 +36,16 @@
                     </div>
                   </div>
                 {{else}}
-                  <p>No pages found.</p>
+                  {{#if nolocalsearchresults}}
+                    <p>No pages found.</p>
+                  {{else}}
+                    <i class="icon-spinner icon-spin"/>
+                  {{/if}}
                 {{/if}}
               </div>
             </div>
+          </div>
+          <div class="searchresults row-fluid">
             <div class="span12">
               <div class="search-heading">Web data</div>
                 {{#if remotesearchresults}}
@@ -59,7 +59,11 @@
                     </div>
                   </div>
                 {{else}}
-                  <p>No results found.</p>
+                  {{#if no-remote-search-results}}
+                    <p>No results found.</p>
+                  {{else}}
+                    <i class="icon-spinner icon-spin"/>
+                  {{/if}}
                 {{/if}}
               </div>
             </div>
@@ -73,7 +77,7 @@
 </template>
 
 <template name="searchcard">
-  <div class="searchcard draggable" data-id="{{pageId}}">
+  <div class="searchcard draggable-card" type="page" data-id="{{pageId}}">
     <h3 class="cardname"><a href="{{name}}">{{name}}</a></h3>
     <div class="cardcontents">
       {{#each snippets}}
@@ -84,7 +88,7 @@
 </template>
 
 <template name="searchlink">
-  <div class="searchcard draggable" data-id="{{pageId}}">
+  <div class="searchcard draggable-card" type="url" data-id="{{url}}" data-label="{{title}}">
     <h3 class="cardname"><a href="{{url}}">{{title}}</a></h3>
     <div class="cardcontents">
         <p>{{description}}</p>
@@ -157,21 +161,21 @@
 </template>
 
 <template name="page">
-  <div id="page" class="card">
+  <div class="page card" data-id="{{this._id}}">
     <h3 class="page-name">{{>editablepagetitle name}} {{>heart}}</h3>
-    <div id="pages">
-      <div id="sortable">
-        {{#each paras}}
-          {{> para}}
-        {{/each}}
-      </div>
-      <div class="buttonbar">
-        {{>newpara}}
-        {{>newpage}}
-        {{>newlink}}
-        {{>newothers}}
-      </div>
+    <div class="sortable">
+      {{#each paras}}
+        {{> para}}
+      {{/each}}
     </div>
+    {{#with this}}
+    <div class="buttonbar">
+      {{>newpara}}
+      {{>newpage}}
+      {{>newlink}}
+      {{>newothers}}
+    </div>
+    {{/with}}
   </div>
 </template>
 

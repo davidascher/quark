@@ -19,7 +19,8 @@ function doSearch(searchterm) {
   }
 
   Session.set("doing-search", true);
-
+  Session.set("done-local-search", false);
+  Session.set("done-remote-search", false);
   Meteor.call("search", searchterm, function(err, local) {
     for (i = 0; i < local.length; i++) {
       // XXX this is probably all very slow.
@@ -42,51 +43,80 @@ function doSearch(searchterm) {
     for (i = 0; i < pageIds.length; i++) {
       results.push(pages[pageIds[i]]);
     }
+    console.log("got local results", results);
+    Session.set("no-local-search-results", (results.length == 0));
     Session.set("searchresults", results);
   });
 
+  Session.set("remotesearchresults", null);
   Meteor.call("searchremote", searchterm, function(err, remote) {
-    console.log("setting remote search results to ", remote)
     Session.set("remotesearchresults", remote);
+    Session.set("no-remote-search-results", (remote.length == 0));
   });
 }
 
+Template.main.nolocalsearchresults = function() {
+  return Session.get('no-local-search-results');
+}
+Template.main.noremotesearchresults = function() {
+  return Session.get('no-remote-search-results');
+}
+
 Template.main.rendered = function() {
-  $(".draggable").draggable({ opacity: 0.7, helper: "clone" }); //{stack: ".searchresults .searchcard"});
-  $( "#page" ).droppable({
-    accept: ".draggable",
-    hoverClass: "activated",
+  $(".draggable-card").draggable({ opacity: 0.7, helper: "clone" });
+
+  $( ".trash" ).droppable({
+    accept: ".droppable-card",
     activeClass: "ready",
+    hoverClass: "activated",
+    drop: function(event, ui) {
+
+    }
+  });
+
+  $( ".page" ).droppable({
+    accept: ".draggable-card",
+    activeClass: "ready",
+    hoverClass: "activated",
     drop: function(event, ui) {
       var droppedPageId = ui.draggable.attr('data-id');
+      var type = ui.draggable.attr('type');
+      var pageId = $(event.target).attr('data-id');
       var timestamp = (new Date()).getTime();
-      var pageId = Session.get('pageId');
       var index = Paras.find({page: pageId}).count() + 1;
-      var pageName = Pages.findOne(droppedPageId).name;
+      var content;
+      if (type === "page") {
+        var pageName = Pages.findOne(droppedPageId).name;
+        content = ["[[" + pageName + "]]"];
+      } else {
+        content = ["[" + droppedPageId + ' ' + ui.draggable.attr('data-label') + "]"];
+      }
       Paras.insert({
         index: index,
         'page': pageId,
-        'content': ["[[" + pageName + "]]"]
+        'content': content
       })
       ui.draggable.remove();
     }
   });
 };
 
-Template.main.pagestack = function() {
-  console.log("LOOKING AT PAGESTACK");
+Template.main.topmostpage = function() {
   var stackIds = Session.get("idStack");
-  console.log("stackIds", stackIds);
-  // if (!stackIds) return;
+  if (!stackIds) return;
+  return Pages.findOne(stackIds[stackIds.length-1]);
+}
+
+Template.main.pagestack = function() {
+  var stackIds = Session.get("idStack");
+  if (!stackIds || stackIds.length < 2) return; // history starts one page ago
   var pages = []; // new Meteor.Collection();
-  for (var i = 0; i < stackIds.length; i++) {
+  for (var i = 0; i < stackIds.length - 1; i++) {
     var p = Pages.findOne(stackIds[i]);
     if (p) {
-      console.log("inserting a page", p)
       pages.push(p);
     }
   }
-  console.log("pages", pages);
   return pages;
 }
 
@@ -130,10 +160,11 @@ Template.newpara.events({
   'click': function(evt) {
     // var pageName = Session.get("pageId");
     var id = this._id;
+    console.log(this);
     var index = Paras.find({page: id}).count() + 1;
     var p = Paras.insert({
       index: index,
-      'page': pageName,
+      'page': id,
       'content': ["Make this paragraph say what you want it to."]
     })
     Session.set("editing_para", p);
@@ -149,7 +180,7 @@ Template.newlink.events({
     var index = Paras.find({page: id}).count() + 1;
     var p = Paras.insert({
       index: index,
-      'page': pageName,
+      'page': id,
       'content': ["This is how you add a link to a [http://www.mozilla.org page on another website]"]
     })
     Session.set("editing_para", p);
@@ -214,8 +245,8 @@ var endPagetitleEditing = function(evt, tmpl) {
   evt.stopPropagation();
   evt.preventDefault();
   Session.set("editing_title", null);
-  var pageId = Session.get('pageId')
-  var page = Pages.findOne(pageId);
+  var pageId = this._id; // Session.get('pageId')
+  var page = this; // Pages.findOne(pageId);
   var oldpagename = page.name;
   if (!page) return;
   var newpagename = tmpl.find("#title-input").value;
@@ -250,10 +281,36 @@ Template.heart.events({
   }
 })
 
-Template.page.preserve(['.card']);
+Template.page.preserve(['#root']);
+
+Template.page.offset = function() {
+  console.log("computing offset for", this._id);
+  var stack = Session.get("idStack");
+  for (var i = 0; i < stack.length; i++) {
+    if (stack[i] === this._id) {
+      return i;
+    }
+  }
+  return 'none'; // XXX should never happen.
+}
+
+Template.page.depth = function() {
+  console.log("computing page for", this._id);
+  var stack = Session.get("idStack");
+  console.log("computing page for", stack);
+  for (var i = 0; i < stack.length; i++) {
+    if (stack[i] === this._id) {
+      return stack.length - i - 1;
+    }
+  }
+  return 'none'; // XXX should never happen.
+}
+
 
 Template.page.rendered = function() {
-  $("#sortable").sortable({ handle: ".drag-handle", 
+  // this.data is the Page
+  console.log("rendered page", this.data._id);
+  $(".sortable").sortable({ handle: ".drag-handle", 
     update: updateParagraphOrder,
     placeholder: "paragraph-placeholder"
   });
@@ -284,9 +341,6 @@ function confirmPageExists(pageId) {
       });
     return;
   }
-  Pages.insert({name: pageName, 
-    mtime: timestamp
-  });
 };
 
 
@@ -318,7 +372,8 @@ function fixupIndices() {
 function endParagraphEditing(id, index, contents) {
   // trim leading and trailing whitespace
   var contents = $.trim(contents);
-  var pageId = Session.get("pageId");
+  var para = Paras.findOne(id);
+  var pageId = para.page; // Session.get("pageId");
   // if it's empty, get rid of it.
   if (contents.length == 0) {
     Paras.remove(id);
@@ -385,12 +440,14 @@ Template.page.events({
   },
 
   'blur': function(evt) {
+    if (! Session.get("editing_para")) return; // otherwise random paragraphs get deleted!
     var para = $(evt.target).parent();
     var textarea = para.find("textarea").val();
     endParagraphEditing(this._id, this.index, textarea);
   },
 
   'keydown .para': function(evt) {
+    console.log(this);
     if (evt.which == 27) {
       endParagraphEditing(this._id, this.index, evt.target.value);
     }
@@ -398,6 +455,7 @@ Template.page.events({
 });
 
 asSlug = function(name) {
+  // return escape(name);
   return name;
 //  return name.replace(/\s/g, '-').replace(/[^A-Za-z0-9-]/g, '').toLowerCase();
 };
@@ -416,7 +474,9 @@ Handlebars.registerHelper('linkify', function(content, options) {
 });
 
 var pageNameToId = function(pageName) {
+  console.log("in pageNameToId, Pages is", Pages, pageName)
   var page = Pages.findOne({'name': pageName});
+  console.log('looking for page with name', pageName, "found id", page._id);
   if (page) return page._id;
   return null;
 }
@@ -434,41 +494,60 @@ function updateParagraphOrder(event, ui) {
 
 
 var router;
-Session.set("idStack", ['Welcome', 'whatever']); // at first there is nothing.
+Session.set("idStack", []); // default
+
+function setHomePage() {
+  Session.set("idStack", ['Welcome']); // default home page
+}
 
 function setPage (arg) {
-  console.log("in setPage", arg.params);
-  var params = arg.params;
-  this.set("post", { title: "Post Title Set in Filter" });
-  Session.set("pageId", pageNameToId(unescape(params['_id'])));
-
   // console.log("in setPage", arg.params);
-  // var params = arg.params;
-  // params['_id'] = 'Welcome';
-  // var id = pageNameToId(unescape(params['_id']));
-  // var id = 'Welcome';
-  // Session.set("pageId", id);
-  // Session.set("idStack", Session.get("idStack").push(id))
+  if (!arg.params) debugger;
+  var params = arg.params;
+  if (!params) return;
+  var pagename = params['name'];
+  // console.log('pagename', pagename);
+  var unescapedPageName = unescape(pagename);
+  // console.log('unescaped pagename', unescapedPageName);
+  var page = Pages.findOne({'name': unescapedPageName})
+  if (!page) { // we don't have data yet
+    return;
+  }
+  id = page._id;
+  // console.log("in setPage, id is ", id);
+  var stack = Session.get("idStack");
+  // console.log("in setPage, idStack is ", stack);
+  for (var i = 0; i < stack.length; i++) {
+    if (stack[i] === id) {
+      // console.log("found a hit, before messing idStack is now", stack);
+      stack.splice(i, 1);
+      // console.log("sliced away something from idStack, it is now", stack);
+      break;
+    }
+  }
+  stack.push(id);
+  // console.log("added something to idStack, it is now", stack);
+  stack = stack.slice(-4);
+  // console.log("trimmed idStack to 3 elements, it is now", stack);
+  Session.set("idStack", stack)
   // Session.set("pageId", pageNameToId("Welcome"));
 }
 
 Meteor.startup(function () {
   router = new Meteor.PageRouter({});
   router.pages({
-    '/:_id': { to: 'main', before: [setPage]},
-    '/': { to: 'main', 'as': 'Welcome', before: [setPage]}
+    '/:name': { before: [setPage]},
+    '/': { before: [setHomePage]}
+  },
+  {
+    defaults: {
+      layout: 'main'
+    }
   });
 });
 
 
 Meteor.startup(function () {
-  $( "#trash" ).droppable({
-    accept: ".searchcard",
-    hoverClass: "activated",
-    activeClass: "ready",
-    drop: function(event, ui) {}
-  });
-
 });
 
 Meteor.subscribe('pages', function () {

@@ -11,6 +11,9 @@ var client = restify.createJsonClient({
   url: 'https://api.datamarket.azure.com',
 });
 
+if (!SKEY) {
+	Meteor._debug("Web search requires an environment variable called BING_APP_ID.")
+}
 
 var ServiceRootURL = "https://api.duckduckgo.com";
 
@@ -33,18 +36,27 @@ Meteor.methods({
     return myresults;
 	},
 	searchremote: function(term) {
+  	Meteor._debug("DOING A Bing SEARCH FOR", term);
 		if (!term) return;
     var fut2 = new Future();
 
     client.basicAuth(SKEY, SKEY);
     client.get('/Bing/Search/v1/Composite?Sources=\'web\'&Query=\'' + term + '\'&$format=JSON&$top=50&$skip=0', function(err, req, res, obj) {
+    	if (!obj || !obj.d || !obj.d.results || !obj.d.results[0] || !obj.d.results[0].Web) {
+    		Meteor._debug("internet down?");
+    		fut2.ret([]);
+    		return;
+    	}
 			var subanswers = obj.d.results[0].Web;
+			Meteor._debug(subanswers);
 			var parts = [];
 			for (var i = 0; i < subanswers.length; i++) {
 				var answer = subanswers[i];
+				Meteor._debug(answer);
 				parts.push({'url': answer.Url, 'title': answer.Title, 'description': answer.Description});
 			}
 			fut2.ret(parts);
+			Meteor._debug(parts);
     });
     return fut2.wait();
   }

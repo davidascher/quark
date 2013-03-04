@@ -15,6 +15,33 @@ button, input, select, textarea {
 	padding-top: 2em;
 }
 
+#pagestack-container {
+	position: fixed;
+	overflow: auto;
+}
+
+#pagestack {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 42%; /* match the spans */
+	left: 0;
+	/*height: 100%;*/
+	padding-left: 2em;
+	padding-right: 2em;
+	/*margin: 2em;*/
+}
+
+.pageholder {
+	overflow: auto;	
+	position: relative;
+}
+
+.topmost {
+	overflow: auto;	
+	position: relative;
+}
+
 div.para {
 	display: inline;
 }
@@ -27,6 +54,8 @@ div.para {
 	border-radius: 3px;
 	padding: .2em 1em;
 	margin: 1px;
+	margin-top: 0;
+	margin-bottom: 2em;
 }
 
 .link {
@@ -38,7 +67,19 @@ div.para {
 }
 
 .trash {
+	margin: 2em;
+	padding: 1em;
+	float: right;
+	vertical-align: top;
 	display: inline-block;
+	opacity: 1;
+	background: red;
+	min-width: 3em;
+	min-height: 3em;
+}
+
+.trash.ready {
+	color: red;
 }
 
 .dropzone {
@@ -49,7 +90,8 @@ div.para {
 }
 
 .ready {
-   box-shadow:         inset 0 0 4px #aaa;	
+	background: orange;
+    box-shadow:         inset 0 0 4px #aaa;	
 }
 
 .activated {
