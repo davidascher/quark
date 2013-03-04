@@ -159,7 +159,7 @@
 </template>
 
 <template name="page">
-  {{#if this}}
+  {{#ifnot this}}
     <b>this is a 404</b>
   {{/if}}
   <div class="page card" data-id="{{this._id}}">
