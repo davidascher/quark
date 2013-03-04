@@ -261,6 +261,7 @@ var endPagetitleEditing = function(evt, tmpl) {
   evt.preventDefault();
   Session.set("editing_title", null);
   console.log(this);
+  console.log(tmpl);
   var pageId = this._id; // Session.get('pageId')
   console.log("pageId", pageId);
   var page = this; // Pages.findOne(pageId);
