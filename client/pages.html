@@ -9,21 +9,18 @@
   {{>main}}
 </template>
 
-
 <template name="main">
 <div id="root">
   <div class="container-fluid main">
     <div class="row-fluid">
       <div id="pagewrapper" class="span6">
-        <div class="container">
-          <div class="wrap">
-            {{> slider}}
-          </div>
+        {{#with topmostpage}}
+          {{>page this}}
+        {{/with}}
       </div>
       <div class="span5">
         {{>search}}
-        <button id="next">next</button>
-        {{! <i id="trash" class="dropzone icon-trash icon-2x"/> }}
+        {{! <i id="trash" class="dropzone icon-trash icon-2x"/>
         {{#if doingsearch}}
           <div class="searchresults row-fluid">
             <div class="span12">
@@ -78,21 +75,6 @@
   </div>
 </div>
 </template>
-
-
-<template name="slider">
-  <div class="current">
-    {{#with currentScreen}}
-      {{>page currentScreen}}
-    {{/with}}
-  </div>
-  <div class="next">
-    {{#with nextScreen}}
-      {{>page nextScreen}}
-    {{/with}}
-  </div>
-</template>
-
 
 <template name="searchcard">
   <div class="searchcard draggable-card" type="page" data-id="{{pageId}}">
