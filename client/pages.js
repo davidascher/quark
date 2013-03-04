@@ -57,7 +57,7 @@ function doSearch(searchterm) {
 }
 
 Template.main.loading = function() {
-  console.log(pagesHandle, pagesHandle.ready());
+  console.log('handle is ready:', pagesHandle.ready());
   return !pagesHandle.ready();
 }
 
