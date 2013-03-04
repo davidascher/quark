@@ -18,8 +18,11 @@ Meteor.autorun(function () {
   var id = stackIds[stackIds.length-1];
   parasHandle = Meteor.subscribe('paras', {'page':id});
   pagesHandle = Meteor.subscribe("pages", function() {
-    console.log('setting idStack');
-    Session.set("idStack", ["Welcome"]);
+    if (!Session.get('idStack')) {
+      var list = Pages.findOne({}, {sort: {name: 1}});
+      if (list)
+        Router.go(list.name);
+    }
   })
 });
 
