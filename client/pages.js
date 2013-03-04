@@ -8,6 +8,8 @@ var Pages = new Meteor.Collection("pages");
 var Paras = new Meteor.Collection("paras");
 var Redirects = new Meteor.Collection("redirects");
 var showdown;
+var pagesHandle = Meteor.subscribe('pages', function () {
+});
 
 function doSearch(searchterm) {
   var results = [];
@@ -564,7 +566,5 @@ Meteor.startup(function () {
   console.log("meteor started");
 });
 
-var pagesHandle = Meteor.subscribe('pages', function () {
-});
 
 
