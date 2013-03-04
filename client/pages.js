@@ -54,6 +54,10 @@ function doSearch(searchterm) {
   });
 }
 
+Template.main.loading = function() {
+  return !pagesHandle.ready();
+}
+
 Template.main.nolocalsearchresults = function() {
   return Session.get('no-local-search-results');
 }
@@ -560,7 +564,7 @@ Meteor.startup(function () {
   console.log("meteor started");
 });
 
-
-Meteor.subscribe('pages', function () {
+var pagesHandle = Meteor.subscribe('pages', function () {
 });
+
 
