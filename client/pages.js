@@ -105,7 +105,9 @@ Template.main.topmostpage = function() {
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   var id = stackIds[stackIds.length-1];
-  return Pages.findOne(id);
+  var id = Pages.findOne(id);
+  console.log("topmostpage =", id);
+  return id;
 }
 
 Template.main.pagestack = function() {
