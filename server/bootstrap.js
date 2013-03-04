@@ -23,12 +23,6 @@ Meteor.startup(function () {
          ["This is a third paragraph linking back to the [[Welcome]] page."]
        ]
       },
-      {name: "Nothing here yet",
-        id: "404",
-        contents: [
-          ["There's nothing here yet -- create it?"]
-        ]
-      }
     ];
     // Redirects.insert({'old_name': 'xxx', 'new_name': 'xxy'})
 
