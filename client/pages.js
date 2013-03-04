@@ -552,11 +552,12 @@ function setPage (pagename) {
   return 'main';
 }
 
+Meteor.Router.add({
+  '/': setHomePage,
+  '/:name': setPage
+});
 Meteor.startup(function () {
-  Meteor.Router.add({
-    '/': setHomePage,
-    '/:name': setPage
-  });
+  console.log("meteor started");
 });
 
 
