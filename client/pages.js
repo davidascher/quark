@@ -512,6 +512,7 @@ Session.set("idStack", []); // default
 
 function setHomePage() {
   Session.set("idStack", ['Welcome']); // default home page
+  console.log('returning main template');
   return 'main';
 }
 
