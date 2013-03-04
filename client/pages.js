@@ -272,6 +272,7 @@ var endPagetitleEditing = function(evt, tmpl) {
   console.log("oldpagename", oldpagename);
   if (!page) return;
   var newpagename = tmpl.find("#title-input").value;
+  console.log("new name", newpagename);
   Pages.update(page._id, {$set: {name: newpagename}})
   // XXX clean up history so old name goes away XXX TODO
   router.go("/" + escape(newpagename));
