@@ -1,6 +1,7 @@
 Work Notes
 
-Todos:
+Big Open Questions
+	* what does my take on federation look like?  (what's easiest way to setup a sub-domain?)
 
 URL strategy:
 	- main URL is the shareable URL - should refer to the main page (or when we get to it, multiple pages)
@@ -23,8 +24,10 @@ UX thoughts:
 - chrome doesn't unescape urls, figure out whether to slugify
 - make easy to deploy to show it, and to get towtruck working
 
-Bugs
-	- on rename, history gets borked because the old page no longer exists.  fix.
+TODO
+
+* escape search terms (e.g. to do multi-word searches) & sql-sanitize them
+* on rename, history gets borked because the old page no longer exists.  fix.
 
 Deferred features
 	- screenshots of links in database (easy, see 	https://github.com/fzaninotto/screenshot-as-a-service)
@@ -50,7 +53,7 @@ Testing
 UX
   - search sidebar goes away when not searching (or there's a way to make it be the same as browse)
   - modes?  navigate vs. author page vs. search vs. curate?
-  - distinguis being 'searching' and 'no results.'
+  - better failure discovery when bing search fails
 
   - think about scrolling regions, e.g.:
 
