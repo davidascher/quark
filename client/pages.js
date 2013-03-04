@@ -8,9 +8,12 @@ var Pages = new Meteor.Collection("pages");
 var Paras = new Meteor.Collection("paras");
 var Redirects = new Meteor.Collection("redirects");
 var showdown;
-var pagesHandle = Meteor.subscribe('pages', function () {
-});
+var pagesHandle = null;
 
+Meteor.autorun(function () {
+  pagesHandle = Meteor.subscribe('pages', function () {
+  });
+}
 function doSearch(searchterm) {
   var results = [];
   var pages = {};
