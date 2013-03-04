@@ -27,6 +27,7 @@ pagesHandle = Meteor.subscribe("pages", function() {
 
 Meteor.autorun(function () {
   // always subscribe to the paras for the current page.
+  console.log("in autorun")
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   var id = stackIds[stackIds.length-1];
