@@ -527,7 +527,7 @@ function setPage (arg) {
   // console.log('unescaped pagename', unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
-    return;
+    id = '405';
   } else {
     id = page._id;
   }
