@@ -8,16 +8,17 @@
 </body>
 
 <template name="main">
-{{#if loading}}
-    loading...
-{{else}}
   <div id="root">
     <div class="container-fluid main">
       <div class="row-fluid">
         <div id="pagewrapper" class="span6">
-          {{#with topmostpage}}
-            {{>page this}}
-          {{/with}}
+          {{#if loading}}
+              loading...
+          {{else}}
+            {{#with topmostpage}}
+              {{>page this}}
+            {{/with}}
+          {{/if}}
         </div>
         <div class="span5">
           {{>search}}
@@ -73,7 +74,6 @@
       </div>
     </div>
   </div>
-{{/if}}
 </template>
 
 <template name="searchcard">
