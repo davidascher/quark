@@ -9,6 +9,20 @@
   {{>main}}
 </template>
 
+<template name="slider">
+  <div class="current">
+    {{#with topmostpage}}
+      {{>page this}}
+    {{/with}}
+  </div>
+  <div class="next">
+    {{#with topmostpage}}
+      {{>page this}}
+    {{/with}}
+  </div>
+</template>
+
+
 <template name="main">
 <div id="root">
   <div class="container-fluid main">
@@ -16,16 +30,7 @@
       <div id="pagewrapper" class="span6">
         <div class="container">
           <div class="wrap">
-            <div class="current">
-              {{#with topmostpage}}
-                {{>page this}}
-              {{/with}}
-            </div>
-            <div class="next">
-              {{#with topmostpage}}
-                {{>page this}}
-              {{/with}}
-            </div>
+      {{> slider}}
           </div>
       </div>
       <div class="span5">
