@@ -13,7 +13,7 @@ var parasHandle = null;
 Meteor.autorun(function () {
   // always subscribe to the paras for the current page.
   var page = Template.main.topmostpage();
-  parasHandle = Meteor.subscribe('paras', function () {'page':page._id});
+  parasHandle = Meteor.subscribe('paras', {'page':page._id});
 });
 
 function doSearch(searchterm) {
