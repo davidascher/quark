@@ -516,11 +516,11 @@ function setHomePage() {
   return 'main';
 }
 
-function setPage (arg) {
-  if (!arg.params) debugger;
-  var params = arg.params;
-  if (!params) return;
-  var pagename = params['name'];
+function setPage (pagename) {
+  // if (!arg.params) debugger;
+  // var params = arg.params;
+  // if (!params) return;
+  // var pagename = params['name'];
   var unescapedPageName = unescape(pagename);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
