@@ -43,7 +43,6 @@ function doSearch(searchterm) {
     for (i = 0; i < pageIds.length; i++) {
       results.push(pages[pageIds[i]]);
     }
-    console.log("got local results", results);
     Session.set("no-local-search-results", (results.length == 0));
     Session.set("searchresults", results);
   });
@@ -169,7 +168,6 @@ Template.newpara.events({
   'click': function(evt) {
     // var pageName = Session.get("pageId");
     var id = this._id;
-    console.log(this);
     var index = Paras.find({page: id}).count() + 1;
     var p = Paras.insert({
       index: index,
@@ -293,7 +291,6 @@ Template.heart.events({
 Template.page.preserve(['#root']);
 
 Template.page.offset = function() {
-  console.log("computing offset for", this._id);
   var stack = Session.get("idStack");
   for (var i = 0; i < stack.length; i++) {
     if (stack[i] === this._id) {
@@ -304,9 +301,7 @@ Template.page.offset = function() {
 }
 
 Template.page.depth = function() {
-  console.log("computing page for", this._id);
   var stack = Session.get("idStack");
-  console.log("computing page for", stack);
   for (var i = 0; i < stack.length; i++) {
     if (stack[i] === this._id) {
       return stack.length - i - 1;
@@ -319,7 +314,6 @@ Template.page.depth = function() {
 Template.page.rendered = function() {
   // this.data is the Page
   if (!this.data) return;
-  console.log("rendered page", this.data._id);
   $(".sortable").sortable({ handle: ".drag-handle", 
     update: updateParagraphOrder,
     placeholder: "paragraph-placeholder"
@@ -457,7 +451,6 @@ Template.page.events({
   },
 
   'keydown .para': function(evt) {
-    console.log(this);
     if (evt.which == 27) {
       endParagraphEditing(this._id, this.index, evt.target.value);
     }
@@ -484,9 +477,7 @@ Handlebars.registerHelper('linkify', function(content, options) {
 });
 
 var pageNameToId = function(pageName) {
-  console.log("in pageNameToId, Pages is", Pages, pageName)
   var page = Pages.findOne({'name': pageName});
-  console.log('looking for page with name', pageName, "found id", page._id);
   if (page) return page._id;
   return null;
 }
@@ -494,7 +485,6 @@ var pageNameToId = function(pageName) {
 function updateParagraphOrder(event, ui) {
   // build a new array items in the right order, and push them
   // stolen from https://github.com/sdossick/sortable-meteor
-  console.log("updateParagraphOrder", event.target)
   var rows = $(event.target).find('.para');
   _.each(rows, function(element,index,list) {
     var id = $(element).data('id');
@@ -511,37 +501,27 @@ function setHomePage() {
 }
 
 function setPage (arg) {
-  // console.log("in setPage", arg.params);
   if (!arg.params) debugger;
   var params = arg.params;
   if (!params) return;
   var pagename = params['name'];
-  // console.log('pagename', pagename);
   var unescapedPageName = unescape(pagename);
-  // console.log('unescaped pagename', unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
     id = '404'; // this will trigger the right template thing.
   } else {
     id = page._id;
   }
-  // console.log("in setPage, id is ", id);
   var stack = Session.get("idStack");
-  // console.log("in setPage, idStack is ", stack);
   for (var i = 0; i < stack.length; i++) {
     if (stack[i] === id) {
-      // console.log("found a hit, before messing idStack is now", stack);
       stack.splice(i, 1);
-      // console.log("sliced away something from idStack, it is now", stack);
       break;
     }
   }
   stack.push(id);
-  // console.log("added something to idStack, it is now", stack);
   stack = stack.slice(-4);
-  // console.log("trimmed idStack to 3 elements, it is now", stack);
   Session.set("idStack", stack)
-  // Session.set("pageId", pageNameToId("Welcome"));
 }
 
 Meteor.startup(function () {
