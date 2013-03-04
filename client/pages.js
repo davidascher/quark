@@ -62,6 +62,13 @@ Template.main.noremotesearchresults = function() {
   return Session.get('no-remote-search-results');
 }
 
+
+Template.main.events({
+  'click #next': function(evt) {
+    router.go("/Other page");
+  }
+})
+
 Template.main.rendered = function() {
   $(".draggable-card").draggable({ opacity: 0.7, helper: "clone" });
 
