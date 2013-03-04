@@ -14,9 +14,19 @@
   <div class="container-fluid main">
     <div class="row-fluid">
       <div id="pagewrapper" class="span6">
-        {{#with topmostpage}}
-          {{>page this}}
-        {{/with}}
+        <div class="container">
+          <div class="wrap">
+            <div class="current">
+              {{#with topmostpage}}
+                {{>page this}}
+              {{/with}}
+            </div>
+            <div class="next">
+              {{#with topmostpage}}
+                {{>page this}}
+              {{/with}}
+            </div>
+          </div>
       </div>
       <div class="span5">
         {{>search}}
