@@ -21,7 +21,7 @@ pagesHandle = Meteor.subscribe("pages", function() {
     if (list)
       Router.go(list.name);
   } else {
-    console.log("at dawn of time, idStack:", idStack);
+    console.log("at dawn of time, idStack:", Session.get('idStack'));
   }
 })
 
