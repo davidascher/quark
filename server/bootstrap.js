@@ -24,7 +24,7 @@ Meteor.startup(function () {
        ]
       },
       {name: "Nothing here yet",
-        id="404",
+        id: "404",
         contents: [
           ["There's nothing here yet -- create it?"]
         ]
