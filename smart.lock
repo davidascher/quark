@@ -9,7 +9,7 @@
       "accounts-persona": {},
       "font-awesome": {},
       "jquery-ui": {},
-      "mini-pages": {},
+      "router": {},
       "transitioner": {}
     },
     "packages": {
@@ -28,25 +28,15 @@
         "tag": "v1.8.16",
         "commit": "abda12134b8f3c5db31d6a4864bead6aa3640358"
       },
-      "mini-pages": {
-        "git": "https://github.com/cmather/meteor-mini-pages.git",
-        "tag": "v0.3.0",
-        "commit": "3de8b93dd4355ebbdcfaed7891350b349ee54815"
+      "router": {
+        "git": "https://github.com/tmeasday/meteor-router.git",
+        "tag": "v0.4.2",
+        "commit": "82d2895847502b4025370523dba60d597cff4772"
       },
       "transitioner": {
         "git": "https://github.com/tmeasday/meteor-transitioner.git",
         "tag": "v0.2.2",
         "commit": "ffbef8e7e10dfcefc61394ea8a11f07a6ff97cd9"
-      },
-      "page-js": {
-        "git": "https://github.com/tmeasday/meteor-page-js.git",
-        "tag": "v1.3.5",
-        "commit": "c652f795a86498aa4609ab637a694710421cb218"
-      },
-      "router": {
-        "git": "https://github.com/tmeasday/meteor-router.git",
-        "tag": "v0.4.2",
-        "commit": "82d2895847502b4025370523dba60d597cff4772"
       },
       "page-js-ie-support": {
         "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
