@@ -275,8 +275,8 @@ var endPagetitleEditing = function(evt, tmpl) {
   console.log("new name", newpagename);
   Pages.update(page._id, {$set: {name: newpagename}})
   // XXX clean up history so old name goes away XXX TODO
-  router.go("/" + escape(newpagename));
   Session.set("editand", null);
+  router.go("/" + newpagename);
   // register a redirect serverside
   Redirects.insert({old_name: oldpagename, original_id: page._id})
 }
