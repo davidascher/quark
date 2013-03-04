@@ -63,7 +63,9 @@ Template.main.noremotesearchresults = function() {
 }
 
 Template.page.url_name = function() {
-  return unescape(Meteor.router._currentPath.slice(1));
+  path = Meteor.router._currentPath;
+  if (!path) return '';
+  return unescape(path.slice(1));
 }
 
 
