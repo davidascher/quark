@@ -15,25 +15,11 @@ Session.set("idStack", []); // default
 
 pagesHandle = Meteor.subscribe("pages", function() {
   console.log('in cb for pagesHandle');
-  if (!Session.get('idStack')) {
-    console.log("nothing in idStack")
-    var list = Pages.findOne({}, {sort: {name: 1}});
-    if (list)
-      Router.go(list.name);
-  } else {
-    console.log("at dawn of time, idStack:", Session.get('idStack'));
-  }
-})
-
-Meteor.autorun(function () {
-  // always subscribe to the paras for the current page.
-  console.log("in autorun")
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   var id = stackIds[stackIds.length-1];
   parasHandle = Meteor.subscribe('paras', {'page':id});
-});
-
+})
 
 function doSearch(searchterm) {
   var results = [];
