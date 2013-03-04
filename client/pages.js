@@ -62,9 +62,10 @@ Template.main.noremotesearchresults = function() {
 }
 
 Template.fourohfour.url_name = function() {
-  path = Meteor.router._currentPath;
-  if (!path) return '';
-  return unescape(path.slice(1));
+  console.log(Meteor.Router);
+  // path = Meteor.router._currentPath;
+  // if (!path) return '';
+  // return unescape(path.slice(1));
 }
 
 Template.fourohfour.events({
