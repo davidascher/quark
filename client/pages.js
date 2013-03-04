@@ -101,7 +101,19 @@ Template.main.rendered = function() {
   });
 };
 
-Template.main.topmostpage = function() {
+
+Template.slider.helpers({
+  currentScreen: function() {
+    return Meteor.Transitioner.currentPage();
+  },
+  nextScreen: function() {
+    return Meteor.Transitioner.nextPage();
+  }
+});
+
+
+
+Template.slider.topmostpage = function() {
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   return Pages.findOne(stackIds[stackIds.length-1]);
