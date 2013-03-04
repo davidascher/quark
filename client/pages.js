@@ -70,13 +70,14 @@ Template.fourohfour.url_name = function() {
 Template.fourohfour.events({
   'click .doit': function(evt) {
     var timestamp = (new Date()).getTime();
-    var newpageId = Pages.insert({name: newpagename, mtime: timestamp});
+    var newpageId = Pages.insert({name: this.url_name, mtime: timestamp});
     Paras.insert({
       index: 0,
       'page': newpageId,
       'content': ["This is an default page. Very sad.  Make it personal?"]
     })
   }
+  router.go(this.url_name);
 })
 
 Template.main.rendered = function() {
