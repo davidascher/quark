@@ -62,7 +62,7 @@ Template.main.noremotesearchresults = function() {
   return Session.get('no-remote-search-results');
 }
 
-Template.main.url_name = function() {
+Template.page.url_name = function() {
   console.log("router");
   console.log(router);
 }
