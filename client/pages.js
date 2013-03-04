@@ -548,16 +548,20 @@ function setPage (arg) {
 }
 
 Meteor.startup(function () {
-  router = new Meteor.PageRouter({});
-  router.pages({
-    '/:name': { before: [setPage]},
-    '/': { before: [setHomePage]}
-  },
-  {
-    defaults: {
-      layout: 'main'
-    }
+  Meteor.Router.add({
+    '/': setHomePage,
+    '/:name': setPage }
   });
+  // router = new Meteor.PageRouter({});
+  // router.pages({
+  //   '/:name': { before: [setPage]},
+  //   '/': { before: [setHomePage]}
+  // },
+  // {
+  //   defaults: {
+  //     layout: 'main'
+  //   }
+  // });
 });
 
 
