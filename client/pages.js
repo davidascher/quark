@@ -12,8 +12,10 @@ var parasHandle = null;
 
 Meteor.autorun(function () {
   // always subscribe to the paras for the current page.
-  var page = Template.main.topmostpage();
-  parasHandle = Meteor.subscribe('paras', {'page':page._id});
+  var stackIds = Session.get("idStack");
+  if (!stackIds) return;
+  var id = stackIds[stackIds.length-1];
+  parasHandle = Meteor.subscribe('paras', {'page':id});
 });
 
 function doSearch(searchterm) {
