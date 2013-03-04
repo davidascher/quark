@@ -552,7 +552,8 @@ Meteor.startup(function () {
     '/': setHomePage,
     '/:name': setPage
   });
-}
+});
+
 
 Meteor.subscribe('pages', function () {
   if (!Session.get('pageId')) {
