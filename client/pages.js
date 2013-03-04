@@ -11,9 +11,9 @@ var showdown;
 var pagesHandle = null;
 
 Meteor.autorun(function () {
-  pagesHandle = Meteor.subscribe('pages', function () {
-  });
-}
+  pagesHandle = Meteor.subscribe('pages', function () {});
+});
+
 function doSearch(searchterm) {
   var results = [];
   var pages = {};
