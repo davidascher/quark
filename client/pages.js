@@ -524,6 +524,7 @@ function setPage (arg) {
     console.log("page is null, unescapedPageName= ", unescapedPageName);
     var redirect = Redirects.findOne({old_name: unescapedPageName});
     if (redirect) {
+      console.log("FOUND A REDIRECT!", redirect)
       // this is an actual client-side redirect, kinda cute!
       id = redirect.original_id;
     }
