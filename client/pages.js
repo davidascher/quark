@@ -12,8 +12,6 @@ var parasHandle = null;
 var pagesHandle = null;
 
 // always subscribe to the paras for the current page.
-var stackIds = Session.get("idStack");
-if (!stackIds) return;
 var id = stackIds[stackIds.length-1];
 parasHandle = Meteor.subscribe('paras', {'page':id});
 pagesHandle = Meteor.subscribe("pages", function() {
