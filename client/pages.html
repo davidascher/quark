@@ -4,71 +4,76 @@
 </head>
 <body>
   {{renderPage}}
+  }
 </body>
 
 <template name="main">
-<div id="root">
-  <div class="container-fluid main">
-    <div class="row-fluid">
-      <div id="pagewrapper" class="span6">
-        {{#with topmostpage}}
-          {{>page this}}
-        {{/with}}
-      </div>
-      <div class="span5">
-        {{>search}}
-        {{#if doingsearch}}
-          <div class="searchresults row-fluid">
-            <div class="span12">
-              <div class="search-heading">Your data</div>
-                {{#if searchresults}}
-                  <div class="searchstrip table">
-                    <div class="row">
-                      {{#each searchresults}}
-                      <div class="cell">
-                        {{>searchcard this}}
+  {{#if loading}}
+    loading...
+  {{else}}
+  <div id="root">
+    <div class="container-fluid main">
+      <div class="row-fluid">
+        <div id="pagewrapper" class="span6">
+          {{#with topmostpage}}
+            {{>page this}}
+          {{/with}}
+        </div>
+        <div class="span5">
+          {{>search}}
+          {{#if doingsearch}}
+            <div class="searchresults row-fluid">
+              <div class="span12">
+                <div class="search-heading">Your data</div>
+                  {{#if searchresults}}
+                    <div class="searchstrip table">
+                      <div class="row">
+                        {{#each searchresults}}
+                        <div class="cell">
+                          {{>searchcard this}}
+                        </div>
+                        {{/each}}  
                       </div>
-                      {{/each}}  
                     </div>
-                  </div>
-                {{else}}
-                  {{#if nolocalsearchresults}}
-                    <p>No pages found.</p>
                   {{else}}
-                    <i class="icon-spinner icon-spin"/>
+                    {{#if nolocalsearchresults}}
+                      <p>No pages found.</p>
+                    {{else}}
+                      <i class="icon-spinner icon-spin"/>
+                    {{/if}}
                   {{/if}}
-                {{/if}}
+                </div>
               </div>
             </div>
-          </div>
-          <div class="searchresults row-fluid">
-            <div class="span12">
-              <div class="search-heading">Web data</div>
-                {{#if remotesearchresults}}
-                  <div class="searchstrip table">
-                    <div class="row">
-                      {{#each remotesearchresults}}
-                      <div class="cell">
-                        {{>searchlink this}}
+            <div class="searchresults row-fluid">
+              <div class="span12">
+                <div class="search-heading">Web data</div>
+                  {{#if remotesearchresults}}
+                    <div class="searchstrip table">
+                      <div class="row">
+                        {{#each remotesearchresults}}
+                        <div class="cell">
+                          {{>searchlink this}}
+                        </div>
+                        {{/each}}  
                       </div>
-                      {{/each}}  
                     </div>
-                  </div>
-                {{else}}
-                  {{#if no-remote-search-results}}
-                    <p>No results found.</p>
                   {{else}}
-                    <i class="icon-spinner icon-spin"/>
+                    {{#if no-remote-search-results}}
+                      <p>No results found.</p>
+                    {{else}}
+                      <i class="icon-spinner icon-spin"/>
+                    {{/if}}
                   {{/if}}
-                {{/if}}
+                </div>
               </div>
             </div>
-          </div>
-        {{/if}}
+          {{/if}}
+        </div>
       </div>
     </div>
   </div>
-</div>
+{{/if}}
 </template>
 
 <template name="searchcard">
