@@ -65,7 +65,8 @@ Template.main.noremotesearchresults = function() {
 
 Template.main.events({
   'click #next': function(evt) {
-    router.go("/Other page");
+    // router.go("/Other page");
+    Meteor.Router.to('/Other page')
   }
 })
 
@@ -522,6 +523,7 @@ Session.set("idStack", []); // default
 
 function setHomePage() {
   Session.set("idStack", ['Welcome']); // default home page
+    Meteor.Router.to('/Welcome')
 }
 
 function setPage (arg) {
