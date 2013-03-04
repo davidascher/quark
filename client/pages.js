@@ -111,10 +111,14 @@ Template.main.rendered = function() {
 
 Template.slider.helpers({
   currentScreen: function() {
-    return Meteor.Transitioner.currentPage();
+    p = Meteor.Transitioner.currentPage();
+    console.log("returning currentPage", p);
+    return p
   },
   nextScreen: function() {
-    return Meteor.Transitioner.nextPage();
+    var p = Meteor.Transitioner.nextPage();
+    console.log("returning nextScreen", p);
+    return p
   }
 });
 
