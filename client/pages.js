@@ -521,6 +521,11 @@ function setPage (arg) {
   var unescapedPageName = unescape(pagename);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
+      var redirect = Redirects.findOne({old_name: unescapedPageName});
+      if (redirect) {
+        // this is an actual client-side redirect, kinda cute!
+        id = redirect.original_id;
+      }
     id = '404'; // this will trigger the right template thing.
   } else {
     id = page._id;
