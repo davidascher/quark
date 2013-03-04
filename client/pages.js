@@ -550,7 +550,7 @@ function setPage (arg) {
 Meteor.startup(function () {
   Meteor.Router.add({
     '/': setHomePage,
-    '/:name': setPage }
+    '/:name': setPage
   });
 }
 
