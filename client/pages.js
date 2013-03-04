@@ -62,14 +62,6 @@ Template.main.noremotesearchresults = function() {
   return Session.get('no-remote-search-results');
 }
 
-
-Template.main.events({
-  'click #next': function(evt) {
-    // router.go("/Other page");
-    Meteor.Router.to('/Other page')
-  }
-})
-
 Template.main.rendered = function() {
   $(".draggable-card").draggable({ opacity: 0.7, helper: "clone" });
 
@@ -109,23 +101,7 @@ Template.main.rendered = function() {
   });
 };
 
-
-Template.slider.helpers({
-  currentScreen: function() {
-    p = Meteor.Transitioner.currentPage();
-    console.log("returning currentPage", p);
-    return p
-  },
-  nextScreen: function() {
-    var p = Meteor.Transitioner.nextPage();
-    console.log("returning nextScreen", p);
-    return p
-  }
-});
-
-
-
-Template.slider.topmostpage = function() {
+Template.main.topmostpage = function() {
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   return Pages.findOne(stackIds[stackIds.length-1]);
@@ -333,7 +309,6 @@ Template.page.depth = function() {
 
 Template.page.rendered = function() {
   // this.data is the Page
-  if (!this.data) return;
   console.log("rendered page", this.data._id);
   $(".sortable").sortable({ handle: ".drag-handle", 
     update: updateParagraphOrder,
@@ -523,7 +498,6 @@ Session.set("idStack", []); // default
 
 function setHomePage() {
   Session.set("idStack", ['Welcome']); // default home page
-    Meteor.Router.to('/Welcome')
 }
 
 function setPage (arg) {
