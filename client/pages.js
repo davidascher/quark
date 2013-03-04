@@ -16,6 +16,7 @@ Session.set("idStack", []); // default
 pagesHandle = Meteor.subscribe("pages", function() {
   console.log('in cb for pagesHandle');
   if (!Session.get('idStack')) {
+    console.log("nothing in idStack")
     var list = Pages.findOne({}, {sort: {name: 1}});
     if (list)
       Router.go(list.name);
