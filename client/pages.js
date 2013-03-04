@@ -57,7 +57,6 @@ function doSearch(searchterm) {
 }
 
 Template.main.loading = function() {
-  return false;
   if (!pagesHandle) return true;
   console.log(pagesHandle, pagesHandle.ready());
   return !pagesHandle.ready();
