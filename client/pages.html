@@ -188,7 +188,7 @@
 
 <template name="editablepagetitle">
   {{#if editing_title}}
-    <input type="text" id="title-input" class="editing-title" value="{{ this }}"></input>
+    <input type="text" id="title-input" class="editing-title" original-value="{{this}}" value="{{this}}"></input>
   {{else}}
     <span class="pagetitle">
       {{ this }}
