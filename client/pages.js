@@ -76,8 +76,8 @@ Template.fourohfour.events({
       'page': newpageId,
       'content': ["This is an default page. Very sad.  Make it personal?"]
     })
+    router.go(this.url_name);
   }
-  router.go(this.url_name);
 })
 
 Template.main.rendered = function() {
