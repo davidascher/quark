@@ -3,7 +3,7 @@
     "accounts-persona": {},
     "font-awesome": {},
     "jquery-ui": {},
-    "mini-pages": {},
+    "router": {},
     "transitioner": {}
   }
 }
