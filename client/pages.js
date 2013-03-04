@@ -552,21 +552,7 @@ Meteor.startup(function () {
     '/': setHomePage,
     '/:name': setPage }
   });
-  // router = new Meteor.PageRouter({});
-  // router.pages({
-  //   '/:name': { before: [setPage]},
-  //   '/': { before: [setHomePage]}
-  // },
-  // {
-  //   defaults: {
-  //     layout: 'main'
-  //   }
-  // });
-});
-
-
-Meteor.startup(function () {
-});
+}
 
 Meteor.subscribe('pages', function () {
   if (!Session.get('pageId')) {
