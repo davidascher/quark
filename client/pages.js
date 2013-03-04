@@ -69,9 +69,13 @@ Template.fourohfour.url_name = function() {
 
 Template.fourohfour.events({
   'click .doit': function(evt) {
-    
-    var searchterm = $("#search")[0].value;
-    doSearch(searchterm);
+    var timestamp = (new Date()).getTime();
+    var newpageId = Pages.insert({name: newpagename, mtime: timestamp});
+    Paras.insert({
+      index: 0,
+      'page': newpageId,
+      'content': ["This is an default page. Very sad.  Make it personal?"]
+    })
   }
 })
 
