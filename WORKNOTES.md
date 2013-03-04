@@ -39,6 +39,8 @@ Feedback:
 	* make initial screencast - focus on ease of editing & curating pages
 
 TODO
+	* FIX BROKEN NEW PAGE -> NEW TITLE 
+	* FIX PAGE RENAME
 	* escape search terms (e.g. to do multi-word searches) & sql-sanitize them
 	* on rename, history gets borked because the old page no longer exists.  fix.
 	* do mongo search of page titles
