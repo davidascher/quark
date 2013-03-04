@@ -511,10 +511,11 @@ function setPage (arg) {
   var unescapedPageName = unescape(pagename);
   // console.log('unescaped pagename', unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
-  if (!page) { // we don't have data yet
-    return;
+  if (!page) { // we don't have data yet, offer to create one
+    id = '404';
+  } else {
+    id = page._id;
   }
-  id = page._id;
   // console.log("in setPage, id is ", id);
   var stack = Session.get("idStack");
   // console.log("in setPage, idStack is ", stack);
