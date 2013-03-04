@@ -264,7 +264,7 @@ var endPagetitleEditing = function(evt, tmpl) {
   var pageId = $(evt.target).attr('original-value');
   console.log(pageId);
   // console.log(tmpl);
-  var pageId = this._id; // Session.get('pageId')
+  // var pageId = this._id; // Session.get('pageId')
   console.log("pageId", pageId);
   var page = this; // Pages.findOne(pageId);
   console.log("page", pageId);
