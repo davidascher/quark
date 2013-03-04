@@ -261,15 +261,8 @@ var endPagetitleEditing = function(evt, tmpl) {
   evt.preventDefault();
   console.log(evt);
   Session.set("editing_title", null);
-  var pageId = $(evt.target).attr('original-value');
-  console.log(pageId);
-  // console.log(tmpl);
-  // var pageId = this._id; // Session.get('pageId')
-  console.log("pageId", pageId);
-  var page = Pages.findOne(pageId);
-  console.log("page", page);
-  var oldpagename = page.name;
-  console.log("oldpagename", oldpagename);
+  var oldpagename = $(evt.target).attr('original-value');
+  var page = Pages.findOne({'name': pageId});
   if (!page) return;
   var newpagename = tmpl.find("#title-input").value;
   console.log("new name", newpagename);
