@@ -86,7 +86,7 @@ var onParaChange = {
 }
 
 db = new sqlite3.Database('paragraphs.sqlite3', function() {
-	db.run("CREATE VIRTUAL TABLE IF NOT EXISTS paragraphs USING fts4(key, data);", function() {});
+	db.run("CREATE VIRTUAL TABLE paragraphs USING fts4(key, data);", function() {});
 });
 Meteor.startup(function () {
 	allparas.observeChanges(onParaChange)
