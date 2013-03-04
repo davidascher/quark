@@ -62,6 +62,12 @@ Template.main.noremotesearchresults = function() {
   return Session.get('no-remote-search-results');
 }
 
+Template.main.url_name = function() {
+  console.log("router");
+  console.log(router);
+}
+
+
 Template.main.rendered = function() {
   $(".draggable-card").draggable({ opacity: 0.7, helper: "clone" });
 
