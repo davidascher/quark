@@ -58,7 +58,7 @@ function doSearch(searchterm) {
 
 Template.main.loading = function() {
   console.log('handle is ready:', pagesHandle.ready());
-  return !pagesHandle.ready();
+  return pagesHandle && !pagesHandle.ready();
 }
 
 Template.main.nolocalsearchresults = function() {
