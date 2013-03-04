@@ -332,6 +332,7 @@ Template.page.depth = function() {
 
 Template.page.rendered = function() {
   // this.data is the Page
+  if (!this.data) return;
   console.log("rendered page", this.data._id);
   $(".sortable").sortable({ handle: ".drag-handle", 
     update: updateParagraphOrder,
