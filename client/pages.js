@@ -69,6 +69,7 @@ Template.fourohfour.url_name = function() {
 
 Template.fourohfour.events({
   'click .doit': function(evt) {
+    console.log("doing the doit");
     var timestamp = (new Date()).getTime();
     var newpageId = Pages.insert({name: this.url_name, mtime: timestamp});
     Paras.insert({
