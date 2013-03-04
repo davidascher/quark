@@ -256,12 +256,13 @@ Template.editablepagetitle.editing_title = function() {
   return Session.get("editing_title");
 }
 
-var endPagetitleEditing = function(evt, tmpl) {
+var endPagetitleEditing = function(event, tmpl) {
   evt.stopPropagation();
   evt.preventDefault();
   Session.set("editing_title", null);
-  console.log(this);
-  console.log(tmpl);
+  var pageId = $(event.target).attr('data-id');
+  console.log(pageId);
+  // console.log(tmpl);
   var pageId = this._id; // Session.get('pageId')
   console.log("pageId", pageId);
   var page = this; // Pages.findOne(pageId);
