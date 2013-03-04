@@ -104,7 +104,21 @@ Template.main.rendered = function() {
 Template.main.topmostpage = function() {
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
-  return Pages.findOne(stackIds[stackIds.length-1]);
+  var id = stackIds[stackIds.length-1];
+  console.log(this);
+  console.log(router);
+  if (id == "404") {
+    pageId = 'foo';
+    Paras.insert({
+      index: index,
+      'page': pageId,
+      'content': content
+    })
+    // play with the stack
+    stackIds[stackIds.length-1] = pageId;
+  } else {
+    return Pages.findOne(id);
+  }
 }
 
 Template.main.pagestack = function() {
