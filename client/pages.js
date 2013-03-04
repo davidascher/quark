@@ -527,7 +527,7 @@ function setPage (arg) {
   // console.log('unescaped pagename', unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
-    id = '405';
+    id = '404'; // this will trigger the right template thing.
   } else {
     id = page._id;
   }
