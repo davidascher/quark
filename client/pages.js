@@ -512,6 +512,7 @@ Session.set("idStack", []); // default
 
 function setHomePage() {
   Session.set("idStack", ['Welcome']); // default home page
+  return 'main';
 }
 
 function setPage (arg) {
@@ -546,6 +547,7 @@ function setPage (arg) {
   stack.push(id);
   stack = stack.slice(-4);
   Session.set("idStack", stack)
+  return 'main';
 }
 
 Meteor.startup(function () {
