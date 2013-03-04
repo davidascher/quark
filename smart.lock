@@ -9,7 +9,8 @@
       "accounts-persona": {},
       "font-awesome": {},
       "jquery-ui": {},
-      "mini-pages": {}
+      "mini-pages": {},
+      "transitioner": {}
     },
     "packages": {
       "accounts-persona": {
@@ -32,10 +33,25 @@
         "tag": "v0.3.0",
         "commit": "3de8b93dd4355ebbdcfaed7891350b349ee54815"
       },
+      "transitioner": {
+        "git": "https://github.com/tmeasday/meteor-transitioner.git",
+        "tag": "v0.2.2",
+        "commit": "ffbef8e7e10dfcefc61394ea8a11f07a6ff97cd9"
+      },
       "page-js": {
         "git": "https://github.com/tmeasday/meteor-page-js.git",
         "tag": "v1.3.5",
         "commit": "c652f795a86498aa4609ab637a694710421cb218"
+      },
+      "router": {
+        "git": "https://github.com/tmeasday/meteor-router.git",
+        "tag": "v0.4.2",
+        "commit": "82d2895847502b4025370523dba60d597cff4772"
+      },
+      "page-js-ie-support": {
+        "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
+        "tag": "v1.3.5",
+        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
       }
     }
   }
