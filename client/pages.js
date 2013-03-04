@@ -256,11 +256,11 @@ Template.editablepagetitle.editing_title = function() {
   return Session.get("editing_title");
 }
 
-var endPagetitleEditing = function(event, tmpl) {
+var endPagetitleEditing = function(evt, tmpl) {
   evt.stopPropagation();
   evt.preventDefault();
   Session.set("editing_title", null);
-  var pageId = $(event.target).attr('data-id');
+  var pageId = $(evt.target).attr('data-id');
   console.log(pageId);
   // console.log(tmpl);
   var pageId = this._id; // Session.get('pageId')
