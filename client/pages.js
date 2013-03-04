@@ -8,10 +8,12 @@ var Pages = new Meteor.Collection("pages");
 var Paras = new Meteor.Collection("paras");
 var Redirects = new Meteor.Collection("redirects");
 var showdown;
-var pagesHandle = null;
+var parasHandle = null;
 
 Meteor.autorun(function () {
-  pagesHandle = Meteor.subscribe('pages', function () {});
+  // always subscribe to the paras for the current page.
+  var page = Template.main.topmostpage();
+  parasHandle = Meteor.subscribe('paras', function () {'page':page._id});
 });
 
 function doSearch(searchterm) {
@@ -60,8 +62,8 @@ function doSearch(searchterm) {
 }
 
 Template.main.loading = function() {
-  console.log('handle is ready:', pagesHandle.ready());
-  return pagesHandle && !pagesHandle.ready();
+  console.log('handle is ready:', parasHandle.ready());
+  return parasHandle && !parasHandle.ready();
 }
 
 Template.main.nolocalsearchresults = function() {
@@ -137,8 +139,8 @@ Template.main.topmostpage = function() {
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   var id = stackIds[stackIds.length-1];
-  var id = Pages.findOne(id);
-  return id;
+  var page = Pages.findOne(id);
+  return page;
 }
 
 Template.main.pagestack = function() {
