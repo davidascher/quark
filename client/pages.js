@@ -561,11 +561,5 @@ Meteor.startup(function () {
 
 
 Meteor.subscribe('pages', function () {
-  if (!Session.get('pageId')) {
-    // not clear if this does anything
-    var page = Pages.findOne({}, {sort: {name: 1}});
-    if (page)
-      Router.setList(page._id);
-  }
 });
 
