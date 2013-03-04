@@ -20,6 +20,8 @@ pagesHandle = Meteor.subscribe("pages", function() {
     var list = Pages.findOne({}, {sort: {name: 1}});
     if (list)
       Router.go(list.name);
+  } else {
+    console.log("at dawn of time, idStack:", idStack);
   }
 })
 
