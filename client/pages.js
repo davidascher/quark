@@ -513,6 +513,7 @@ function setPage (arg) {
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
     id = '404';
+    console.log("GOT a 404!")
   } else {
     id = page._id;
   }
