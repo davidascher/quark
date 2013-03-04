@@ -16,11 +16,12 @@ Session.set("idStack", []); // default
 pagesHandle = Meteor.subscribe("pages", function() {
   console.log('in cb for pagesHandle');
   var stackIds = Session.get("idStack");
-  if (!stackIds) 
+  if (!stackIds) {
     parasHandle = null;
-  else
+  } else {
     var id = stackIds[stackIds.length-1];
     parasHandle = Meteor.subscribe('paras', {'page':id});
+  }
 })
 
 function doSearch(searchterm) {
