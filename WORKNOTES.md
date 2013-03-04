@@ -1,6 +1,10 @@
 Work Notes
 ==========
 
+Priorities:
+	* remodel to be pages -> [thing, thing, thing] (as opposed to thing->page)
+	
+
 Big Open Questions
 	* what does my take on federation look like?  (what's easiest way to setup a sub-domain?)
 	* what does social search look like?
