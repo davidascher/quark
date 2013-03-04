@@ -63,6 +63,7 @@ Template.main.noremotesearchresults = function() {
 }
 
 Template.page.url_name = function() {
+  return Meteor.router._currentPath;
   console.log("router");
   console.log(router);
 }
