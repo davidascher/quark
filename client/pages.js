@@ -61,7 +61,7 @@ Template.main.noremotesearchresults = function() {
   return Session.get('no-remote-search-results');
 }
 
-Template.page.url_name = function() {
+Template.fourohfour.url_name = function() {
   path = Meteor.router._currentPath;
   if (!path) return '';
   return unescape(path.slice(1));
