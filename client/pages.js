@@ -15,7 +15,9 @@ Meteor.autorun(function () {
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   var id = stackIds[stackIds.length-1];
-  parasHandle = Meteor.subscribe('paras', {'page':id});
+  parasHandle = Meteor.subscribe('paras', {'page':id}, function() {
+    Session.set("idStack", ["Welcome"]);
+  });
 });
 
 function doSearch(searchterm) {
