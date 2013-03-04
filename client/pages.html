@@ -177,9 +177,14 @@
     {{/with}}
   </div>
   {{else}}
-    <b>this is a 404</b>
-    url name is: {{url_name}}
+    {{>fourohfour this}}
   {{/if}}
+</template>
+
+<template name="fourohfour">
+  <h3>The page <b>{{url_name}}</b> doesn't exist yet.  Do you want to create it?</h3>
+    <button id="#doit">Yes, let's create it!</button>
+    url name is: {{url_name}}
 </template>
 
 <template name="editablepagetitle">
