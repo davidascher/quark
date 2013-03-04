@@ -13,7 +13,7 @@ var pagesHandle = null;
 var router;
 Session.set("idStack", []); // default
 
-parasHandle = Meteor.subscribe("paras");
+parasHandle = Meteor.subscribe("paras"); // probably needs to be more efficient, TBD XXX
 
 function doSearch(searchterm) {
   var results = [];
