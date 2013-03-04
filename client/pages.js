@@ -530,7 +530,7 @@ function setPage (pagename) {
     if (redirect) {
       console.log("FOUND A REDIRECT!", redirect)
       var newpage = Pages.findOne(redirect.original_id);
-      router.go(newpage.name); // XXX this is flashy =(
+      Meteor.Router.to(newpage.name); // XXX this is flashy =(
       return;
 
     } else {
