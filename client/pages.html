@@ -159,9 +159,7 @@
 </template>
 
 <template name="page">
-  {{#ifnot this}}
-    <b>this is a 404</b>
-  {{/if}}
+  {{#if this}}
   <div class="page card" data-id="{{this._id}}">
     <h3 class="page-name">{{>editablepagetitle name}} {{>heart}}</h3>
     <div class="sortable">
@@ -178,6 +176,9 @@
     </div>
     {{/with}}
   </div>
+  {{else}}
+    <b>this is a 404</b>
+  {{/if}}
 </template>
 
 <template name="editablepagetitle">
