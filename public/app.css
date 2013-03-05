@@ -39,6 +39,12 @@ button, input, select, textarea {
   -webkit-transition: left 1000ms ease-in-out 0s;
 }
 
+body {
+  background: rgba(0, 0, 0, 0);
+  transition: background 0s linear 1s;
+  -moz-transition: background 0s linear 1s;
+  -webkit-transition: background 0s linear 1s;
+}
 
 
 #pagestack-container {
