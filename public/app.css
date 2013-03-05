@@ -48,10 +48,10 @@ body {
 
 
 .current, .next {
-  width: 496px;
+/*  width: 496px;
   height: 296px;
   float: left;
-}
+*/}
 
 #pagestack-container {
 	position: fixed;
