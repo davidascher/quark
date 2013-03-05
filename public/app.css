@@ -49,26 +49,26 @@ div.para {
 
 
 .wrap {
-    -webkit-transition: -webkit-transform 1500ms ease-in-out;
+    -webkit-transition: -webkit-transform 150ms ease-in-out;
     -webkit-transform: translateX(0%) translateZ(0);
 
-    -moz-transition: -moz-transform 1500ms ease-in-out;
+    -moz-transition: -moz-transform 150ms ease-in-out;
     -moz-transform: translateX(0%) translateZ(0);
 
-    transition: transform 1500ms ease-in-out;
+    transition: transform 150ms ease-in-out;
     transform: translateX(0%) translateZ(0);
 }
 
 .wrap.outgoing {
-    -webkit-transform: translateX(-10%) translateZ(0);
-    -moz-transform: translateX(-10%) translateZ(0);
-    transform: translateX(-10%) translateZ(0);
+    -webkit-transform: translateX(-100%) translateZ(0);
+    -moz-transform: translateX(-100%) translateZ(0);
+    transform: translateX(-100%) translateZ(0);
 }
 
 .wrap.incoming {
-    -webkit-transform: translateX(10%) translateZ(0);
-    -moz-transform: translateX(10%) translateZ(0);
-    transform: translateX(10%) translateZ(0);
+    -webkit-transform: translateX(100%) translateZ(0);
+    -moz-transform: translateX(100%) translateZ(0);
+    transform: translateX(100%) translateZ(0);
 }
 
 .card {
