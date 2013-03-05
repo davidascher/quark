@@ -49,6 +49,7 @@ div.para {
 
 
 .wrap {
+	position: relative;
     -webkit-transition: -webkit-transform 1500ms ease-in-out;
     -webkit-transform: translateX(0%) translateZ(0);
 
