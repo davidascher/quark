@@ -57,10 +57,10 @@ div.para {
 	margin: 1px;
 	margin-top: 0;
 	margin-bottom: 2em;
-	/*transition-property: left;*/
-	transition-duration: 150ms;
+    -webkit-transition: -webkit-transform 150ms ease-in-out;
+    -webkit-transform: translateX(0%) translateZ(0);
+    transition: transform 150ms ease-in-out;
     transform: translateX(0%) translateZ(0);
-    transition-timing-function: ease-in-out;	
 }
 
 .card:hover {
