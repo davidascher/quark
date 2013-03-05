@@ -20,6 +20,7 @@ Template.slider.helpers({
   currentScreen: function() {
     console.log('in currentScreen')
     x = Meteor.Transitioner.currentPage();
+    console.log("CURRENSCREEN",x);
     return x;
   },
   nextScreen: function() {
