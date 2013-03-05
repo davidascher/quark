@@ -3,10 +3,10 @@
   <link rel='stylesheet' type='text/css' href='/app.css'>
 </head>
 <body>
-  {{>main}}
+  {{renderPage}}
 </body>
 
-<template name="main"> 
+<template name="main">
   <div id="root">
     <div class="container-fluid main">
       <div class="row-fluid container">
@@ -14,7 +14,7 @@
           {{#if loading}}
               <b>loading...</b>
           {{else}}
-            {{> slider}}
+            {{>page this}}
           {{/if}}
         </div>
         <div class="span5">
@@ -71,22 +71,6 @@
       </div>
     </div>
   </div>
-</template>
-
-<template name="slider">
-  <div class="current">
-    {{this}}
-    {{> onePage currentScreen}}
-  </div>
-  <div class="next">
-    {{> onePage nextScreen}}
-  </div>
-</template>
-
-<template name="onePage">
-  {{#if this}}
-    {{>page this}}
-  {{/if}}
 </template>
 
 <template name="searchcard">
