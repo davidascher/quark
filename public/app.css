@@ -47,6 +47,14 @@ body {
 }
 
 
+.current, .next {
+  width: 496px;
+  height: 296px;
+  float: left;
+  line-height: 296px;
+  text-align: center;
+}
+
 #pagestack-container {
 	position: fixed;
 	overflow: auto;
