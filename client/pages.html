@@ -78,21 +78,17 @@
 
 <template name="slider">
   <div class="current">
-    {{#with topmostpage}}
     {{> onePage currentScreen}}
-    {{/with}}
   </div>
   <div class="next">
-    {{#with topmostpage}}
     {{> onePage nextScreen}}
-    {{/with}}
   </div>
 </template>
 
 <template name="onePage">
-  {{#with this}}
+  {{#if this}}
     {{>page this}}
-  {{/with}}
+  {{/if}}
 </template>
 
 <template name="searchcard">
