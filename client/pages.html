@@ -19,7 +19,9 @@
             </div>
             <div class="wrap {{#if transitioning}}incoming{{/if}}">
               {{#if nextPage}}
-                  {{>page nextPage}}
+                {{#with nextPage}}
+                  {{>page this}}
+                {{/with}}
               {{/if}} 
             </div>
           {{/if}}
