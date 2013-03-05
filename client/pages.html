@@ -14,7 +14,9 @@
           {{#if loading}}
               <b>loading...</b>
           {{else}}
-            {{>page topmostpage}}
+            <div class="current">
+              {{>page topmostpage}}
+            </div>
             {{#with nextPage}}
               <div class="incoming">
                 {{>page this}}
