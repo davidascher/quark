@@ -134,7 +134,7 @@ Template.main.rendered = function() {
   });
 };
 
-Template.onePage.topmostpage = function() {
+Template.main.topmostpage = function() {
   var stackIds = Session.get("idStack");
   if (!stackIds) return;
   var id = stackIds[stackIds.length-1];
