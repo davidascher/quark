@@ -22,6 +22,7 @@ Template.slider.helpers({
     return Meteor.Transitioner.currentPage();
   },
   nextScreen: function() {
+    console.log('in nextScreen')
     return Meteor.Transitioner.nextPage();
   }
 });
