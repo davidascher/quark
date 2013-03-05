@@ -10,21 +10,21 @@
   <div id="root">
     <div class="container-fluid main">
       <div class="row-fluid container">
-        <div id="pagewrapper wrap" class="span6">
+        <div id="pagewrapper" class="span6">
           {{#if loading}}
               <b>loading...</b>
           {{else}}
             {{#if transitioning}}
-              <div class="outgoing">
+              <div class="wrap outgoing">
             {{else}}
-              <div class="">
+              <div class="wrap">
             {{/if}}
               {{>page topmostpage}}
             </div>
             {{#if transitioning}}
-              <div class="incoming">
+              <div class="wrap incoming">
             {{else}}
-              <div class="">
+              <div class="wrap">
             {{/if}}
             {{#with nextPage}}
                 {{>page this}}
