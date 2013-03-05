@@ -515,7 +515,10 @@ function setHomePage() {
 }
 
 Template.main.nextPage = function() {
-  return Pages.findOne({'name': Session.get('nextPage')});
+  console.log("seting up nextpage, session is",Session.get('nextPage'))
+  if (Session.get('nextPage'))
+    return Pages.findOne({'name': Session.get('nextPage')});
+  return null;
 }
 
 Meteor.Router.filters({
