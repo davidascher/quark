@@ -520,6 +520,7 @@ Template.main.nextPage = function() {
 
 Meteor.Router.filters({
   'setupAnimation': function(pageName) {
+    console.log('setting up animation', pageName);
     // figure out if we already have a page showing, in which case we'll do an animation
     var stack = Session.get("idStack");
     if (stack.length > 0) {
