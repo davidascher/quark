@@ -57,13 +57,15 @@ div.para {
 	margin: 1px;
 	margin-top: 0;
 	margin-bottom: 2em;
-	transition-property: left;
+    -webkit-transition: -webkit-transform 1s linear;
+    -webkit-transform: translateX(0%) translateZ(0);
+	/*transition-property: left;*/
 	transition-duration: 350ms;
     transition-timing-function: ease-in-out;	
 }
 
 .card:hover {
-	left: -300px;
+    -webkit-transform: translateX(50%) translateZ(0);
 }
 
 .link {
