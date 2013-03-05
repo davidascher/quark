@@ -72,8 +72,7 @@ div.para {
 }
 
 .card {
-	position: relative;
-	top: 0;
+	position: fixed;
 	background: white;
 	border: 1px solid #ccc;
 	border-radius: 3px;
