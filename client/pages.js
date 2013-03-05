@@ -525,6 +525,7 @@ Meteor.Router.filters({
     var stack = Session.get("idStack");
     if (stack.length > 0) {
       var currentId = stack[stack.length - 1];
+      console.log($().find(".current"))
       $().find(".current").attr('outgoing');
       Session.set('nextPage', pageName)
     }
