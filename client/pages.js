@@ -15,27 +15,6 @@ Session.set("idStack", []); // default
 
 parasHandle = Meteor.subscribe("paras"); // probably needs to be more efficient, TBD XXX
 
-
-Template.slider.helpers({
-  currentScreen: function() {
-    console.log('in currentScreen')
-    x = Meteor.Transitioner.currentPage();
-    console.log("CURRENSCREEN",x);
-    return x;
-  },
-  nextScreen: function() {
-    console.log('in nextScreen')
-    return Meteor.Transitioner.nextPage();
-  }
-});
-
-Template.onePage.helpers({
-  id2page: function(id) {
-    console.log("in id2page, id:", id);
-    return Pages.findOne(id);
-  }
-})
-
 function doSearch(searchterm) {
   var results = [];
   var pages = {};
