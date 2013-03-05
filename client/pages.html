@@ -78,10 +78,14 @@
 
 <template name="slider">
   <div class="current">
+    {{#with topmostpage}}
     {{> onePage currentScreen}}
+    {{/with}}
   </div>
   <div class="next">
+    {{#with topmostpage}}
     {{> onePage nextScreen}}
+    {{/with}}
   </div>
 </template>
 
