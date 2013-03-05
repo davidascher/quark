@@ -523,18 +523,16 @@ Template.main.nextPage = function() {
   return null;
 }
 
-Template.main.incoming = function() {
-  return Session.get("transitioning");
-}
-
-Template.main.outgoing = function() {
+Template.main.transitioning = function() {
   return Session.get("transitioning");
 }
 
 function setPage (unescapedPageName) {
   var stack = Session.get("idStack");
-  if (stack.length > 0) 
+  if (stack.length > 0)  {
     Session.set("transitioning");
+
+  }
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
     var redirect = Redirects.findOne({old_name: unescapedPageName});
