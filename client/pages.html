@@ -14,14 +14,18 @@
           {{#if loading}}
               <b>loading...</b>
           {{else}}
-            <div class="current">
-              {{>page topmostpage}}
-            </div>
-            {{#with nextPage}}
-              <div class="incoming">
-                {{>page this}}
+            {{#if outgoing}}
+              <div class="outgoing">
+                {{>page topmostpage}}
               </div>
-            {{/with}} 
+            {{/if}}
+            {{# if incoming}}
+              <div class="incoming">
+              {{#with nextPage}}
+                  {{>page this}}
+              {{/with}} 
+              </div>
+            {{/if}}
           {{/if}}
         </div>
         <div class="span5">
