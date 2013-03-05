@@ -16,7 +16,9 @@
           {{else}}
             {{>page topmostpage}}
             {{#with nextPage}}
-              {{>page this}}
+              <div class="incoming">
+                {{>page this}}
+              </div>
             {{/with}} 
           {{/if}}
         </div>
