@@ -16,6 +16,10 @@ Session.set("idStack", []); // default
 parasHandle = Meteor.subscribe("paras"); // probably needs to be more efficient, TBD XXX
 
 function doSearch(searchterm) {
+
+      $(".current").addClass('outgoing');
+return;
+
   var results = [];
   var pages = {};
   var pageIds = [];
@@ -536,6 +540,7 @@ Meteor.Router.filters({
     return pageName;
   }
 });
+
 
 
 function setPage (unescapedPageName) {
