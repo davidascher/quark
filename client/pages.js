@@ -565,7 +565,7 @@ function setPage (unescapedPageName) {
   stack.push(id);
   stack = stack.slice(-4);
   Session.set("idStack", stack)
-  return 'main';
+  return 'page';
 }
 
 Meteor.Router.add({
