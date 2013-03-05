@@ -17,9 +17,6 @@ parasHandle = Meteor.subscribe("paras"); // probably needs to be more efficient,
 
 function doSearch(searchterm) {
 
-      $(".current").addClass('outgoing');
-return;
-
   var results = [];
   var pages = {};
   var pageIds = [];
@@ -526,26 +523,18 @@ Template.main.nextPage = function() {
   return null;
 }
 
-Meteor.Router.filters({
-  'setupAnimation': function(pageName) {
-    console.log('setting up animation', pageName);
-    // figure out if we already have a page showing, in which case we'll do an animation
-    var stack = Session.get("idStack");
-    if (stack.length > 0) {
-      var currentId = stack[stack.length - 1];
-      console.log($(".current"))
-      $(".current").addClass('outgoing');
-      Session.set('nextPage', pageName)
-    }
-    return pageName;
-  }
-});
+Template.main.incoming = function() {
+  return Session.get("transitioning");
+}
 
-
+Template.main.outgoing = function() {
+  return Session.get("transitioning");
+}
 
 function setPage (unescapedPageName) {
   var stack = Session.get("idStack");
-
+  if (stack.length > 0) 
+    Session.set("transitioning");
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
     var redirect = Redirects.findOne({old_name: unescapedPageName});
@@ -576,7 +565,6 @@ Meteor.Router.add({
   '/': setHomePage,
   '/:name': setPage
 });
-Meteor.Router.filter('setupAnimation');
 Meteor.startup(function () {
   console.log("meteor started");
 });
