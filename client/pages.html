@@ -15,6 +15,9 @@
               <b>loading...</b>
           {{else}}
             {{>page topmostpage}}
+            {{#with nextPage}}
+              {{>page this}}
+            {{/with}} 
           {{/if}}
         </div>
         <div class="span5">
