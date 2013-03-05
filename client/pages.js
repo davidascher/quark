@@ -529,14 +529,14 @@ Template.main.transitioning = function() {
 
 function setPage (unescapedPageName) {
   var stack = Session.get("idStack");
+  var page = Pages.findOne({'name': unescapedPageName})
   console.log("in setPage", stack, stack[stack.length - 1], unescapedPageName);
-  if (stack.length > 1 && stack[stack.length - 1] != unescapedPageName)  {
+  if (stack.length > 1 && stack[stack.length - 1] != page._id)  {
     console.log("TRANSITIONING, BABY");
     Session.set("transitioning", true);
     Session.set("nextPage", unescapedPageName);
     return;
   }
-  var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
     var redirect = Redirects.findOne({old_name: unescapedPageName});
     if (redirect) {
