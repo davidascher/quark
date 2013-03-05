@@ -60,15 +60,15 @@ div.para {
 }
 
 .wrap.outgoing {
-    -webkit-transform: translateX(-100%) translateZ(0);
-    -moz-transform: translateX(-100%) translateZ(0);
-    transform: translateX(-100%) translateZ(0);
+    -webkit-transform: translateX(-10%) translateZ(0);
+    -moz-transform: translateX(-10%) translateZ(0);
+    transform: translateX(-10%) translateZ(0);
 }
 
 .wrap.incoming {
-    -webkit-transform: translateX(100%) translateZ(0);
-    -moz-transform: translateX(100%) translateZ(0);
-    transform: translateX(100%) translateZ(0);
+    -webkit-transform: translateX(10%) translateZ(0);
+    -moz-transform: translateX(10%) translateZ(0);
+    transform: translateX(10%) translateZ(0);
 }
 
 .card {
