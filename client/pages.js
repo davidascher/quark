@@ -21,7 +21,7 @@ Template.slider.helpers({
     console.log('in currentScreen')
     x = Meteor.Transitioner.currentPage();
     console.log("CURRENSCREEN",x);
-    return Pages.findOne('Welcome');
+    return Pages.findOne(x);
   },
   nextScreen: function() {
     console.log('in nextScreen')
