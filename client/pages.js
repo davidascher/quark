@@ -524,9 +524,26 @@ function setHomePage() {
   return 'main';
 }
 
-function setPage (unescapedPageName) {
+Template.main.nextPage() {
+  return Pages.findOne({'name': Session.get('nextPage')});
+}
+Meteor.Router.filters({
+  'setupAnimation': function(pageName) {
+    // figure out if we already have a page showing, in which case we'll do an animation
+    var stack = Session.get("idStack");
+    if (stack.length > 0) {
+      var currentId = stack[stack.length - 1];
+      $().find(".card.current").attr('outgoing');
+      Session.set('nextPage', pageName)}
+      $().find(".card.current").attr('outgoing');
+    }
+    return pageName;
+  }
+});
 
-  // figure out if we already have a page showing, in which case we'll do an animation
+
+function setPage (unescapedPageName) {
+  var stack = Session.get("idStack");
 
   console.log("in setPage", unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
@@ -543,7 +560,6 @@ function setPage (unescapedPageName) {
   } else {
     id = page._id;
   }
-  var stack = Session.get("idStack");
   for (var i = 0; i < stack.length; i++) {
     if (stack[i] === id) {
       stack.splice(i, 1);
@@ -560,6 +576,7 @@ Meteor.Router.add({
   '/': setHomePage,
   '/:name': setPage
 });
+Meteor.Router.filter('setupAnimation');
 Meteor.startup(function () {
   console.log("meteor started");
 });
