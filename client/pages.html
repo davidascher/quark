@@ -87,7 +87,9 @@
 
 <template name="onePage">
   {{#if this}}
+  {{#with id2page}}
     {{>page this}}
+  {{/with}}
   {{/if}}
 </template>
 
