@@ -31,6 +31,7 @@ Template.slider.helpers({
 
 Template.onePage.helpers({
   id2page: function(id) {
+    console.log("in id2page, id:", id);
     return Pages.findOne(id);
   }
 })
