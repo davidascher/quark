@@ -524,9 +524,10 @@ function setHomePage() {
   return 'main';
 }
 
-Template.main.nextPage() {
+Template.main.nextPage = function() {
   return Pages.findOne({'name': Session.get('nextPage')});
 }
+
 Meteor.Router.filters({
   'setupAnimation': function(pageName) {
     // figure out if we already have a page showing, in which case we'll do an animation
