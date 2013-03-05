@@ -268,14 +268,11 @@ Template.editablepagetitle.editing_title = function() {
 var endPagetitleEditing = function(evt, tmpl) {
   evt.stopPropagation();
   evt.preventDefault();
-  console.log(evt);
   Session.set("editing_title", null);
   var oldpagename = $(evt.target).attr('original-value');
   var page = Pages.findOne({'name': oldpagename});
   if (!page) return;
-  console.log(page);
   var newpagename = tmpl.find("#title-input").value;
-  console.log("new name", newpagename);
   Pages.update(page._id, {$set: {name: newpagename}})
   // XXX clean up history so old name goes away XXX TODO
   Redirects.insert({old_name: oldpagename, original_id: page._id})
@@ -296,9 +293,6 @@ Template.editablepagetitle.events({
   },
   'keydown #title-input': function(evt, tmpl) {
     if (evt.which == 13) {
-      console.log(evt);
-      console.log(evt.target);
-      console.log(evt.originalTarget);
       endPagetitleEditing(evt, tmpl);
     }
   }
@@ -517,7 +511,6 @@ function updateParagraphOrder(event, ui) {
 
 function setHomePage() {
   Session.set("idStack", ['Welcome']); // default home page
-  console.log('returning main template');
   return 'main';
 }
 
