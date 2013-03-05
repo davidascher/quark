@@ -61,7 +61,6 @@ function doSearch(searchterm) {
 }
 
 Template.main.loading = function() {
-  console.log('handle is ready:', parasHandle.ready());
   return parasHandle && !parasHandle.ready();
 }
 
@@ -73,7 +72,6 @@ Template.main.noremotesearchresults = function() {
 }
 
 Template.fourohfour.url_name = function() {
-  console.log(Meteor.Router);
   // path = Meteor.router._currentPath;
   // if (!path) return '';
   // return unescape(path.slice(1));
@@ -545,7 +543,6 @@ Meteor.Router.filters({
 function setPage (unescapedPageName) {
   var stack = Session.get("idStack");
 
-  console.log("in setPage", unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
     var redirect = Redirects.findOne({old_name: unescapedPageName});
