@@ -18,9 +18,9 @@
               {{>page topmostpage}}
             </div>
             <div class="wrap {{#if transitioning}}incoming{{/if}}">
-              {{#with nextPage}}
-                  {{>page this}}
-              {{/with}} 
+              {{#if nextPage}}
+                  {{>page nextPage}}
+              {{/if}} 
             </div>
           {{/if}}
         </div>
