@@ -14,9 +14,7 @@
           {{#if loading}}
               <b>loading...</b>
           {{else}}
-            {{#with topmostpage}}
-              {{>page this}}
-            {{/with}}
+            {{> slider}}
           {{/if}}
         </div>
         <div class="span5">
@@ -73,6 +71,24 @@
       </div>
     </div>
   </div>
+</template>
+
+
+
+
+<template name="slider">
+  <div class="current">
+    {{> onePage currentScreen}}
+  </div>
+  <div class="next">
+    {{> onePage nextScreen}}
+  </div>
+</template>
+
+<template name="onePage">
+  {{#with topmostpage}}
+    {{>page this}}
+  {{/with}}
 </template>
 
 <template name="searchcard">
