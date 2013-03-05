@@ -69,6 +69,8 @@ div.para {
 
 .card:hover {
     -webkit-transform: translateX(-100%) translateZ(0);
+    -moz-transform: translateX(-100%) translateZ(0);
+    transform: translateX(-100%) translateZ(0);
 }
 
 .link {
