@@ -19,7 +19,6 @@ parasHandle = Meteor.subscribe("paras"); // probably needs to be more efficient,
 Template.slider.helpers({
   currentScreen: function() {
     console.log('in currentScreen')
-    return 'page';
     x = Meteor.Transitioner.currentPage();
     console.log("CURRENSCREEN",x);
     return x;
