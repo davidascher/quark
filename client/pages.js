@@ -364,9 +364,10 @@ function confirmPageExists(pageId) {
 };
 
 
-// function handleInternalLinkClick(evt) {
-//   evt.stopPropagation();
-//   evt.preventDefault();
+function handleInternalLinkClick(evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+}
 //   var target = evt.target.getAttribute('data');
 //   var pageName = unescape(target);
 
