@@ -46,13 +46,6 @@ body {
   -webkit-transition: background 0s linear 1s;
 }
 
-
-.current, .next {
-/*  width: 496px;
-  height: 296px;
-  float: left;
-*/}
-
 #pagestack-container {
 	position: fixed;
 	overflow: auto;
