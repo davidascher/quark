@@ -14,21 +14,13 @@
           {{#if loading}}
               <b>loading...</b>
           {{else}}
-            {{#if transitioning}}
-              <div class="wrap outgoing">
-            {{else}}
-              <div class="wrap">
-            {{/if}}
+            <div class="wrap {{#if transitioning}}outgoing{{/if}}">
               {{>page topmostpage}}
             </div>
-            {{#if transitioning}}
-              <div class="wrap incoming">
-            {{else}}
-              <div class="wrap">
-            {{/if}}
-            {{#with nextPage}}
-                {{>page this}}
-            {{/with}} 
+            <div class="wrap {{#if transitioning}}incoming{{/if}}">
+              {{#with nextPage}}
+                  {{>page this}}
+              {{/with}} 
             </div>
           {{/if}}
         </div>
