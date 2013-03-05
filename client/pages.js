@@ -305,7 +305,7 @@ Template.heart.events({
   }
 })
 
-Template.page.preserve(['.wrap']);
+Template.page.preserve(['.wrap', '.card', '#root']);
 
 Template.page.offset = function() {
   var stack = Session.get("idStack");
