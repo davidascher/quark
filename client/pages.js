@@ -525,6 +525,9 @@ function setHomePage() {
 }
 
 function setPage (unescapedPageName) {
+
+  // figure out if we already have a page showing, in which case we'll do an animation
+
   console.log("in setPage", unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
