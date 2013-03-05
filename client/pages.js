@@ -29,6 +29,11 @@ Template.slider.helpers({
   }
 });
 
+Template.onePage.helpers({
+  id2page: function(id) {
+    return Pages.findOne(id);
+  }
+})
 
 function doSearch(searchterm) {
   var results = [];
