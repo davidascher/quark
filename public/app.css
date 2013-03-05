@@ -73,6 +73,7 @@ div.para {
 
 .card {
 	position: relative;
+	top: 0;
 	background: white;
 	/*max-width: 25em;*/
 	border: 1px solid #ccc;
