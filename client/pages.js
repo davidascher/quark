@@ -529,7 +529,7 @@ Template.main.transitioning = function() {
 
 function setPage (unescapedPageName) {
   var stack = Session.get("idStack");
-  console.log(stack);
+  console.log("in setPage", stack, stack[stack.length - 1], unescapedPageName);
   if (stack.length > 1 && stack[stack.length - 1] != unescapedPageName)  {
     console.log("TRANSITIONING, BABY");
     Session.set("transitioning", true);
