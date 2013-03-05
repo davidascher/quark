@@ -84,6 +84,9 @@ div.para {
 	margin-top: 0;
 	margin-bottom: 2em;
 }
+.card.next {
+	left: 100%;
+}
 
 .link {
 	background-color: orange;
