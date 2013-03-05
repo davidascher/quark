@@ -57,11 +57,9 @@ div.para {
 	margin: 1px;
 	margin-top: 0;
 	margin-bottom: 2em;
-    -webkit-transition: -webkit-transform 1s linear;
-    -webkit-transform: translateX(0%) translateZ(0);
 	/*transition-property: left;*/
 	transition-duration: 150ms;
-	-webkit-transition-duration: 150ms;
+    transform: translateX(0%) translateZ(0);
     transition-timing-function: ease-in-out;	
 }
 
