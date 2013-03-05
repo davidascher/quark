@@ -60,7 +60,7 @@ div.para {
     -webkit-transition: -webkit-transform 1s linear;
     -webkit-transform: translateX(0%) translateZ(0);
 	/*transition-property: left;*/
-	transition-duration: 350ms;
+	transition-duration: 150ms;
     transition-timing-function: ease-in-out;	
 }
 
