@@ -67,7 +67,13 @@ div.para {
     transform: translateX(0%) translateZ(0);
 }
 
-.card:hover {
+.card:incoming {
+    -webkit-transform: translateX(100%) translateZ(0);
+    -moz-transform: translateX(100%) translateZ(0);
+    transform: translateX(100%) translateZ(0);
+}
+
+.card:outgoing {
     -webkit-transform: translateX(-100%) translateZ(0);
     -moz-transform: translateX(-100%) translateZ(0);
     transform: translateX(-100%) translateZ(0);
