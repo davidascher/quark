@@ -533,9 +533,8 @@ Meteor.Router.filters({
     var stack = Session.get("idStack");
     if (stack.length > 0) {
       var currentId = stack[stack.length - 1];
-      $().find(".card.current").attr('outgoing');
+      $().find(".current").attr('outgoing');
       Session.set('nextPage', pageName)}
-      $().find(".card.current").attr('outgoing');
     }
     return pageName;
   }
