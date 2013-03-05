@@ -529,7 +529,7 @@ Meteor.Router.filters({
     if (stack.length > 0) {
       var currentId = stack[stack.length - 1];
       console.log($(".current"))
-      $(".current").attr('outgoing');
+      $(".current").addClass('outgoing');
       Session.set('nextPage', pageName)
     }
     return pageName;
