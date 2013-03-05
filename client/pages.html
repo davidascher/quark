@@ -78,19 +78,19 @@
 
 <template name="slider">
   <div class="current">
-    {{> onePage currentScreen}}
+    {{> onePage topmostpage}}
   </div>
   <div class="next">
-    {{> onePage nextScreen}}
+    {{> onePage topmostpage}}
   </div>
 </template>
 
-<template name="onePage">
+<!-- <template name="onePage">
   {{#with topmostpage}}
     {{>page this}}
   {{/with}}
 </template>
-
+ -->
 <template name="searchcard">
   <div class="searchcard draggable-card" type="page" data-id="{{pageId}}">
     <h3 class="cardname"><a href="{{name}}">{{name}}</a></h3>
