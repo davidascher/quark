@@ -47,16 +47,27 @@ div.para {
 	display: inline;
 }
 
-.outgoing > .card {
+.wrap.outgoing {
     -webkit-transform: translateX(-100%) translateZ(0);
     -moz-transform: translateX(-100%) translateZ(0);
     transform: translateX(-100%) translateZ(0);
 }
 
-.incoming > .card {
+.wrap.incoming {
     -webkit-transform: translateX(100%) translateZ(0);
     -moz-transform: translateX(100%) translateZ(0);
     transform: translateX(100%) translateZ(0);
+}
+
+.wrap {
+    -webkit-transition: -webkit-transform 150ms ease-in-out;
+    -webkit-transform: translateX(0%) translateZ(0);
+
+    -moz-transition: -moz-transform 150ms ease-in-out;
+    -moz-transform: translateX(0%) translateZ(0);
+
+    transition: transform 150ms ease-in-out;
+    transform: translateX(0%) translateZ(0);
 }
 
 .card {
@@ -69,14 +80,6 @@ div.para {
 	margin: 1px;
 	margin-top: 0;
 	margin-bottom: 2em;
-    -webkit-transition: -webkit-transform 150ms ease-in-out;
-    -webkit-transform: translateX(0%) translateZ(0);
-
-    -moz-transition: -moz-transform 150ms ease-in-out;
-    -moz-transform: translateX(0%) translateZ(0);
-
-    transition: transform 150ms ease-in-out;
-    transform: translateX(0%) translateZ(0);
 }
 
 .link {
