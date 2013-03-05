@@ -3,6 +3,10 @@
   <link rel='stylesheet' type='text/css' href='/app.css'>
 </head>
 <body>
+  {{>main}}
+</body>
+
+<template name="main"> 
   <div id="root">
     <div class="container-fluid main">
       <div class="row-fluid container">
@@ -67,7 +71,7 @@
       </div>
     </div>
   </div>
-</body>
+</template>
 
 <template name="slider">
   <div class="current">
