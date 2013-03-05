@@ -532,8 +532,8 @@ function setPage (unescapedPageName) {
   var page = Pages.findOne({'name': unescapedPageName})
   console.log("in setPage", stack, stack[stack.length - 1], page);
   console.log("TRANSITIONING, BABY");
-  Session.set("transitioning", true);
   Session.set("nextPage", unescapedPageName);
+  Session.set("transitioning", true);
   return;
   if (!page) { // we don't have data yet, offer to create one
     var redirect = Redirects.findOne({old_name: unescapedPageName});
