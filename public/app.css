@@ -47,6 +47,18 @@ div.para {
 	display: inline;
 }
 
+.outgoing > .card {
+    -webkit-transform: translateX(-100%) translateZ(0);
+    -moz-transform: translateX(-100%) translateZ(0);
+    transform: translateX(-100%) translateZ(0);
+}
+
+.incoming > .card {
+    -webkit-transform: translateX(100%) translateZ(0);
+    -moz-transform: translateX(100%) translateZ(0);
+    transform: translateX(100%) translateZ(0);
+}
+
 .card {
 	position: relative;
 	background: white;
@@ -65,18 +77,6 @@ div.para {
 
     transition: transform 150ms ease-in-out;
     transform: translateX(0%) translateZ(0);
-}
-
-.card:incoming {
-    -webkit-transform: translateX(100%) translateZ(0);
-    -moz-transform: translateX(100%) translateZ(0);
-    transform: translateX(100%) translateZ(0);
-}
-
-.card:outgoing {
-    -webkit-transform: translateX(-100%) translateZ(0);
-    -moz-transform: translateX(-100%) translateZ(0);
-    transform: translateX(-100%) translateZ(0);
 }
 
 .link {
