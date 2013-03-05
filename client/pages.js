@@ -531,7 +531,8 @@ function setPage (unescapedPageName) {
   var stack = Session.get("idStack");
   if (stack.length > 0)  {
     Session.set("transitioning");
-
+    Session.set("nextPage", unescapedPageName);
+    return;
   }
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
