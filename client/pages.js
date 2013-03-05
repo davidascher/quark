@@ -539,9 +539,8 @@ function setHomePage() {
   return 'main';
 }
 
-function setPage (pagename) {
-  console.log("in setPage", pagename);
-  var unescapedPageName = unescape(pagename);
+function setPage (unescapedPageName) {
+  console.log("in setPage", unescapedPageName);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
     console.log("page is null, unescapedPageName= ", unescapedPageName);
