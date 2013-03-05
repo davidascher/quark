@@ -59,6 +59,8 @@ div.para {
 	margin-bottom: 2em;
     -webkit-transition: -webkit-transform 150ms ease-in-out;
     -webkit-transform: translateX(0%) translateZ(0);
+    -moz-transition: -moz-transform 150ms ease-in-out;
+    -moz-transform: translateX(0%) translateZ(0);
     transition: transform 150ms ease-in-out;
     transform: translateX(0%) translateZ(0);
 }
