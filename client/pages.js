@@ -541,10 +541,6 @@ function setHomePage() {
 
 function setPage (pagename) {
   console.log("in setPage", pagename);
-  // if (!arg.params) debugger;
-  // var params = arg.params;
-  // if (!params) return;
-  // var pagename = params['name'];
   var unescapedPageName = unescape(pagename);
   var page = Pages.findOne({'name': unescapedPageName})
   if (!page) { // we don't have data yet, offer to create one
@@ -555,7 +551,6 @@ function setPage (pagename) {
       var newpage = Pages.findOne(redirect.original_id);
       Meteor.Router.to('/'+newpage.name); // XXX this is flashy =(
       return;
-
     } else {
       id = '404'; // this will trigger the right template thing.
     }
