@@ -2,14 +2,18 @@ Work Notes
 ==========
 
 Priorities:
-	* remodel to be pages -> [thing, thing, thing] (as opposed to thing->page)
-	
+    * what is the plugin model -- edit through the web as an option? [after all, if it's my wiki, auth is enough]
+    	* role of data, visualizations
+		* Pages should have a type: page, link, image, json, code?
+		** oops, broke reordering -- figure out whether reordering is a chunk feature.
+
+    * figure out auth UI for pages -- personal, peers, public
+	* what does my take on federation look like?  (what's easiest way to setup a sub-domain?)
+    * do i render foreign wikipages in the same place?
+    * installable plugins, if you run into a page that requires a plugin you don't have
 
 Big Open Questions
-	* what does my take on federation look like?  (what's easiest way to setup a sub-domain?)
-	* what does social search look like?
-	* what is the plugin model -- edit through the web as an option? [after all, if it's my wiki, auth is enough]
-		* role of data, visualizations
+	* what does social search look like? agents asking nodes?  search as one of many verbs?
 
 URL strategy:
 	* main URL is the shareable URL - should refer to the main page (or when we get to it, multiple pages)
@@ -43,12 +47,9 @@ Feedback:
 	* make initial screencast - focus on ease of editing & curating pages
 
 TODO
-	* FIX BROKEN NEW PAGE -> NEW TITLE 
-	* FIX PAGE RENAME
+    * nail transitions to and from?	
 	* escape search terms (e.g. to do multi-word searches) & sql-sanitize them
-	* on rename, history gets borked because the old page no longer exists.  fix.
 	* do mongo search of page titles
-	* Pages should have a type: page, link, image, json, code?
 	* think about SQL schema so that para keys and page keys are SQL IDs.
 	* detect page name collision on new page creation
 	* allow people to create page w/o linking

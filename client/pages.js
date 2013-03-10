@@ -1,25 +1,72 @@
-// TODOs
-
-// new UI for creating new pages: asks for a name; editing names -> makes 302s and tweaks backlinks.
-// make some pages starrable
-
-
 var Pages = new Meteor.Collection("pages");
-var Paras = new Meteor.Collection("paras");
+// var Paras = new Meteor.Collection("paras");
+// var parasHandle = Meteor.subscribe("paras"); // probably needs to be more efficient, TBD XXX
+var pagesHandle = Meteor.subscribe("pages"); // probably needs to be more efficient, TBD XXX
 var Redirects = new Meteor.Collection("redirects");
-var showdown;
-var parasHandle = null;
-var pagesHandle = null;
-var router;
+var DOING_TRANSITIONS = false; // XXX turned off for now
+
 Session.set("idStack", []); // default
 
-parasHandle = Meteor.subscribe("paras"); // probably needs to be more efficient, TBD XXX
+/*///////////////////////
+
+Adds support for passing arguments to partials. Arguments are merged with 
+the context for rendering only (non destructive). Use `:token` syntax to 
+replace parts of the template path. Tokens are replace in order.
+
+USAGE: {{$ 'path.to.partial' context=newContext foo='bar' }}
+USAGE: {{$ 'path.:1.:2' replaceOne replaceTwo foo='bar' }}
+
+///////////////////////////////*/
+
+Handlebars.registerHelper('passid', function(partial) {
+  if (!partial) console.error("No partial name given.")
+
+  var values = Array.prototype.slice.call(arguments,1)
+  var opts = values.pop()
+  var done, value
+
+  while (!done) {
+    value = values.pop()
+    if (value) partial = partial.replace(/:[^\.]+/, value)
+    else done = true
+  }
+
+console.log("partial", partial);
+console.log(opts);
+  partial = Handlebars._default_helpers[partial]
+  if (!partial) return ''
+
+  var context = _.extend({}, opts.context||this, _.omit(opts, 'context', 'fn', 'inverse'))
+  return new Handlebars.SafeString( partial(context) )
+})
+
+Handlebars.registerHelper('$', function(partial) {
+  if (!partial) console.error("No partial name given.")
+
+  var values = Array.prototype.slice.call(arguments,1)
+  var opts = values.pop()
+  var done, value
+
+  while (!done) {
+    value = values.pop()
+    if (value) partial = partial.replace(/:[^\.]+/, value)
+    else done = true
+  }
+
+console.log("partial", partial);
+console.log(opts);
+  partial = Handlebars._default_helpers[partial]
+  if (!partial) return ''
+
+  var context = _.extend({}, opts.context||this, _.omit(opts, 'context', 'fn', 'inverse'))
+  return new Handlebars.SafeString( partial(context) )
+})
+
+
+// -- Search --
 
 function doSearch(searchterm) {
-
   var results = [];
-  var pages = {};
-  var pageIds = [];
   if (! searchterm) {
     Session.set("doing-search", false);
     return;
@@ -30,25 +77,11 @@ function doSearch(searchterm) {
   Session.set("done-remote-search", false);
   Meteor.call("search", searchterm, function(err, local) {
     for (i = 0; i < local.length; i++) {
-      // XXX this is probably all very slow.
-      paraId = local[i]['paraId'];
-      para = Paras.findOne(paraId);
-      if (!para) return; // XXX
-      page = Pages.findOne(para.page);
-      var p;
-      if (pages[page._id]) {
-        p = pages[page._id]
-      } else {
-        pageIds.push(page._id);
-        p = {'name': page.name, 'pageId': page._id, snippets: []};
-        pages[page._id] = p;
-      }
+      var page = Pages.findOne(local[i]['pageId']);
+      var p = {'name': page.name, 'pageId': page._id, snippets: []};
       snippets = local[i]['snippets'];
-      snippets = "<p>" + snippets.split('\n').join('</p><p>') + "</p>";
-      p['snippets'].push(snippets);
-    }
-    for (i = 0; i < pageIds.length; i++) {
-      results.push(pages[pageIds[i]]);
+      p['snippets'] = ["<p>" + snippets.split('\n').join('</p><p>') + "</p>"];
+      results.push(p);
     }
     Session.set("no-local-search-results", (results.length == 0));
     Session.set("searchresults", results);
@@ -61,97 +94,6 @@ function doSearch(searchterm) {
   });
 }
 
-Template.main.loading = function() {
-  return parasHandle && !parasHandle.ready();
-}
-
-Template.main.nolocalsearchresults = function() {
-  return Session.get('no-local-search-results');
-}
-Template.main.noremotesearchresults = function() {
-  return Session.get('no-remote-search-results');
-}
-
-Template.fourohfour.url_name = function() {
-  // path = Meteor.router._currentPath;
-  // if (!path) return '';
-  // return unescape(path.slice(1));
-}
-
-Template.fourohfour.events({
-  'click .doit': function(evt) {
-    console.log("doing the doit");
-    var name = Template.fourohfour.url_name();
-    var timestamp = (new Date()).getTime();
-    var newpageId = Pages.insert({name: name, mtime: timestamp});
-    Paras.insert({
-      index: 0,
-      'page': newpageId,
-      'content': ["This is an default page. Very sad.  Make it personal?"]
-    })
-    // router.go(name);
-  }
-})
-
-Template.main.rendered = function() {
-  $(".draggable-card").draggable({ opacity: 0.7, helper: "clone" });
-
-  $( ".trash" ).droppable({
-    accept: ".droppable-card",
-    activeClass: "ready",
-    hoverClass: "activated",
-    drop: function(event, ui) {
-
-    }
-  });
-
-  $( ".page" ).droppable({
-    accept: ".draggable-card",
-    activeClass: "ready",
-    hoverClass: "activated",
-    drop: function(event, ui) {
-      var droppedPageId = ui.draggable.attr('data-id');
-      var type = ui.draggable.attr('type');
-      var pageId = $(event.target).attr('data-id');
-      var timestamp = (new Date()).getTime();
-      var index = Paras.find({page: pageId}).count() + 1;
-      var content;
-      if (type === "page") {
-        var pageName = Pages.findOne(droppedPageId).name;
-        content = ["[[" + pageName + "]]"];
-      } else {
-        content = ["[" + droppedPageId + ' ' + ui.draggable.attr('data-label') + "]"];
-      }
-      Paras.insert({
-        index: index,
-        'page': pageId,
-        'content': content
-      })
-      ui.draggable.remove();
-    }
-  });
-};
-
-Template.main.topmostpage = function() {
-  var stackIds = Session.get("idStack");
-  if (!stackIds) return;
-  var id = stackIds[stackIds.length-1];
-  var page = Pages.findOne(id);
-  return page;
-}
-
-Template.main.pagestack = function() {
-  var stackIds = Session.get("idStack");
-  if (!stackIds || stackIds.length < 2) return; // history starts one page ago
-  var pages = []; // new Meteor.Collection();
-  for (var i = 0; i < stackIds.length - 1; i++) {
-    var p = Pages.findOne(stackIds[i]);
-    if (p) {
-      pages.push(p);
-    }
-  }
-  return pages;
-}
 
 Template.search.events({
   'keydown #search': function(evt) {
@@ -169,6 +111,107 @@ Template.search.events({
     doSearch(searchterm);
   }
 })
+
+// -- main template --
+
+Template.main.loading = function() {
+  return pagesHandle && !pagesHandle.ready();
+}
+
+Template.main.nextPage = function() {
+  if (Session.get('nextPage'))
+    return Pages.findOne({'name': Session.get('nextPage')});
+}
+
+Template.main.transitioning = function() {
+  return Session.get("transitioning");
+}
+
+Template.main.nolocalsearchresults = function() {
+  return Session.get('no-local-search-results');
+}
+
+Template.main.noremotesearchresults = function() {
+  return Session.get('no-remote-search-results');
+}
+
+Template.page.redirected_from = function() {
+  return Session.get("redirected-from");
+}
+
+Template.page.equal = function(a,b) {
+  return a == b;
+}
+
+Template.page.chunk = function() {
+  // type is the type of template we need
+  var type = this.type;
+  // find the template?
+  return Template[type](this);
+}
+
+Template.fourohfour.url_name = function() {
+  return Session.get('targetpath')
+}
+
+Template.main.rendered = function() {
+  $(".draggable-card").draggable({ opacity: 0.7, helper: "clone" });
+
+  $( ".page" ).droppable({
+    accept: ".draggable-card",
+    activeClass: "ready",
+    hoverClass: "activated",
+    drop: function(event, ui) {
+      var droppedPageId = ui.draggable.attr('data-id');
+      var type = ui.draggable.attr('type');
+      var pageId = $(event.target).attr('data-id');
+      var page = Pages.findOne(pageId);
+      var timestamp = (new Date()).getTime();
+
+      var content;
+      if (type === "page") {
+        var droppedPage = Pages.findOne(droppedPageId);
+        if (!droppedPage) {
+          console.log("Uh-oh -- couldn't find page ", droppedPageId, ", maybe there's a corrupt sqlite?");
+          return;
+        }
+
+        var pageName = droppedPage.name;
+        // escape ]'s in pagenames XXX
+        content = "[[" + pageName + "]]";
+      } else {
+        content = "[" + droppedPageId + ' ' + ui.draggable.attr('data-label') + "]";
+      }
+      para = {type: 'para', value: content, guid: guid(), pageId: page._id};
+      var contents = page.contents;
+      contents.push(para);
+      Pages.update(pageId, {$set: {contents: contents, mtime: timestamp}});
+      ui.draggable.remove();
+    }
+  });
+};
+
+Template.main.topmostpage = function() {
+  var stackIds = Session.get("idStack");
+  if (!stackIds) return;
+  var id = stackIds[stackIds.length-1];
+  var page = Pages.findOne(id);
+  return page;
+}
+
+// not currently used, but ready in case we want to display history
+Template.main.pagestack = function() {
+  var stackIds = Session.get("idStack");
+  if (!stackIds || stackIds.length < 2) return; // history starts one page ago
+  var pages = []; // new Meteor.Collection();
+  for (var i = 0; i < stackIds.length - 1; i++) {
+    var p = Pages.findOne(stackIds[i]);
+    if (p) {
+      pages.push(p);
+    }
+  }
+  return pages;
+}
 
 Template.main.doingsearch = function() {
   return Session.get("doing-search");
@@ -189,68 +232,84 @@ Template.main.remotesearchresults = function() {
   return Session.get("remotesearchresults");
 }
 
-Template.newpara.events({
-  'click': function(evt) {
-    // var pageName = Session.get("pageId");
-    var id = this._id;
-    var index = Paras.find({page: id}).count() + 1;
-    var p = Paras.insert({
-      index: index,
-      'page': id,
-      'content': ["Make this paragraph say what you want it to."]
-    })
-    Session.set("editing_para", p);
-    Meteor.flush(); // force DOM redraw, so we can focus the edit field
-    activateInput($("#para-textarea")); // XXX hacky - assumes only one such thing in page.
+
+// -- 404 handling: offer to create a new page --
+
+Template.fourohfour.events({
+  'click .doit': function(evt) {
+    var name = Session.get('targetpath')
+    var timestamp = (new Date()).getTime();
+    var newpageId = Pages.insert({name: name, mtime: timestamp,
+      contents: [{type: 'para', value: "This is an default page. Very sad.  Make it personal?",
+      guid: guid()}]});
+    var stack = Session.get("idStack")
+    stack.push(name);
+    Session.set("idStack", stack)
   }
 })
 
-Template.newlink.events({
+// -- new paragraph template --
+
+function addParaToPage(page, defaultValue) {
+  contents = page.contents;
+  var id = guid();
+  contents.push({type: 'para', value: defaultValue, guid: id});
+  var timestamp = (new Date()).getTime();
+  Pages.update(page._id, {$set: {contents: contents, mtime: timestamp}});
+  Session.set("editing_para", id); 
+  Meteor.flush(); // force DOM redraw, so we can focus the edit field
+  activateInput($("#para-textarea")); // XXX hacky - assumes only one such thing in page.
+}
+
+Template.newpara.events({
   'click': function(evt) {
-    // var pageName = Session.get("pageId");
-    var id = this._id;
-    var index = Paras.find({page: id}).count() + 1;
-    var p = Paras.insert({
-      index: index,
-      'page': id,
-      'content': ["This is how you add a link to a [http://www.mozilla.org page on another website]"]
-    })
-    Session.set("editing_para", p);
-    Meteor.flush(); // force DOM redraw, so we can focus the edit field
-    activateInput($("#para-textarea")); // XXX hacky - assumes only one such thing in page.
+    addParaToPage(this, "Make this paragraph say what you want it to.");
   }
 })
+
+// -- new link template --
+
+Template.newlink.events({
+  'click': function(evt) {
+    addParaToPage(this, "This is how you add a link to a [http://www.mozilla.org page on another website]");
+  }
+})
+
+// -- new page button template --
+
+function generateNewPageName() {
+  var names = ['new page', 'another new page', 'a random new page'];
+  var newpage = true;
+  var i = 0;
+  var newpagename = names[i];
+  while (newpage != null) {
+    newpage = Pages.findOne({name: newpagename});
+    if (!newpage) break;
+    i++;
+    if (i >= names.length) {
+      newpagename = 'new page ' + (i-2).toString(); // so they start from 1
+    } else {
+      newpagename = names[i];
+    }
+    newpage = Pages.findOne({name: newpagename});
+  }
+  return newpagename;
+}
 
 Template.newpage.events({
   'click': function(evt) {
     // this creates a paragraph containing a link to a page that doesn't exist.
     // and inserts it at the end of the current page.
-    var pageId = this._id;
-    // var pageId = Session.get("pageId");
-    var names = ['new page', 'another new page', 'a random new page'];
-    var newpage = true;
-    var i = 0;
-    var newpagename = names[i];
-    while (newpage != null) {
-      newpage = Pages.findOne({name: newpagename});
-      if (!newpage) break;
-      i++;
-      if (i >= names.length) {
-        newpagename = 'new page ' + (i-2).toString(); // so they start from 1
-      } else {
-        newpagename = names[i];
-      }
-      newpage = Pages.findOne({name: newpagename});
-    }
-    var index = Paras.find({page: pageId}).count() + 1;
-    var p = Paras.insert({
-      index: index,
-      'page': pageId,
-      'content': ["Link to a [[" + newpagename + "]]"]
-    })
-    Session.set("editing_para", p);
-    Meteor.flush(); // force DOM redraw, so we can focus the edit field
-    activateInput($("#para-textarea")); // XXX hacky - assumes only one such thing in page.
+    var newpagename = generateNewPageName();
+    addParaToPage(this, "Link to a [[" + newpagename + "]]");
+  }
+})
+
+// -- heartable pages, and their lists
+
+Template.heart.events({
+  'click i.heart': function(evt, tmpl) {
+    Pages.update(this._id, {$set: {starred: !this.starred}})
   }
 })
 
@@ -261,6 +320,8 @@ Template.heartedpages.pages = function() {
 Template.recentpages.pages = function() {
   return Pages.find({}, {sort: {mtime: -1}}); // most recently modified first
 };
+
+// -- editable page titles --
 
 Template.editablepagetitle.editing_title = function() {
   return Session.get("editing_title");
@@ -284,7 +345,7 @@ var endPagetitleEditing = function(evt, tmpl) {
 
 Template.editablepagetitle.events({
   'blur': function(evt, tmpl) {
-    endPagetitleEditing(evt, tmpl);
+   endPagetitleEditing(evt, tmpl);
   },
   'click span.pagetitle': function(evt, tmpl) {
     Session.set("editing_title", true);
@@ -299,13 +360,21 @@ Template.editablepagetitle.events({
   }
 })
 
-Template.heart.events({
-  'click i.heart': function(evt, tmpl) {
-    Pages.update(this, {$set: {starred: !this.starred}})
-  }
-})
+// This will return the template that corresponds to the type attribute
+// of the object that it's applied to.  So
+//  {{dispatchtype object}}
+// if object.type == orange, will be equivalent to
+//  {{>orange object}}
+
+Handlebars.registerHelper('dispatchtype', function(chunk, options) {
+  return new Handlebars.SafeString(Template[chunk.type](this));
+});
+
+// -- this is needed for css transitions, which we may not need -- not clear whether we need all of these
 
 Template.page.preserve(['.wrap', '.card', '#root']);
+
+// -- the page template
 
 Template.page.offset = function() {
   var stack = Session.get("idStack");
@@ -339,93 +408,16 @@ Template.page.rendered = function() {
   $( ".para" ).enableSelection();
 }
 
-Template.page.paras = function() {
-	return Paras.find({"page": this._id}, {sort: {index: 1}});
-}
-
-Template.para.editing = function () {
-  return Session.equals('editing_para', this._id);
-};
-
-Template.page.itemlist = function() {
-return Items.find({},{sort:{listposition:1}});
-}
-
-function confirmPageExists(pageId) {
-  var timestamp = (new Date()).getTime();
-  page = Pages.findOne({_id: pageId});
-  if (page) {
-    Pages.update(page._id,
-      {$set: {
-        // name: pageName,
-        mtime: timestamp}
-      });
-    return;
-  }
-};
-
-
-function handleInternalLinkClick(evt) {
-  evt.stopPropagation();
-  evt.preventDefault();
-}
-//   var target = evt.target.getAttribute('data');
-//   var pageName = unescape(target);
-
-//   var redirect = Redirects.findOne({old_name: pageName});
-//   if (redirect) {
-//     // this is an actual client-side redirect, kinda cute!
-//     Session.set("pageId", redirect.original_id);
-//   } else {
-//     Session.set("pageId", pageNameToId(unescape(target)));
-//   }
-// };
-
-function fixupIndices() {
-  var pageName = Session.get("pageId");
-  var paras = Paras.find({page: pageName}, {sort: {index: 1}});
-  var index = 0;
-  paras.forEach(function(para) {
-    Paras.update(para._id, {$set: {index: index}});
-    index++;
+Template.page.contents = function() {
+  var chunks = this.contents;
+  var pageId = this._id;
+  _.each(chunks, function(chunk) {
+    if (! chunk.guid)
+      chunk.guid = guid();
   });
+  return chunks;
 }
 
-function endParagraphEditing(id, index, contents) {
-  // trim leading and trailing whitespace
-  var contents = $.trim(contents);
-  var para = Paras.findOne(id);
-  var pageId = para.page; // Session.get("pageId");
-  // if it's empty, get rid of it.
-  if (contents.length == 0) {
-    Paras.remove(id);
-  } else {
-    var subparas = contents.split(/\n\n+/);
-    var numsubparas = subparas.length;
-    // if it has double newlines, split it
-    if (numsubparas > 1) {
-      Paras.remove(id); // remove the old one
-      for (var i = 0; i < subparas.length; i++) {
-        Paras.insert({
-          page: pageId,
-          index: index + (i / numsubparas), 
-          content: [subparas[i]]
-        });
-      }
-    } else {
-      Paras.update({_id: id}, {
-        page: pageId,
-        index: index, 
-        content: [contents]
-      });
-    }
-  }
-  fixupIndices();
-  Session.set("editand", null);
-  Session.set("editing_para", null);
-
-  confirmPageExists(pageId);
-}
 
 var activateInput = function (input) {
   input.focus();
@@ -433,61 +425,21 @@ var activateInput = function (input) {
 };
 
 var startEditParagraph = function(para, tmpl) {
-    Session.set("editing_para", para._id);
-    Session.set("editand", para._id);
-    Meteor.flush(); // force DOM redraw, so we can focus the edit field
-    activateInput(tmpl.find("#para-textarea"));
+  var guid = para.guid;
+  Session.set("editing_para", guid);
+  Session.set("editand", guid);
+  Meteor.flush(); // force DOM redraw, so we can focus the edit field
+  activateInput(tmpl.find("#para-textarea"));
 }
 
-
-Template.page.events({
-  'click .edit-handle': function(evt, tmpl) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    startEditParagraph(this, tmpl);
-  },
-
-  'click i.done-handle': function(evt, template) {
-    var para = $(evt.target).parent();
-    var textarea = para.find("textarea").val();
-    endParagraphEditing(this._id, this.index, textarea);
-
-  },
-
-  'dblclick .editable': function (evt, tmpl) {
-    evt.stopPropagation();
-    evt.preventDefault();
-    startEditParagraph(this, tmpl)
-    // Session.set("editing_para", this._id);
-  },
-
-  'blur': function(evt) {
-    if (! Session.get("editing_para")) return; // otherwise random paragraphs get deleted!
-    var para = $(evt.target).parent();
-    var textarea = para.find("textarea").val();
-    endParagraphEditing(this._id, this.index, textarea);
-  },
-
-  'keydown .para': function(evt) {
-    if (evt.which == 27) {
-      endParagraphEditing(this._id, this.index, evt.target.value);
-    }
-  },
-});
-
-asSlug = function(name) {
-  // return escape(name);
-  return name;
-//  return name.replace(/\s/g, '-').replace(/[^A-Za-z0-9-]/g, '').toLowerCase();
-};
-
-renderInternalLink = function(match, name) {
-  var slug = asSlug(name);
+var renderInternalLink = function(match, name) {
+  var slug = name.replace('"', '&quot;', 'g');
+  var slug = name.replace("'", '&squot;', 'g');
   return "<a class=\"internal\" data=\"" + slug + "\" href=\"/" + slug + "\" title=\"" + "\">" + name + "</a>";
 };
 
 Handlebars.registerHelper('linkify', function(content, options) {
-  var original = content[0];
+  var original = content;
   converter = new Showdown.converter(); // XXX move this to some appropriate scope
   var html = converter.makeHtml(original);
   var linkified = html.replace(/\[\[([^\]]+)\]\]/gi, renderInternalLink).replace(/\[(http.*?) (.*?)\]/gi, "<a class=\"external\" target=\"_blank\" href=\"$1\" title=\"$1\" rel=\"nofollow\">$2</a>");
@@ -503,11 +455,13 @@ var pageNameToId = function(pageName) {
 function updateParagraphOrder(event, ui) {
   // build a new array items in the right order, and push them
   // stolen from https://github.com/sdossick/sortable-meteor
-  var rows = $(event.target).find('.para');
-  _.each(rows, function(element,index,list) {
-    var id = $(element).data('id');
-    Paras.update({_id: id}, {$set: {index: index}});
+  var contents = [];
+  var chunks = $(event.target).closest('.page').find(".chunk");
+  _.each(chunks, function(element,index,list) {
+    contents.push(JSON.parse($(element).attr('data-json')));
   });
+  var id = $(event.target).closest('.page').attr('data-id');
+  Pages.update(id, {$set: {contents: contents}})
 }
 
 
@@ -516,36 +470,43 @@ function setHomePage() {
   return 'main';
 }
 
-Template.main.nextPage = function() {
-  console.log("seting up nextpage, session is",Session.get('nextPage'))
-  if (Session.get('nextPage'))
-    return Pages.findOne({'name': Session.get('nextPage')});
-  return null;
-}
-
-Template.main.transitioning = function() {
-  return Session.get("transitioning");
-}
-
 function setPage (unescapedPageName) {
   var stack = Session.get("idStack");
   var page = Pages.findOne({'name': unescapedPageName})
-  console.log("in setPage", stack, stack[stack.length - 1], page);
-  console.log("TRANSITIONING, BABY");
-  Session.set("nextPage", unescapedPageName);
-  Session.set("transitioning", true);
-  return;
+  if (DOING_TRANSITIONS) {
+    // console.log("in setPage", stack, stack[stack.length - 1], page);
+    // console.log("TRANSITIONING, BABY");
+    // Session.set("nextPage", unescapedPageName);
+    // Meteor.flush();
+    // Session.set("transitioning", true);
+    // Meteor.flush();
+  }
   if (!page) { // we don't have data yet, offer to create one
     var redirect = Redirects.findOne({old_name: unescapedPageName});
     if (redirect) {
-      console.log("FOUND A REDIRECT!", redirect)
       var newpage = Pages.findOne(redirect.original_id);
-      Meteor.Router.to('/'+newpage.name); // XXX this is flashy =(
+      var target = newpage.name;
+      if (newpage._id == stack[stack.length-1]) { // we're likely doing a back button want to skip past redirect
+        target = stack[stack.length-2]; // XXX is it possible that there isn't one?
+      }
+      Meteor.defer(function() {
+        // We store the from and to, so we can detect on page render whether we need to indicate
+        // that there was a redirection.
+        Session.set('redirected-from', unescapedPageName)
+        Session.set('redirected-to', target)
+        Meteor.Router.to('/'+target);
+      })
       return;
     } else {
+      Session.set('targetpath', unescapedPageName)
       id = '404'; // this will trigger the right template thing.
     }
   } else {
+    if (Session.get('redirected-to') != unescapedPageName) {
+      // it's a non-redirected visit, so clear the markers.
+      Session.set('redirected-from', '')
+      Session.set('redirected-to', '')
+    }
     id = page._id;
   }
   for (var i = 0; i < stack.length; i++) {
@@ -556,7 +517,7 @@ function setPage (unescapedPageName) {
   }
   stack.push(id);
   stack = stack.slice(-4);
-  // Session.set("idStack", stack)
+  Session.set("idStack", stack)
   return 'main';
 }
 
@@ -564,6 +525,7 @@ Meteor.Router.add({
   '/': setHomePage,
   '/:name': setPage
 });
+
 Meteor.startup(function () {
   console.log("meteor started");
 });

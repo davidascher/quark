@@ -43,20 +43,34 @@ button, input, select, textarea {
 	position: relative;
 }
 
-div.para {
+.para {
 	display: inline;
 }
 
+.testbox {
+	position: fixed;
+	right: 0;
+	top: 1em;
+	/*max-width: 350px;*/
+	font-size: 12px;
+	font-size: smallest;
+}
+
+#startTest {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
 
 .wrap {
 	position: relative;
-    -webkit-transition: -webkit-transform 1500ms ease-in-out;
+    -webkit-transition: -webkit-transform 350ms ease-in-out;
     -webkit-transform: translateX(0%) translateZ(0);
 
-    -moz-transition: -moz-transform 1500ms ease-in-out;
+    -moz-transition: -moz-transform 350ms ease-in-out;
     -moz-transform: translateX(0%) translateZ(0);
 
-    transition: transform 1500ms ease-in-out;
+    transition: transform 350ms ease-in-out;
     transform: translateX(0%) translateZ(0);
 }
 
@@ -65,12 +79,17 @@ div.para {
     -moz-transform: translateX(-100%) translateZ(0);
     transform: translateX(-100%) translateZ(0);
 }
-
+.wrap.next {
+	top: -100%;
+	left: 100%;
+}
 .wrap.incoming {
     -webkit-transform: translateX(-100%) translateZ(0);
     -moz-transform: translateX(-100%) translateZ(0);
     transform: translateX(-100%) translateZ(0);
 }
+
+
 
 .card {
 	position: fixed;
@@ -209,9 +228,6 @@ div.para {
 	font-weight: lighter;
 }
 
-.searchcard p {
-}
-
 .paragraph-placeholder {
 	min-height: 1.2em; 
 	line-height: 1.2em;
@@ -243,6 +259,7 @@ span.pagetitle:hover {
 .navbar-fixed-top, .navbar-fixed-bottom {
 	position: static;
 }
+
 .right {
 	float: right;
 	margin-right: 1em;
@@ -254,14 +271,20 @@ input[type="text"], input[type="email"], input[type="password"] {
 
 #sortable { list-style-type: none; margin: 0; padding: 0; }
 
-/*#sortable div { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; }*/
+.draggable {
+	position: relative;
+}
+
 .drag-handle { 
-	position: absolute; 
+	position: absolute;
+	top: 0;
+	right: 0; 
+/*	padding-right: 1em;
 	margin-right: 1.3em; 
-	min-width: 1.3em; 
+	margin-left: .5em;
+*/	min-width: 1.3em; 
 	width: 1.3em;
-	float: left;
-	/*clear:;*/
+	/*float: left;*/
 }
 
 .draggable-handle {
@@ -270,6 +293,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 	top: 0.5em;
 	opacity: .2;
 }
+
 .draggable-handle:hover {
 	opacity: 1
 }
@@ -279,7 +303,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 }
 
 h3.page-name {
-	margin-left: 16px;
+	/*margin-left: 16px;*/
 }
 
 textarea.editable {
@@ -299,11 +323,15 @@ textarea.editable {
 	opacity: .4;
 }
 
-.para {
-	float: left;
-	margin-left: 20px;
-	/*text-indent: -1.5em;*/
+.chunk {
+	display: inline-block;
 }
+
+.chunk {
+	float: left;
+	/*margin-left: 20px;*/
+}
+
 .drag-handle, .done-handle {
 	vertical-align: top;
 	opacity: .1;

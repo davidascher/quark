@@ -1,7 +1,7 @@
 // This keeps user-authored stuff indexed in sqlite
 
 var sqlite3 = require('sqlite3');
-var allparas = Paras.find();
+var allpages = Pages.find();
 var Future = require('fibers/future'), wait = Future.wait;
 var db;
 var restify = require('restify');
@@ -25,13 +25,15 @@ Meteor.methods({
     //select snippet(paragraphs) from paragraphs where data match 'tarte';
     // XXX add title searches too, and rank them higher.
     // XXX figure out ranking in general.
-    db.all("SELECT DISTINCT key,SNIPPET(paragraphs) FROM paragraphs WHERE data MATCH '" + term + "';", function(err, rows) {
-	    var results = [];
-	    for (var i = 0; i < rows.length; i++) {
-	    	results.push({'paraId': rows[i]['key'], 'snippets': rows[i]["SNIPPET(paragraphs)"]})
-	    }
-    	fut.ret(results);
-    })
+    db.all("SELECT DISTINCT key,SNIPPET(pages) FROM pages WHERE data MATCH '" + term + "';",
+    	function(err, rows) {
+		    Meteor._debug(rows);
+		    var results = [];
+		    for (var i = 0; i < rows.length; i++) {
+		    	results.push({'pageId': rows[i]['key'], 'snippets': rows[i]["SNIPPET(pages)"]})
+		    }
+	    	fut.ret(results);
+	    })
     var myresults = fut.wait();
     return myresults;
 	},
@@ -62,21 +64,34 @@ Meteor.methods({
   }
 });
 
-var onParaChange = {
+var aggregateParagraphText = function(contents) {
+	var bits = [];
+	_.each(contents, function(para, index, list) {
+		var typePlugin = TYPES[para.type];
+		if (typePlugin && typePlugin.toString)
+			bits.push(typePlugin.toString(para));
+	})
+	return bits.join('\n')
+}
+
+var onPageChange = {
 	added: function(id, fields) {
 		// Meteor._debug("added", id, fields);
 		// using OR REPLACE in case we're getting replays by meteor.
-		db.run("INSERT OR REPLACE INTO paragraphs VALUES ($key, $data)", {
+		var text = aggregateParagraphText(fields.contents);
+		// console.log("Indexing page:", id);
+		db.run("INSERT OR REPLACE INTO pages VALUES ($key, $data)", {
 			$key: id,
-			$data: fields['content'][0]
+			$data: text
 		})
 	},
 	changed: function(id, fields) {
 		// Meteor._debug("changed", id, fields);
 		if (fields['content']) { // some updates are just index tweaks for example
+			var text = aggregateParagraphText(fields.contents);
 			db.run("INSERT OR REPLACE INTO paragraphs VALUES ($key, $data)", {
 				$key: id,
-				$data: fields['content'][0]
+				$data: text
 			})
 		}
 	},
@@ -85,10 +100,10 @@ var onParaChange = {
 	}
 }
 
-db = new sqlite3.Database('paragraphs.sqlite3', function() {
-	db.run("CREATE VIRTUAL TABLE paragraphs USING fts4(key, data);", function() {});
+db = new sqlite3.Database('pages.sqlite3', function() {
+	db.run("CREATE VIRTUAL TABLE pages USING fts4(key, data);", function() {});
 });
 Meteor.startup(function () {
-	allparas.observeChanges(onParaChange)
+	allpages.observeChanges(onPageChange)
 });
 

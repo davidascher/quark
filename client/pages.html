@@ -1,9 +1,13 @@
 <head>
   <title>Playing w/ meteor and fedwiki</title>
-  <link rel='stylesheet' type='text/css' href='/app.css'>
+  <link rel='stylesheet' type='text/css' href='/app.css'/>
+  <link rel='stylesheet' type='text/css' href='/qunit-1.11.0.css'/>
+  <script type="text/javascript" src="/test.js"></script>
 </head>
 <body>
   {{> main}}
+  <button id="startTest" onclick="runTests()">test</button>
+<div class="testbox"><div id="qunit"></div> <div id="qunit-fixture"></div></div>
 </body>
 
 <template name="main">
@@ -17,16 +21,16 @@
             <div class="wrap {{#if transitioning}}outgoing{{/if}}">
               {{>page topmostpage}}
             </div>
-            <div class="wrap {{#if transitioning}}incoming{{/if}}">
-              {{#if nextPage}}
-                {{#with nextPage}}
+            {{#if nextPage}}
+              {{#with nextPage}}
+                <div class="next wrap {{#if transitioning}}incoming{{/if}}">
                   {{>page this}}
-                {{/with}}
-              {{/if}} 
-            </div>
+                </div>
+              {{/with}}
+            {{/if}} 
           {{/if}}
         </div>
-        <div class="span5">
+        <div class="span6">
           {{>search}}
           {{#if doingsearch}}
             <div class="searchresults row-fluid">
@@ -139,22 +143,25 @@
   {{/each}}
 </template>
 
-<template name="para">
+<template name="chunk">
   <div class="ui-state-default draggable">
     <span class="drag-handle">¶</span>
-    <!-- <i class="icon-align-justify drag-handle"></i> -->
-    <div>
-      <div class="para" data-id='{{_id}}' data-index='{{index}}'>
-        {{#if editing}}
-          <div class="parablock">
-            <textarea id="para-textarea" class='editable'>{{this.content}}</textarea>
-          </div>
-            <i class="icon-remove-circle done-handle"></i>
-        {{else}}<div class='editable'>{{#linkify this.content}}{{/linkify}}</div>
-        {{/if}}
-      </div>
+    <div class="chunk" guid="{{guid}}" data-json="{{json}}">
+      {{dispatchtype this}} {{! dispatch to the template specified by this.type }}
     </div>
     <div class="clear"/>
+  </div>
+</template>
+
+<template name="para">
+  <div class="para">
+    {{#if editing}}
+      <div class="parablock">
+        <textarea id="para-textarea" class='editable'>{{this.value}}</textarea>
+      </div>
+        <i class="icon-remove-circle done-handle"></i>
+    {{else}}<div class='editable'>{{#linkify this.value}}{{/linkify}}</div>
+    {{/if}}
   </div>
 </template>
 
@@ -169,19 +176,21 @@
 <template name="page">
   {{#if this}}
   <div class="page card" data-id="{{this._id}}">
-    <h3 class="page-name">{{>editablepagetitle name}} {{>heart}}</h3>
+    <h3 class="page-name">{{>editablepagetitle name}} {{>heart this}}</h3>
     <div class="sortable">
-      {{#each paras}}
-        {{> para}}
+      {{#each contents}}
+        {{>chunk this}}
       {{/each}}
     </div>
     {{#with this}}
-    <div class="buttonbar">
-      {{>newpara}}
-      {{>newpage}}
-      {{>newlink}}
-      {{>newothers}}
-    </div>
+      <div class="buttonbar">
+        {{>newpara}}
+        {{>newpage}}
+        {{>newlink}}
+      </div>
+      {{#if redirected_from}}
+        <div class="redirected_from">You were redirected here from '{{redirected_from}}'</div>
+      {{/if}}
     {{/with}}
   </div>
   {{else}}

@@ -3,15 +3,15 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-autopublish
 insecure
 preserve-inputs
 bootstrap
 backbone
-jquery
 font-awesome
 accounts-ui
 accounts-persona
 jquery-ui
 router
 transitioner
+jquery
+autopublish
