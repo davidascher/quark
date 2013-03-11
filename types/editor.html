@@ -1,0 +1,33 @@
+<head>
+	<script src="codemirror.js"></script>
+	<link rel="stylesheet" href="codemirror.css">
+	<script src="modes/javascript.js"></script>
+	<script src="modes/css.js"></script>
+</head>
+
+<template name="editor">
+  <div class="modal {{visible}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h4 class="editorheader" id="myModalLabel">
+				<ul class="editorchoices nav">
+					 <li class="dropdown">
+                      <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><span id="editorlabel">Editing Style chunk</span><b class="caret"></b></a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                      	{{#each editables}}
+	                        <li class="{{editor}}" chunkid="{{chunkid}}" role="presentation"><a role="menuitem" tabindex="-1">{{label}}</a></li>
+                      	{{/each}}
+                      </ul>
+                    </li>
+                </ul>
+            </h4>
+			<div class="clear">
+		</div>
+		<div class="modal-body editor">
+		</div>
+		<div class="modal-footer">
+			<button class="btn revertchanges">Revert changes</button>
+			<button class="btn btn-primary savechanges" aria-hidden="true" data-dismiss="modal" >Save changes</button>
+		</div>
+  </div>
+</template>

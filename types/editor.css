@@ -1,0 +1,17 @@
+.modal-backdrop {
+	opacity: 0.4;
+}
+
+.editorlabel {
+	float: left;
+	display: inline;
+}
+
+.editorheader {
+	/*font-size: smaller;*/
+}
+
+.editorchoices > li  {
+	float: left;
+}
+

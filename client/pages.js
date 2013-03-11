@@ -401,7 +401,7 @@ Template.page.rendered = function() {
   // this.data is the Page
   if (!this.data) return;
   $(".sortable").sortable({ handle: ".drag-handle", 
-    update: updateParagraphOrder,
+    update: persistPageContents,
     placeholder: "paragraph-placeholder"
   });
   $( ".drag-handle" ).disableSelection();
@@ -452,16 +452,25 @@ var pageNameToId = function(pageName) {
   return null;
 }
 
-function updateParagraphOrder(event, ui) {
-  // build a new array items in the right order, and push them
-  // stolen from https://github.com/sdossick/sortable-meteor
+function persistPageByPageElement(pageElt) {
   var contents = [];
-  var chunks = $(event.target).closest('.page').find(".chunk");
+  var chunks = pageElt.find(".chunk");
   _.each(chunks, function(element,index,list) {
     contents.push(JSON.parse($(element).attr('data-json')));
   });
-  var id = $(event.target).closest('.page').attr('data-id');
+  var id = pageElt.attr('data-id');
+  console.log("new contents");
+  console.log(contents);
   Pages.update(id, {$set: {contents: contents}})
+}
+
+function persistPageContents(event) {
+  // persist page contents based on the data-json attributes in each 
+  // 'chunk' in said page.
+
+  var pageElt = $(event.target).closest('.page');
+  persistPageByPageElement(pageElt);
+
 }
 
 
