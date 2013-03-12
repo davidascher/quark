@@ -357,7 +357,8 @@ textarea.editable {
 	transition: height 0.5s;
 	-moz-transition: height 0.5s;
 }
-.starred, .unstarred {
+
+.starred, .unstarred, .edit {
 	cursor: pointer;
 }
 
@@ -369,12 +370,16 @@ textarea.editable {
 	color: red;
 }
 
+.edit {
+	opacity: .6;
+}
+
 .starred {
 	color: red;
 	opacity: .6;
 }
 
-.starred:hover {
+.starred:hover,.edit:hover {
 	opacity: 1;
 }
 

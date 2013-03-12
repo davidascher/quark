@@ -21,13 +21,9 @@ if (Meteor.isClient) {
       var styleChunk = this;
       var pageElt = $(event.target).closest('.page');
       var chunk = $(event.target).closest(".chunk");
-      Quark.editor.show(styleChunk.value, 'css', pageElt, function (newcode) {
-        Session.set('style', newcode)
-        styleChunk.value = newcode;
-        contents = JSON.parse(chunk.attr("data-json"));
-        contents.value = newcode;
-        chunk.attr('data-json', JSON.stringify(contents));
-      });
+      chunkid = chunk.attr("guid");
+      Quark.editor.editchunk(chunkid, pageElt);
+      // Quark.editor.show(styleChunk.value, 'css', pageElt, StyleType.onCodeChange);
     },
   })
 
@@ -60,7 +56,17 @@ var StyleType = {
                {type: 'style', value: ".card {background: orange; color: white}", guid: guid()},
              ]
         });
-    }
+    },
+    onCodeChange: function(chunkid, newcode) {
+      Session.set('style', newcode)
+      // styleChunk.value = newcode;
+      var chunk = $("[guid=\"" + chunkid + "\"]");
+      console.log("chunkid", chunkid, "chunk", chunk);
+      contents = JSON.parse(chunk.attr("data-json"));
+      contents.value = newcode;
+      chunk.attr('data-json', JSON.stringify(contents));
+    },
+    editorMode: 'css',
 }
 
 var TYPES = TYPES || {};

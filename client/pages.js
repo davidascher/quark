@@ -409,6 +409,7 @@ Template.page.rendered = function() {
 }
 
 Template.page.contents = function() {
+  console.log("UPDATING PAGE CONTENTS");
   var chunks = this.contents;
   var pageId = this._id;
   _.each(chunks, function(chunk) {

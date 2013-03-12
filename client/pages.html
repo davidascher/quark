@@ -11,8 +11,8 @@
 </body>
 
 <template name="main">
+  {{>editor}}
   <div id="root">
-    {{>editor}}
     <div class="container-fluid main">
       <div class="row-fluid container">
         <div id="pagewrapper" class="span6">
@@ -177,7 +177,7 @@
 <template name="page">
   {{#if this}}
   <div class="page card" data-id="{{this._id}}">
-    <h3 class="page-name">{{>editablepagetitle name}} {{>heart this}}</h3>
+    <h3 class="page-name">{{>editablepagetitle name}} {{>heart this}}  <i class="edit icon-edit"></i></h3>
     <div class="sortable">
       {{#each contents}}
         {{>chunk this}}

@@ -3,10 +3,10 @@
 }
 
 .modal {
-	margin-left: 5em;
 	color: black;
 	background: white;
 }
+
 .editor {
 	border: 1px inset rgba(0,0,0,.3);
 	padding: 0.2em;

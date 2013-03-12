@@ -4,22 +4,22 @@ if (Meteor.isClient) {
     var Editor = function() {
       this.visible = false;
     }
-    
-    Editor.prototype._setup = function(initialValue, mode, pageEl, onUpdateCB) {
+    Template.page.preserve([".modal"]);
+
+    Editor.prototype._setup = function(initialValue, mode, pageEl) {
       var self = this;
       self.mode = mode;
       self.persistOnHide = false;
       self.pageEl = pageEl;
-      self.onUpdateCB = onUpdateCB;
       self._editor = CodeMirror(function(elt) {
         self.visible = true;
-        $(".modal-body").append(elt);
-        $(".modal").modal();
+        $(".modal-body").html(elt);
       }, {value: initialValue, mode: mode});
       self._editor.on("change", function(instance, changeObj) {
-        // onUpdateCB(instance.getValue())
+        if (self.onUpdateCB) 
+          self.onUpdateCB(instance.getValue())
       })
-      $(".modal").on("hide", function(instance) {
+      $(".modal").on("hidden", function(instance) {
         if (self.persistOnHide) {
           persistPageByPageElement(self.pageEl);
         } else {
@@ -28,17 +28,15 @@ if (Meteor.isClient) {
       })
     }
 
-    Editor.prototype.show = function(initialValue, mode, pageEl, onUpdateCB) {
+    Editor.prototype.show = function(initialValue, mode, pageEl) {
       this._originalValue = initialValue;
-      if (!this._editor) {
-        this._setup(initialValue, mode, pageEl, onUpdateCB);
-      } else {
-        $(".modal").modal("show");
-      }
+      this._setup(initialValue, mode, pageEl);
+      $(".modal").modal("show");
     }
 
     Editor.prototype.savechanges = function() {
       this.persistOnHide = true;
+      $(".modal").modal("hide");
     }
 
     Editor.prototype.revertchanges = function() {
@@ -46,20 +44,26 @@ if (Meteor.isClient) {
       this.onUpdateCB(this._originalValue)
     }
 
-    Editor.prototype.editpage = function(chunkid) {
-      var page = Template.main.topmostpage();
-      var json = JSON.stringify(page.contents, undefined, 2);
-      this._editor.setValue(json);
-      $("#editorlabel").text("Editing page")
+    Editor.prototype.onPageEdit = function(newjson) {
+      this.pageElt.attr("data-json", newjson);
+      // var page = Template.main.topmostpage();
+      // page.contents = JSON.parse(newjson);
+      // Pages.update(page._id, {$set: {contents: JSON.parse(newjson)}});
     }
 
-    Editor.prototype.editchunk = function(chunkid) {
+    Editor.prototype.editchunk = function(chunkid, pageElt) {
+      if (!chunkid) { //just pick the first one
+        chunkid = $(".chunk").attr("guid");
+      }
       var chunk = $("[guid=\"" + chunkid + "\"]");
       var json = chunk.attr("data-json");
-      console.log("json", json);
       var obj = JSON.parse(json);
-      console.log("obj", obj);
+      this.onUpdateCB = null; // otherwise new text will be sent to old plugin.
+      this.show(obj.value, TYPES[obj.type].editorMode, pageElt)
       this._editor.setValue(obj.value);
+      this.onUpdateCB = function (newcontents) {
+        TYPES[obj.type].onCodeChange(chunkid, newcontents)
+      }
       $("#editorlabel").text("Editing " + obj.type + " chunk")
     }
 
@@ -79,16 +83,17 @@ if (Meteor.isClient) {
       },
       'click .editchunk': function(event, tmpl) {
         var chunkid = $(event.target.parentNode).attr('chunkid');
-        Quark.editor.editchunk(chunkid);
+        var pageElt = $(".page");
+        Quark.editor.editchunk(chunkid, pageElt);
       }
     })
 
     Template.editor.editables = function() {
-      var parts = [{editor: 'editpage', label: 'Edit page'}];
+      var parts = [];
       var page = Template.main.topmostpage();
       if (!page) return;
       _.each(page.contents, function(chunk, index) {
-        parts.push({'editor': 'editchunk', 'chunkid': chunk.guid, 'label': 'Edit chunk ' + index})
+        parts.push({'editor': 'editchunk', 'chunkid': chunk.guid, 'label': 'Edit ' + chunk.type +' chunk (' + index + ')'})
       })
       return parts;
     }
@@ -96,6 +101,12 @@ if (Meteor.isClient) {
     Template.editor.visible = function() {
       return Quark.editor.visible ? "" : "hide";
     }
+
+    Template.page.events({
+      'click .edit': function(event, tmpl) {
+        Quark.editor.editchunk();
+      }
+    })
   })();
 }
 

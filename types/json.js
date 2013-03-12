@@ -3,7 +3,11 @@
 if (Meteor.isClient) {
 	Template.json.events({
 		'click .show_source' : function(event, tmpl) {
-			alert("JSON source: " + this.value);
+      var styleChunk = this;
+      var pageElt = $(event.target).closest('.page');
+      var chunk = $(event.target).closest(".chunk");
+      chunkid = chunk.attr("guid");
+      Quark.editor.editchunk(chunkid, pageElt);
 		}
 	})
 
@@ -29,7 +33,15 @@ var JSONType = {
 			   {type: 'json', value: "{a: 123, b: 'foo'}"},
 			 ]
 		});
-	}
+	},
+  editorMode: {name: "javascript", json: true},
+  onCodeChange: function(chunkid, newcode) {
+    var chunk = $("[guid=\"" + chunkid + "\"]");
+    console.log("chunkid", chunkid, "chunk", chunk);
+    contents = JSON.parse(chunk.attr("data-json"));
+    contents.value = newcode;
+    chunk.attr('data-json', JSON.stringify(contents));
+  }
 }
 
 var TYPES = TYPES || {};

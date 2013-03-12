@@ -71,7 +71,15 @@ if (Meteor.isClient) {
 var ParaType = {
 	toString: function(para) {
 		return para.value;
-	}
+	},
+  onCodeChange: function(chunkid, newcode) {
+    var chunk = $("[guid=\"" + chunkid + "\"]");
+    contents = JSON.parse(chunk.attr("data-json"));
+    contents.value = newcode;
+    chunk.attr('data-json', JSON.stringify(contents));
+    var page = Template.main.topmostpage();
+    page.contents = contents;
+  }
 }
 
 var TYPES = TYPES || {};
